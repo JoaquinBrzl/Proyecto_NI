@@ -1,0 +1,118 @@
+
+
+.demo-construction{
+    --color-primary: #FF5E14;
+    --color-secondary: #FF5E14;
+    --shadow-7: 0 0 20px 5px rgb(255 94 20 / 31%);
+
+
+
+    .demo-banner-area-start-solar{
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        &::after{
+            position: absolute;
+            left: 0;
+            top: 0;
+            content: '';
+            background: linear-gradient(4deg, rgb(0 0 0 / 99%) 1.29%, rgba(54, 69, 27, 0) 100.95%);
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            backdrop-filter: blur(3px);
+        }
+        .inner{
+            .title{
+                font-size: 70px;
+                text-transform: uppercase;
+                margin-bottom: 30px;
+                @media #{$mdsm-layout} {
+                    font-size: 42px;
+                }
+                @media #{$sm-layout} {
+                    font-size: 36px;
+                }
+            }
+            .tmp-personal-portfolio-content{
+                
+                p.description{
+                    max-width: 46%;
+                    margin: auto;
+                    margin-bottom: 30px;
+                    @media #{$mdsm-layout} {
+                        max-width: 85%;
+                    }
+                    @media #{$large-mobile} {
+                        max-width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    .tmp-pricing.with-gradient-bg::after {
+        opacity: 0.5;
+        background: linear-gradient(0, rgb(255 94 20) 0%, rgba(237, 221, 83, 0) 80%);
+    }
+    .inverweb-side-bar-close .shape-right-top {
+        filter: brightness(0) saturate(100%) invert(40%) sepia(94%) saturate(1309%) hue-rotate(349deg) brightness(98%) contrast(106%);
+    }
+
+    .bg-finance-video-thumb {
+        position: relative;
+        height: 850px;
+        background-image: url(../images/bg/18.webp);
+    }
+
+
+    .bg_image--27 {
+        background-image: url(../images/bg/17.webp);
+    }
+
+    .demo-banner-area-start-solar {
+        margin: 0px 0px 0 0px;
+        border-radius: 0;
+    }
+    .height-650 {
+        height: 750px;
+    }
+
+
+
+    &.active-light-mode{
+        .demo-banner-area-start-solar .inner .title{
+            color: #fff;
+        }
+        .demo-banner-area-start-solar .inner .tmp-personal-portfolio-content p.description,
+        .demo-banner-area-start-solar .btn-read-more span{
+            color: #fff;
+        }
+        .demo-banner-area-start-solar::after {
+            background: linear-gradient(4deg, rgb(255 94 20 / 62%) 1.29%, rgba(54, 69, 27, 0) 100.95%);
+            backdrop-filter: blur(0);
+        }
+        .service-layout-presentation-box .advance-tab-button ul li .tab-button::before {
+            background: rgb(255 94 20 / 7%);
+            box-shadow: none;
+        }
+        .tmp-pricing .pricing-table-inner .pricing-header {
+            border-bottom: 2px solid #ff5e14;
+        }
+        .form-group input,
+        .contact-form-1 .form-group textarea {
+            border: var(--border-width) solid #ff5e1424;
+        }
+        .brand-style-1 li {
+            border-color: #ff5e141a;
+        }
+        .tmp-pricing.with-gradient-bg::after {
+            opacity: 0.5;
+            background: linear-gradient(0, rgb(255 94 20 / 33%) 0%, rgba(237, 221, 83, 0) 80%);
+        }
+        .footer-form-wrap form input {
+            border: var(--border-width) solid #ff5e1436;
+        }
+    }
+
+}

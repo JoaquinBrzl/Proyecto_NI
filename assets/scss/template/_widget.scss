@@ -1,0 +1,38 @@
+
+/*-----------------------
+    Corpox Widget Styles  
+--------------------------*/
+.tmp-widget-sidebar {
+    .tmp-default-sidebar-list {
+        @extend %liststyle;
+        li {
+            display: flex;
+            justify-content: space-between;
+            i {
+                color: var(--color-body);
+                margin-right: 10px;
+                font-size: 16px;
+            }
+            span {
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 26px;
+                &.tmp-feature-value {
+                    font-size: 12px;
+                }
+            }
+            a {
+                color: var(--color-body);
+                transition: 0.4s;
+                &:hover {
+                    color: var(--color-primary);
+                }
+            }
+            & + li {
+                padding-top: 10px;
+                margin-top: 10px;
+                border-top: 1px solid var(--color-border);
+            }
+        }
+    }
+}

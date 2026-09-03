@@ -1,0 +1,318 @@
+/*----------------------
+    Animation Css  
+-----------------------*/
+// Bg flashlight
+.tmponhover {
+    position: relative;
+    overflow: hidden;
+    &::before{
+        content: '';
+        position: absolute;
+        top: var(--y);
+        left: var(--x);
+        transform: translate(-50%, -50%);
+        background: radial-gradient(var(--color-primary), transparent, 
+        transparent);
+        width: 200%;
+        height: 200%;
+        opacity: 0;
+        transition:  0.5s,top 0s,left 0s;
+        border-radius: var(--radius);
+    }
+    &:hover{
+        &::before{
+            opacity: 1;
+        }
+    }
+    &::after{
+        content: '';
+        position: absolute;
+        inset: 2px;
+        background: var(--color-card);
+        border-radius: var(--radius);
+    }
+    & > *{
+        z-index: 2;
+        position: relative;
+    }
+}
+
+
+
+
+.post-scale {
+    overflow: hidden;
+    @extend %radius;
+    img {
+        transition: 0.5s;
+    }
+    &:hover {
+        img {
+            transform: scale(1.1);
+        }
+    }
+}
+@keyframes customOne {
+    from {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.90);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes customTwo {
+    0% {
+        transform: (translate(0.0px, 0.0px));
+    }
+
+    50% {
+        transform: (translate(100.0px, 0.0px));
+    }
+
+    100% {
+        transform: (translate(50.0px, 50.0px));
+    }
+}
+
+.customOne {
+    animation: customOne 2s infinite;
+}
+
+@keyframes moveright {
+    from {
+        clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+    }
+
+    to {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+}
+
+@keyframes moveLeft {
+    from {
+        clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
+    }
+
+    to {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+}
+
+@keyframes moveOut {
+    0% {
+        -webkit-clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+        clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+    }
+
+    100% {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+.move-right {
+    animation: moveright 1s linear;
+}
+
+.move-left {
+    animation: moveLeft 1s linear;
+}
+
+.move-down {
+    animation: movedown 1s linear;
+}
+@keyframes leftRight {
+  0%   { transform: translateX(0); }
+  25%  { transform: translateX(-30px); }
+  50%  { transform: translateX(30px); }
+  75%  { transform: translateX(-30px); }
+  100% { transform: translateX(0); }
+}
+.move-out {
+    border-radius: 50%;
+    animation: moveOut 2s linear;
+}
+
+@keyframes movedown {
+    from {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+    }
+
+    to {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+}
+
+.move-up {
+    animation: moveup 1s linear;
+}
+
+@keyframes moveup {
+    from {
+        clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+    }
+
+    to {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+}
+
+@keyframes moveOut {
+    0% {
+        -webkit-clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+        clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+    }
+
+    100% {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+@keyframes toBottomLeft {
+    0% {
+        -webkit-clip-path: polygon(100% 0, 100% 0, 100% 0, 100% 0);
+        clip-path: polygon(100% 0, 100% 0, 100% 0, 100% 0);
+    }
+
+    100% {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+.toBottomLeft {
+    animation: toBottomLeft 1.5s linear;
+}
+/* ------------------------
+    Custom Animation 01 
+----------------------------*/
+
+@-webkit-keyframes headerSlideDown {
+    0% {
+        margin-top: -100px
+    }
+
+    to {
+        margin-top: 0
+    }
+}
+
+@keyframes headerSlideDown {
+    0% {
+        margin-top: -100px
+    }
+
+    to {
+        margin-top: 0
+    }
+}
+
+
+/*------------------------
+	slidefadeinup
+--------------------------*/
+
+@-webkit-keyframes slideFadeInUp {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 20%, 0);
+        transform: translate3d(0, 20%, 0);
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes slideFadeInUp {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 20%, 0);
+        transform: translate3d(0, 20%, 0);
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+.slideFadeInUp {
+    -webkit-animation-name: slideFadeInUp;
+    animation-name: slideFadeInUp;
+}
+
+/* -----------------------------------
+    Custom Animation For All Page
+---------------------------------------*/
+
+@-webkit-keyframes moveVertical {
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(0)
+    }
+}
+
+@keyframes moveVertical {
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+        transform: translateY(0)
+    }
+}
+
+
+
+
+
+
+/*--------------------------------
+Scroll Down Button Animation  
+----------------------------------*/
+@keyframes scrollDown {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+}
+
+.invers-anime{
+    position: relative;
+    overflow: hidden;
+    &::after{
+        content: "";
+        position: absolute;
+        width: 200%;
+        height: 0%;
+        left: 50%;
+        top: 50%;
+        background-color: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%) rotate(45deg);
+        z-index: 1;
+        pointer-events: none;
+    }
+    &:hover{
+        &::after{
+            height: 250%;
+            transition: all 600ms linear;
+            background-color: transparent;
+        }
+    }
+}

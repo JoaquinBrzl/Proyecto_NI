@@ -1,0 +1,212 @@
+.slick-initialized .slick-slide {
+    margin-bottom: 0;
+}
+
+.slick-grid-15 {
+    margin: 0 -15px;
+    .slide-single-layout {
+        padding: 0 15px;
+    }
+}
+
+
+/*----------------------
+    Slick Dots  
+------------------------*/
+.tmp-slick-dot {
+    .slick-dots {
+        bottom: -60px;
+        @media #{$large-mobile} {
+            bottom: -50px; 
+        }
+        li{
+            width: 30px;
+            margin: 0;
+            opacity: 1;
+            position: relative;
+            
+            button{
+                &::before{
+                    display: none;
+                }
+                &::after{
+                    background: var(--color-border);
+                    width: 100%;
+                    display: block;
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    margin-left: 11px;
+                    background-color: transparent;
+                    box-shadow: inset 0 0 0 7px var(--color-border);
+                }
+            }
+            &.slick-active{
+                opacity: 1;
+                button{
+                    &::after{
+                        -webkit-transform: scale(2);
+                        transform: scale(2);
+                        box-shadow: inset 0 0 0 1px var(--color-primary);
+                        background-color: transparent;
+                        background-color: transparent!important;
+                    }
+                }
+            }
+        }
+    }
+    // Dot Light  
+    &.dot-light {
+        .slick-dots {
+            li{
+                button {
+                    &::after {
+                        background: #ffffff;
+                        box-shadow: inset 0 0 0 5px #ffffff;
+                    }
+                }
+                &.slick-active{
+                    opacity: 1;
+                    button{
+                        &::after{
+                            -webkit-transform: scale(2);
+                            transform: scale(2);
+                            box-shadow: inset 0 0 0 1px var(--color-primary);
+                            background-color: transparent;
+                            background-color: transparent!important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/*----------------------
+    Slick Arrow  
+------------------------*/
+.tmp-slick-arrow {
+    position: relative;
+    button {
+        &.slick-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            transition: 0.5s;
+            opacity: 0;
+            width: 68px;
+            height: 68px;
+            border: 2px solid var(--color-border);
+            border-radius: 100%;
+            color: var(--color-border);
+            background-color: transparent;
+
+            @media #{$md-layout} {
+                display: none !important;
+            }
+
+            @media #{$lg-layout} {
+                display: none !important;
+            }
+
+            @media #{$sm-layout} {
+                display: none !important;
+            }
+
+            &:hover{
+                background: var(--color-primary);
+                border-color: var(--color-primary) !important;
+                transform: translateY(-50%) scale(1.2);
+            }
+
+            &::before {
+                line-height: 1;
+                opacity: 0.4;
+                position: relative;
+                top: -2px;
+                transition: 0.5s;
+                z-index: 2;
+            }
+
+            &.prev-arrow {
+                left: 70px;
+                @media #{$sm-layout} {
+                    left: 10px;
+                }
+
+                &::before{
+                    content: url(../images/slick-arrow-left-small.png);
+                    vertical-align: middle;
+                }
+
+                &:hover{
+                    left: 60px;
+                    &::before{
+                        opacity: 1;
+                    }
+                }
+            }
+            &.next-arrow {
+                left: auto;
+                right: 70px;
+                @media #{$sm-layout} {
+                    right: 10px;
+                }
+                &::before{
+                    content: url(../images/slick-arrow-right-small.png);
+                    vertical-align: middle;
+                }
+                &:hover {
+                    right: 60px;
+                    &::before{
+                        opacity: 1;
+                    }
+                }
+            }
+            i {
+                display: none;
+            }
+        }
+    }
+
+
+    &.slick-arrow-alignwide {
+        button {
+            &.slick-arrow {
+                &.prev-arrow {
+                    left: -105px;
+                }
+
+                &.next-arrow {
+                    right: -105px;
+                    left: auto;
+                }
+            }
+        }
+    }
+
+    &:hover {
+        button {
+            &.slick-arrow {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.tmp-slick-arrow-white {
+    &.tmp-slick-arrow button.slick-arrow {
+        color: var(--heading-opacity-2);
+        border-color: var(--heading-opacity-2);
+    }
+}
+
+
+
+
+

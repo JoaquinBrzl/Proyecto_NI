@@ -1,0 +1,122 @@
+// property area start
+.card-section-sticky-wrapper{
+    height: auto;
+}
+.card-large-sticky-style-one{
+    background: var(--color-card);
+    position: sticky;
+    top: 50px;
+    @media #{$mdsm-layout} {
+        position: relative;
+        top: 0;
+        margin-top: 30px;
+        &:first-child{
+            margin-top: 0;
+        }
+    }
+}
+.real-estate-demo{
+    overflow: visible !important;
+}
+.portfolio-list-thumbnail{
+    height: 640px;
+    @media #{$smlg-device} {
+        height: 640px;
+    }
+    @media #{$sm-layout} {
+        height: 400px;
+    }
+}
+.portfolio-list-inner-content{
+    max-width: 90%;
+    @media #{$sm-layout} {
+        max-width: 100%;
+    }
+    .title{
+        font-size: 45px;
+        @media #{$smlg-device} {
+            font-size: 28px;
+        }
+    }
+    .tag-wrapper-area{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        @media #{$sm-layout} {
+            flex-wrap: wrap;
+        }
+        .single{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 12px;
+            border: 1px solid var(--color-border);
+        }
+    }
+    p{
+        margin-top: 25px;
+        max-width: 90%;
+    }
+    .tmp-btn{
+        margin-top: 25px;
+    }
+    .location-area{
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        i{
+            font-size: 22px;
+        }
+        span{
+            font-size: 18px;
+        }
+    }
+    .feature-list{
+        padding: 0;
+        list-style: none;
+        margin-bottom: 15px;
+        li{
+            display: flex;
+            @media #{$large-mobile} {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            .icon{
+                background: var(--color-primary);
+                width: 30px;
+                height: 30px;
+                border-radius: 100%;
+                color: var(--color-white);
+                text-align: center;
+                min-width: 30px;
+                i{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100%;
+                }
+            }
+            .title-wrapper{
+                margin-left: 13px;
+                @media #{$large-mobile} {
+                    margin-left: 0;
+                }
+                .title{
+                    font-size: 18px;
+                    margin: 0;
+                }
+                .text{
+                    font-size: 16px;
+                    margin-bottom: 20px;
+                    max-width: 80%;
+                    margin-top: 13px;
+                }
+            }
+        }
+    }
+}
+
+.realstate-banner-style-two-thumbnail{
+    height: auto;
+}

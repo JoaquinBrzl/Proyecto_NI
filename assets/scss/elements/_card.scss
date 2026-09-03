@@ -1,0 +1,84 @@
+/*----------------------
+    Card Styles  
+-------------------------*/
+.card-box {
+    &.card-style-1 {
+        box-shadow: var(--shadow-lighter);
+        background-color: var(--color-card);
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 30px;
+        transition: .3s;
+        margin-top: 0;
+        &:hover{
+            transform: translateY(-5px);
+        }
+    }
+    .inner {
+        .image {
+            a {
+                img {
+                    border-radius: 5px;
+                    width: 100%;
+                }
+            }
+        }
+        .content {
+            padding-top: 20px;
+            .title {
+                font-size: 18px;
+                font-weight: 500;
+                margin-bottom: 14px;
+                a {
+                    @extend %transition;
+                    color: inherit;
+                    &:hover {
+                        color: var(--color-primary);
+                    }
+                }
+            }
+            .description {
+                margin-bottom: 0;
+            }
+            .tmp-btn {
+                margin-top: 20px;
+            }
+        }
+    }
+}
+
+
+// main.business-coatch{
+//     .thumbnail-banner-business-coatch img,
+//     .banner-coatch-right-image::after,
+//     .invers-anime,
+//     .single-modern-case-studies .thumbnail,
+//     .team-style-two .inner .thumbnail {
+//         border-radius: 5px !important;
+//         clip-path: polygon(0% 0%, 0% 0%, 11.242% 1.171%, 21.54% 2.084%, 31.146% 2.74%, 40.31% 3.136%, 49.281% 3.271%, 58.309% 3.145%, 67.645% 2.756%, 77.539% 2.103%, 88.241% 1.185%, 100% 0%, 100% 100%, 0% 100%, 0% 0%);
+//     }
+//     .single-modern-case-studies .thumbnail{
+//         display: block;
+//     }
+// }
+
+main.business-coatch{
+    .thumbnail-banner-business-coatch img{
+        height: 100%;
+        object-fit: cover;
+        @media #{$smlg-device} {
+            object-fit: cover;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,240 @@
+/*********************************************************************************
+  Template Name: Corpox - Business & Consulting Bootstrap5 Template
+  Description: Transform your business with expert consulting. Our team delivers strategic insights, innovative solutions, and professional guidance to help you achieve lasting success.
+  Note: This is style css.
+**********************************************************************************/
+/**************************************************************
+  STYLESHEET INDEXING
+  |
+  |
+  |___ Default Styles
+  | |
+  | |___ variables
+  | |___ mixins
+  | |___ reset
+  | |___ typography
+  | |___ extend
+  | |___ animations
+  | |___ shortcode
+  | |___ spacing
+  | |___ edu-common
+  | |___ forms
+  | |___ sal
+  | |___ text-animation
+  |
+  |
+  |___Header Styles
+  | |___ header-common
+  | |___ headertop
+  | |___ offertopbar
+  | |___ headermid
+  | |___ social-share
+  | |___ header
+  | |___ nav
+  | |___ mega-menu
+  | |___ mobilemenu
+  | |___ offcanvas
+  | |___ one-page-navigation
+  |
+  |
+  |___Elements Styles
+  | |___ button
+  | |___ section-title
+  | |___ breadcrumb
+  | |___ card
+  | |___ course-meta
+  | |___ service
+  | |___ feature
+  | |___ about
+  | |___ callto-action
+  | |___ accordion
+  | |___ image-gallery
+  | |___ counterup
+  | |___ pricingtable
+  | |___ badge
+  | |___ team
+  | |___ social
+  | |___ pagination
+  | |___ backtotop
+  | |___ newsletterform
+  | |___ brand
+  | |___ portfolio
+  | |___ contact
+  | |___ testimonial
+  | |___ advance-tab
+  | |___ category
+  | |___ instagram
+  | |___ split
+  | |___ countdown
+  | |___ progressbar
+  | |___ category-box
+  | |___ course-filter
+  | |___ modal
+  | |___ list
+  | |___ search
+  | |___ video
+  | |___ 404
+  |___Blog Styles
+  | |___ blog
+  | |___ post-default
+  | |___ sidebar
+  | |___ blog-details
+  |___Template Styles
+  | |___ banner
+  | |___ course-details
+  | |___ course-sidebar
+  | |___ contact
+  | |___ sidebar
+  | |___ course-action-bottom
+  |___Footer Styles
+  | |___ footer
+  | |___ copyright
+  | |___ back-to-top
+  |
+  |
+  |___ END STYLESHEET INDEXING
+***************************************************************/
+
+
+
+/**************************************
+    Default Styles
+***************************************/
+
+@import 'default/variables';
+@import 'default/mixins';
+@import 'default/reset';
+@import 'default/typography';
+@import 'default/extend';
+@import 'default/animations';
+@import 'default/shortcode';
+@import 'default/spacing';
+@import 'default/common';
+@import 'default/forms';
+@import 'default/sal';
+@import 'default/text-animation';
+
+
+/**************************************
+    Theme Styles
+***************************************/
+
+@import 'color/themebg';
+@import 'color/cursor';
+
+
+/**************************************
+    Header Styles
+***************************************/
+
+@import 'header/header';
+@import 'header/nav';
+@import 'header/header-top';
+@import 'header/headerTopBar';
+@import 'header/mobilemenu';
+@import 'header/onepage';
+
+
+/**************************************
+    Elements 
+***************************************/
+
+@import 'elements/breadcrumb';
+@import 'elements/sectiontitle';
+@import 'elements/button';
+@import 'elements/service';
+@import 'elements/auto-slider-service';
+@import 'elements/why-choose-us';
+@import 'elements/card';
+@import 'elements/counter';
+@import 'elements/progressbar';
+@import 'elements/accordion';
+@import 'elements/social-share';
+@import 'elements/team';
+@import 'elements/portfolio';
+@import 'elements/testimonial';
+@import 'elements/slickslide';
+@import 'elements/timeline';
+@import 'elements/call-to-action';
+@import 'elements/tab';
+@import 'elements/pricing';
+@import 'elements/split';
+@import 'elements/vedio';
+@import 'elements/gallery';
+@import 'elements/contact';
+@import 'elements/brand';
+@import 'elements/404';
+@import 'elements/advance-tab';
+@import 'elements/advancepricing';
+@import 'elements/contact-form';
+@import 'elements/swicher';
+@import 'elements/backto-top';
+@import 'elements/about';
+@import 'elements/newsletter';
+@import 'elements/feature';
+@import 'elements/pagination';
+@import 'elements/gsapanimation';
+@import 'elements/tooltip';
+@import 'elements/search';
+@import 'elements/property';
+@import 'elements/experience';
+@import 'elements/skill';
+@import 'elements/new-testimonial';
+@import 'elements/stars-animation';
+@import 'elements/preloader';
+@import 'elements/circle-progress';
+@import 'elements/career';
+@import 'elements/story';
+@import 'elements/branch';
+@import 'elements/shop';
+@import 'elements/cart';
+@import 'elements/checkout';
+@import 'elements/sidebar';
+@import 'elements/before-after';
+
+
+
+
+
+/**************************************
+            Blog 
+***************************************/
+
+
+@import 'blog/blog';
+@import 'blog/sidebar';
+@import 'blog/blog-details';
+
+
+
+/**************************************
+    Footer Styles
+***************************************/
+@import 'footer/footer';
+@import 'footer/copyright';
+
+
+/**************************************
+            Template
+***************************************/
+@import 'template/banner';
+@import 'template/portfoliodetails';
+@import 'template/splash';
+@import 'template/application';
+@import 'template/collaborate';
+@import 'template/widget';
+@import 'template/lightmode';
+
+
+/**************************************
+            Updates
+***************************************/
+
+
+@import 'updates/gym';
+@import 'updates/medical';
+@import 'updates/solar';
+@import 'updates/event';
+@import 'updates/ai-agency';
+@import 'updates/architecture';
+@import 'updates/construction';

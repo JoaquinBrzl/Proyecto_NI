@@ -1,0 +1,208 @@
+.progress-circle-main-wrapper {
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+    @media #{$laptop-device} {
+        gap: 15px;
+    }
+    @media #{$smlg-device} {
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    @media #{$small-mobile} {
+        justify-content: center;
+    }
+
+    .single-progress-circle {
+        display: flex;
+        justify-content: center;
+        position: relative;
+
+        .small-text {
+            position: absolute;
+            top: 55%;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 24px;
+            color: #1F1F21;
+            font-family: var(--font-primary);
+        }
+    }
+
+    /*For CodePen*/
+    svg.radial-progress {
+        height: auto;
+        max-width: 100px;
+        padding: 0;
+        border-radius: 50%;
+        transform: rotate(-90deg);
+        width: 100%;
+        background-image: none;
+        border-radius: 50%;
+        transition: 0.3s;
+
+        circle {
+            fill: transparent;
+            stroke: #fff;
+        }
+
+        circle.bar-static {
+            stroke: rgba(160, 160, 160, 0.08) !important;
+            stroke-width: 5px;
+            transition: .3s;
+        }
+
+        circle.bar--animated {
+            stroke-dasharray: 219.91148575129;
+            stroke: var(--color-primary);
+            stroke-dashoffset: 219.91148575129;
+            stroke-width: 5px;
+            transition: .3s;
+            stroke-linecap: round;
+        }
+
+        text {
+            fill: #ffffff !important;
+            font-size: 16px;
+            font-weight: 700;
+            text-anchor: middle;
+            font-family: var(--font-primary);
+            fill: rgb(255, 255, 255);
+            transition: .3s;
+            color: var(--color-primary);
+        }
+
+        &:hover {
+            circle.bar-static {
+                stroke-width: 1px;
+            }
+
+            circle.bar--animated {
+                stroke-width: 4px;
+            }
+
+            text {
+                fill: #1F1F21;
+            }
+        }
+    }
+
+    section.svg-container {
+        svg.radial-progress {
+            &:nth-child(even) {
+                margin: 0 15px;
+            }
+        }
+
+        &:nth-last-of-type(1) {
+            svg.radial-progress {
+                background: linear-gradient(260deg, #ff0300, #ffc900);
+            }
+        }
+
+        &:nth-last-of-type(0) {
+            svg.radial-progress {
+                background-image: linear-gradient(60deg, #3d3393 0%, #2b76b9 37%, #2cacd1 65%, #35eb93 100%);
+            }
+        }
+    }
+
+    .devider {
+        font-size: 50px;
+        padding: 20px;
+        min-height: 11vh;
+        color: #fff;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(-225deg, #FF057C 0%, #FF057C 40%, #321575 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+
+        &:nth-last-of-type(2) {
+            background-image: linear-gradient(260deg, #ff0300, #ffc900);
+        }
+    }
+
+    .single-progress-area {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        position: relative;
+
+        @media #{$small-mobile} {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        &.ininner {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+            background: #20282D;
+            padding: 20px 42px;
+            border-radius: 10px;
+            @media #{$large-mobile} {
+                width: 100%;
+            }
+            .right-counter {
+                * {
+                    color: #fff;
+                }
+            }
+        }
+
+        &::after {
+            position: absolute;
+            right: -86px;
+            height: 100%;
+            width: 1px;
+            background: #D9D9D9;
+            content: '';
+
+            @media #{$smlg-device} {
+                display: none;
+            }
+        }
+
+        &:last-child {
+            &::after {
+                display: none;
+            }
+        }
+
+        svg {
+            text {
+                opacity: 0;
+            }
+        }
+
+        img {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .right-counter {
+            .title {
+                margin-bottom: 0;
+                font-size: 48px;
+            }
+
+            p {
+                margin-bottom: 0;
+                font-size: 16px;
+                font-weight: 600;
+                text-transform: uppercase;
+                color: #5D666F;
+            }
+        }
+    }
+
+}

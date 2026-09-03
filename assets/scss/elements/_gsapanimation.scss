@@ -1,0 +1,91 @@
+.rts-reveal-one {
+    visibility: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: max-content;
+    margin-left: auto;
+    right: 0;
+    overflow: hidden;
+}
+
+
+.large-video-playing video {
+    max-width: 100%;
+    width: 100%;
+    clip-path: polygon( 0% 0%,0% 0%,11.169% 1.84%,21.52% 3.233%,31.262% 4.193%,40.605% 4.735%,49.759% 4.873%,58.931% 4.621%,68.332% 3.994%,78.171% 3.005%,88.657% 1.669%,100% 0%,100% 100%,100% 100%,88.723% 98.395%,78.313% 97.147%,68.551% 96.256%,59.22% 95.721%,50.099% 95.543%,40.971% 95.721%,31.616% 96.256%,21.815% 97.147%,11.349% 98.395%,0% 100%,0% 0% );
+}
+
+
+.grow-thumbnail{
+    transform: scaleX(1);
+}
+
+.large-video-playing{
+    position: relative;
+    clip-path: polygon( 0% 0%,0% 0%,11.169% 1.84%,21.52% 3.233%,31.262% 4.193%,40.605% 4.735%,49.759% 4.873%,58.931% 4.621%,68.332% 3.994%,78.171% 3.005%,88.657% 1.669%,100% 0%,100% 100%,100% 100%,88.723% 98.395%,78.313% 97.147%,68.551% 96.256%,59.22% 95.721%,50.099% 95.543%,40.971% 95.721%,31.616% 96.256%,21.815% 97.147%,11.349% 98.395%,0% 100%,0% 0% );
+    .grow-thumbnail-1-overlay{
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        width: 100.1%;
+        height: 99%;
+        background: var(--color-card);
+        transform: scaleX(1);
+    }
+}
+
+
+.tmp-video-section-start-one{
+    position: relative;
+}
+
+.text-split-wrap-video{
+    position: absolute;
+    width:100vw;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-transform: uppercase;
+    text-align:center;
+    top: 50%;
+    background-blend-mode: exclusion;
+    transform: translateY(-50%);
+    .title{
+        font-size: 110px;
+        text-transform: uppercase;
+        font-weight: 800;
+        font-size: 220px;
+        line-height: 110px;
+        color: #fff;
+        text-transform: uppercase;
+        min-width: max-content;
+        width: 500vw;
+        min-width: max-content;
+        background-blend-mode: exclusion;
+        @media #{$smlg-device} {
+            font-size: 120px;
+        }
+        @media #{$mdsm-layout} {
+            font-size: 80px;
+        }
+        @media #{$sm-layout} {
+            font-size: 60px;
+        }
+        span{
+            -webkit-text-fill-color: transparent;
+            -webkit-text-stroke: 1px;
+            -webkit-text-stroke-color: #fff;
+            background-blend-mode: exclusion;
+        }
+    }
+}
+
+
+.gsap-marker-scroller-start,
+.gsap-marker-scroller-end,
+.gsap-marker-start{
+    display: none !important;
+}

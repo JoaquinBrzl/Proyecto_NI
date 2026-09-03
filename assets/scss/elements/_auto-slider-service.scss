@@ -1,0 +1,99 @@
+
+.service-layout-presentation-box{
+    padding: 80px;
+    background: var(--color-card);
+    border-radius: 8px;
+    @media #{$smlg-device} {
+        padding: 50px;
+    }
+    @media #{$mdsm-layout} {
+        padding: 30px;
+    }
+    @media #{$large-mobile} {
+        padding: 20px;
+    }
+    .advance-tab-button{
+        ul{
+            li{
+                display: block;
+                width: 100%;
+                .tab-button{
+                    padding: 23px 27px;
+                    background: rgb(0 0 0 / 18%);
+                    @media #{$large-mobile} {
+                        padding: 10px 27px;
+                    }
+                    .tab{
+                        display: flex;
+                        align-items: flex-start;
+                        gap: 15px;
+                        @media #{$small-mobile} {
+                            flex-direction: column;
+                            gap: 10px;
+                        }
+                        span{
+                            font-size: 20px;
+                            height: 45px;
+                            min-width: 45px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: 50%;
+                            background: transparent;
+                            border: 1px solid var(--color-border);
+                            color: var(--color-white);
+                            font-weight: 700;
+                        }
+                        .inner{
+                            p{
+                                margin-bottom: 0;
+                                margin-top: 10px;
+                            }
+                        }
+                    }
+                    .title{
+                        font-size: 26px;
+                        margin-bottom: 0;
+                        color: #fff;
+                        @media #{$large-mobile} {
+                            font-size: 18px;
+                        }
+                    }
+                    &::after{
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 100%;
+                        border-left: 12px solid var(--color-primary);
+                        border-top: 12px solid transparent;
+                        border-bottom: 12px solid transparent;
+                        margin-top: -12px;
+                        display: none;
+                    }
+                    &::before{
+                        position: absolute;
+                        content: "";
+                        background: var(--color-primary);
+                        width: 0%;
+                        height: 100%;
+                        left: 0;
+                        top: 0;
+                        transition: 0.3s;
+                        opacity: 0;
+                        transform: scale(0.9);
+                        z-index: -1;
+                        border-radius: 7px;
+                        box-shadow: var(--shadow-1);
+                    }
+                    &.active {
+                        &::before {
+                            opacity: 1;
+                            width: 100%;
+                            transition: width 4.5s ease-in-out;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

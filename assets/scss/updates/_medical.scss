@@ -1,0 +1,30 @@
+
+
+.demo-medical{
+    .bg_gym-1{
+        background-image: url(../images/bg/08.webp);
+    }
+    .bg_gym-2{
+        background-image: url(../images/bg/09.webp);
+    }
+    .bg_gym-3{
+        background-image: url(../images/bg/10.webp);
+    }
+    .footer-style-default .shape-area {
+        filter: brightness(0) saturate(100%) invert(43%) sepia(73%) saturate(1498%) hue-rotate(185deg) brightness(96%) contrast(91%);
+    }
+    .inverweb-side-bar-close .shape-right-top{
+        img{
+            filter: brightness(0) saturate(100%) invert(43%) sepia(73%) saturate(1498%) hue-rotate(185deg) brightness(96%) contrast(91%);
+        }
+    }
+}
+
+
+
+.demo-medical{
+    --color-primary: #2490eb;
+    .brand-carousel-activation {
+        padding: 0 0;
+    }
+}

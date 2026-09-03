@@ -1,0 +1,53 @@
+
+
+.demo-architecture{
+    --color-primary: #b19777;
+    --color-secondary: #b19777;
+    --shadow-7: 0 0 20px 5px rgb(177 151 119 / 30%);
+
+
+
+
+
+    .bg_image--10{
+        background-image: url(../images/bg/14.webp);
+    }
+    .bg_image--13{
+        background-image: url(../images/bg/15.webp);
+    }
+    .bg_image--19{
+        background-image: url(../images/bg/16.webp);
+    }
+
+    .about-us-area{
+        .thumbnail-image{
+            border-radius: 6px;
+            display: block;
+            overflow: hidden;
+        }
+    }
+
+    &.active-light-mode .tmp-slick-dot .slick-dots li button::after {
+        box-shadow: inset 0 0 0 7px rgb(177 151 119);
+    }
+    .inverweb-side-bar-close .shape-right-top{
+        filter: brightness(0) saturate(100%) invert(67%) sepia(2%) saturate(6145%) hue-rotate(338deg) brightness(89%) contrast(79%);
+    }
+
+}
+
+
+.active-light-mode{
+    .tmp-slick-arrow button.slick-arrow {
+        border: 2px solid rgb(177 151 119);
+    }
+    .tmp-slick-arrow button.slick-arrow::before {
+        filter: brightness(0) saturate(100%) invert(67%) sepia(2%) saturate(6145%) hue-rotate(338deg) brightness(89%) contrast(79%);
+    }
+
+    .header-default.header-transparent.header-one {
+        background: rgb(0 0 0 / 11%) !important;
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgb(255 255 255 / 23%);
+    }
+}

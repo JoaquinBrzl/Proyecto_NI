@@ -1,0 +1,71 @@
+.business-boost-wrapper-main{
+    background: var(--color-card);
+    border-bottom: 5px solid var(--color-primary);
+    box-shadow: 0px 22px 23px rgba(0, 0, 0, 0.07);
+}
+
+.container-large{
+    max-width: 1680px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.why-choose-content-wrapper{
+    .feature-one-wrapper{
+        display: flex;
+        flex-wrap: wrap;
+        .icon{
+            background: var(--color-primary);
+            width: 30px;
+            height: 30px;
+            border-radius: 100%;
+            min-width: 30px;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            transition: 0.3s;
+            i{
+                color: var(--color-white);
+                height: 16px;
+                transition: 0.3s;
+            }
+        }
+        .single-feature-one{
+            display: flex;
+            align-items: center;
+            padding: 15px 29px;
+            background: transparent;
+            border: 1px solid var(--color-border);
+            border-radius: 5px;
+            max-width: 290px;
+            margin-right: 25px;
+            margin-bottom: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            gap: 10px;
+            i{
+                transition: 0.3s;
+            }
+            p{
+                font-weight: 500;
+                font-size: 18px;
+                margin-bottom: 0;
+                transition: 0.3s;
+            }
+            &:hover{
+                background: var(--color-primary);
+                border-color: var(--color-primary);
+                transform: translateY(-5px);
+                p{
+                    color: var(--color-white);
+                }
+                .icon{
+                    background: var(--color-white);
+                    i{
+                        color: var(--color-primary);
+                    }
+                }
+            }
+        }
+    }
+}

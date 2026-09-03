@@ -1,0 +1,118 @@
+
+
+
+// scroll var -v
+
+.show-on-scroll{
+  opacity: 0;
+}
+
+.show-on-scroll.show{
+  opacity: 1;
+}
+
+.show-on-scroll.hide{
+  opacity: 0;
+}
+.scrollbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  transition: all linear 0.1s;
+  min-width: 0%;
+  z-index:996;
+}
+
+.scrollbar-v {
+  background: var(--color-primary);
+  position: fixed;
+  top: calc(50% + 60px);
+  right: 60px;
+  width: 2px;
+  transition: all linear 0.1s;
+  min-height: 0%;
+  z-index:996;
+  cursor: pointer;
+    @media #{$sm-layout} {
+      right: 30px;
+    }
+}
+
+.scrollbar-v:before{
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 2px;
+  min-height: 100px;
+  background: rgba(255, 255, 255, 0.15);
+}
+.scrollbar-v::after{
+  content: "";
+  position: absolute;
+  left: -13px;
+  width: 25px;
+  min-height: 100px;
+  background: transparent;
+}
+
+
+.scrollbar-v.dark:before{
+  background: rgba(255, 255, 255, .2);
+}
+
+.float-text {
+    width: 20px;
+    position: fixed;
+    z-index: 995;
+    margin-left: 30px;
+    text-align: center;
+    font-size: 12px;
+    top: 50%;
+    right: 38px;
+    transform: translate(-50%, -50%);
+    font-weight: 500;
+    @media #{$sm-layout} {
+      right: 8px;
+    }
+}
+
+.float-text a{
+    color: #fff;
+}
+
+.float-text.dark a{
+  color:#ffffff;
+}
+
+.float-text span{
+    margin-left: -5px;
+    margin-top: 20px;
+    writing-mode: vertical-rl;
+    letter-spacing: .75px;
+    -webkit-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    color: #222;
+}
+
+
+.float-text-right {
+    width: 20px;
+    position: fixed;
+    z-index: 1000;
+    margin-left: 30px;
+    text-align: center;
+    letter-spacing: 2px;
+    font-size: 12px;
+    top: 50%;
+    right: 15px;
+}
+
+.show-on-scroll span a {
+    padding: 9px 5px;
+    border-radius: 20px;
+    background: var(--color-card);
+    color: var(--color-white);
+    box-shadow: rgb(0 0 0 / 20%) 0px 8px 24px;
+}
