@@ -2220,165 +2220,328 @@
         <!-- Start Service Area  -->
         <div class="main-content">
 
-            <!-- our business service area start -->
-            <div class="my-business-service-area tmp-section-gap">
+            <!-- Start Resource Library Area -->
+            <div class="academic-resource-area tmp-section-gap">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-12">
-
-                            <div class="title-flex-between">
-                                <div class="tmp-section-title-border text-start">
-                                    <div class="pres-line-separator-wrapper text-start mb--10">
-                                        <span class="subtitle">
-                                        <span class="subtitle-text">My Business Services</span>
-                                        </span>
-                                        <div class="line-separator line-right"></div>
-                                    </div>
-                                    <h2 class="title w-700 tmp-title-split">Innovative Service For Your <br>
-                                Business Solution</h2>
+                        <div class="col-lg-10 mx-auto">
+                            <!-- Section Title -->
+                            <div class="tmp-section-title-border text-start mb--35">
+                                <div class="pres-line-separator-wrapper text-start mb--10">
+                                    <span class="subtitle">
+                                        <span class="subtitle-text">RECURSOS ACADÉMICOS</span>
+                                    </span>
+                                    <div class="line-separator line-right"></div>
                                 </div>
-                                <div class="tmp-load-more d-flex justify-content-center">
-                                    <a class="tmp-btn btn-large hover-icon-reverse" href="#">
-                                        <span class="icon-reverse-wrapper">
-                                        <span class="btn-text">View More Service</span>
-                                        <span class="btn-icon"><i class="feather-loader"></i></span>
-                                        <span class="btn-icon"><i class="feather-loader"></i></span>
-                                        </span>
-                                    </a>
+                                <h2 class="title w-700 tmp-title-split">Biblioteca de Recursos</h2>
+                                <p class="description mt--10">Materiales de talleres, plantillas, guías y más para tu desarrollo académico.</p>
+                            </div>
+
+                            <!-- Search and Filter Bar -->
+                            <div class="resource-filter-bar mb--30">
+                                <div class="resource-search-box">
+                                    <i class="feather-search search-icon"></i>
+                                    <input type="text" id="resource-search" placeholder="Buscar recursos..." autocomplete="off">
+                                </div>
+                                <div class="resource-select-box">
+                                    <select id="resource-category-filter" aria-label="Filtrar por categoría">
+                                        <option value="">Todas las categorías</option>
+                                        <option value="Exportaciones e Importaciones">Exportaciones e Importaciones</option>
+                                        <option value="Comercio Internacional">Comercio Internacional</option>
+                                        <option value="Marketing Internacional">Marketing Internacional</option>
+                                        <option value="Empleabilidad">Empleabilidad</option>
+                                        <option value="Talleres con Ponentes">Talleres con Ponentes</option>
+                                        <option value="Logística">Logística</option>
+                                        <option value="Finanzas Internacionales">Finanzas Internacionales</option>
+                                        <option value="Certificados">Certificados</option>
+                                    </select>
+                                    <i class="feather-chevron-down select-arrow"></i>
                                 </div>
                             </div>
 
-
-                        </div>
-                    </div>
-                    <div class="row g-5 mt--20">
-                        <div class="col-lg-12">
-                            <div class="single-service-list-area" data-sal="slide-up" data-sal-duration="700" data-sal-delay="100">
-                                <div class="row g-5 align-items-center">
-                                    <div class="col-lg-6">
-                                        <a href="service-details.html" class="thumbnail-service-list invers-anime">
-                                            <img src="assets/images/services/list/01.webp" alt="Business consulting">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="inner-content">
-                                            <div class="head">
-                                                <div class="icon">
-                                                    <img src="assets/images/services/list/icon/01.svg" alt="Business">
-                                                </div>
-                                                <h6 class="title">Business Growth</h6>
+                            <!-- Resource Cards List Container -->
+                            <div id="resource-list" class="resource-list-container">
+                                <!-- Card 1 -->
+                                <div class="resource-card" data-category="Exportaciones e Importaciones" data-title="Guía de exportación para MIPYMES peruanas">
+                                    <div class="resource-card-left">
+                                        <div class="resource-file-icon icon-pdf">
+                                            <i class="feather-file-text"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <div class="resource-title-wrapper">
+                                                <h4 class="resource-title">Guía de exportación para MIPYMES peruanas</h4>
                                             </div>
-                                            <p class="disc">
-                                                Our business growth service helps companies expand faster with strategic planning, marketing solutions, and expert guidance to achieve sustainable success.
-                                            </p>
-                                            <a class="tmp-btn hover-icon-reverse" href="service-details.html">
-                                                <span class="icon-reverse-wrapper">
-                                            <span class="btn-text">See Details</span>
-                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                </span>
-                                            </a>
+                                            <div class="resource-meta">
+                                                <span class="meta-category">Exportaciones e Importaciones</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-info">PDF · 3.4 MB</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-downloads">734 descargas</span>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="resource-card-right">
+                                        <button type="button" class="tmp-btn btn-small round resource-btn-download" data-title="Guía de exportación para MIPYMES peruanas">
+                                            <i class="feather-download"></i> Descargar
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="single-service-list-area" data-sal="slide-up" data-sal-duration="700" data-sal-delay="100">
-                                <div class="row g-5 align-items-center">
 
-                                    <div class="col-lg-6 order-2 order-lg-1 order-md-2 order-sm-2">
-                                        <div class="inner-content">
-                                            <div class="head">
-                                                <div class="icon">
-                                                    <img src="assets/images/services/list/icon/02.svg" alt="Business">
-                                                </div>
-                                                <h6 class="title">Audit Consulting</h6>
+                                <!-- Card 2 -->
+                                <div class="resource-card" data-category="Comercio Internacional" data-title="Presentación: Incoterms 2024 completa">
+                                    <div class="resource-card-left">
+                                        <div class="resource-file-icon icon-ppt">
+                                            <i class="feather-airplay"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <div class="resource-title-wrapper">
+                                                <h4 class="resource-title">Presentación: Incoterms 2024 completa</h4>
+                                                <span class="resource-badge badge-ni-pro"><i class="feather-lock"></i> NI Pro</span>
                                             </div>
-                                            <p class="disc">
-                                                Our audit consulting service ensures transparency, compliance, and financial accuracy with expert guidance to optimize performance and reduce risks.
-                                            </p>
-                                            <a class="tmp-btn hover-icon-reverse" href="service-details.html">
-                                                <span class="icon-reverse-wrapper">
-                                            <span class="btn-text">See Details</span>
-                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                </span>
-                                            </a>
+                                            <div class="resource-meta">
+                                                <span class="meta-category">Comercio Internacional</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-info">PPT · 8.1 MB</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-downloads">897 descargas</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 order-1 order-lg-2 order-md-1 order-sm-1">
-                                        <a href="service-details.html" class="thumbnail-service-list invers-anime">
-                                            <img src="assets/images/services/list/02.webp" alt="Business consulting">
-                                        </a>
+                                    <div class="resource-card-right">
+                                        <button type="button" class="tmp-btn btn-small round resource-btn-locked" data-required="NI Pro" data-title="Presentación: Incoterms 2024 completa">
+                                            <i class="feather-lock"></i> Bloqueado
+                                        </button>
                                     </div>
-
                                 </div>
-                            </div>
-                            <div class="single-service-list-area" data-sal="slide-up" data-sal-duration="700" data-sal-delay="100">
-                                <div class="row g-5 align-items-center">
-                                    <div class="col-lg-6">
-                                        <a href="service-details.html" class="thumbnail-service-list invers-anime">
-                                            <img src="assets/images/services/list/03.webp" alt="Business consulting">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="inner-content">
-                                            <div class="head">
-                                                <div class="icon">
-                                                    <img src="assets/images/services/list/icon/03.svg" alt="Business">
-                                                </div>
-                                                <h6 class="title">Financial Idea</h6>
+
+                                <!-- Card 3 -->
+                                <div class="resource-card" data-category="Comercio Internacional" data-title="Plantilla de contrato de compraventa internacional">
+                                    <div class="resource-card-left">
+                                        <div class="resource-file-icon icon-docx">
+                                            <i class="feather-file-text"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <div class="resource-title-wrapper">
+                                                <h4 class="resource-title">Plantilla de contrato de compraventa internacional</h4>
+                                                <span class="resource-badge badge-ni-pro"><i class="feather-lock"></i> NI Pro</span>
                                             </div>
-                                            <p class="disc">
-                                                Our Financial Idea service helps companies expand faster with strategic planning, marketing solutions, and expert guidance to achieve sustainable success.
-                                            </p>
-                                            <a class="tmp-btn hover-icon-reverse" href="service-details.html">
-                                                <span class="icon-reverse-wrapper">
-                                            <span class="btn-text">See Details</span>
-                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                </span>
-                                            </a>
+                                            <div class="resource-meta">
+                                                <span class="meta-category">Comercio Internacional</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-info">DOCX · 1.5 MB</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-downloads">512 descargas</span>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="resource-card-right">
+                                        <button type="button" class="tmp-btn btn-small round resource-btn-locked" data-required="NI Pro" data-title="Plantilla de contrato de compraventa internacional">
+                                            <i class="feather-lock"></i> Bloqueado
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="single-service-list-area" data-sal="slide-up" data-sal-duration="700" data-sal-delay="100">
-                                <div class="row g-5 align-items-center">
 
-                                    <div class="col-lg-6 order-2 order-lg-1 order-md-2 order-sm-2">
-                                        <div class="inner-content">
-                                            <div class="head">
-                                                <div class="icon">
-                                                    <img src="assets/images/services/list/icon/04.svg" alt="Business">
-                                                </div>
-                                                <h6 class="title">Minimal Achievement</h6>
+                                <!-- Card 4 -->
+                                <div class="resource-card" data-category="Marketing Internacional" data-title="Resumen ejecutivo: Mercados asiáticos 2026">
+                                    <div class="resource-card-left">
+                                        <div class="resource-file-icon icon-pdf">
+                                            <i class="feather-file-text"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <div class="resource-title-wrapper">
+                                                <h4 class="resource-title">Resumen ejecutivo: Mercados asiáticos 2026</h4>
                                             </div>
-                                            <p class="disc">
-                                                Our minimal achievement strategy focuses on steady growth, smart resource use, and sustainable progress to reach goals with efficiency.
-                                            </p>
-                                            <a class="tmp-btn hover-icon-reverse" href="service-details.html">
-                                                <span class="icon-reverse-wrapper">
-                                            <span class="btn-text">See Details</span>
-                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                </span>
-                                            </a>
+                                            <div class="resource-meta">
+                                                <span class="meta-category">Marketing Internacional</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-info">PDF · 1.8 MB</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-downloads">186 descargas</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 order-1 order-lg-2 order-md-1 order-sm-1">
-                                        <a href="service-details.html" class="thumbnail-service-list invers-anime">
-                                            <img src="assets/images/services/list/04.webp" alt="Business consulting">
-                                        </a>
+                                    <div class="resource-card-right">
+                                        <button type="button" class="tmp-btn btn-small round resource-btn-download" data-title="Resumen ejecutivo: Mercados asiáticos 2026">
+                                            <i class="feather-download"></i> Descargar
+                                        </button>
                                     </div>
+                                </div>
 
+                                <!-- Card 5 -->
+                                <div class="resource-card" data-category="Empleabilidad" data-title="Guía de networking para estudiantes de RRNN">
+                                    <div class="resource-card-left">
+                                        <div class="resource-file-icon icon-pdf">
+                                            <i class="feather-file-text"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <div class="resource-title-wrapper">
+                                                <h4 class="resource-title">Guía de networking para estudiantes de RRNN</h4>
+                                            </div>
+                                            <div class="resource-meta">
+                                                <span class="meta-category">Empleabilidad</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-info">PDF · 3.2 MB</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-downloads">421 descargas</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="resource-card-right">
+                                        <button type="button" class="tmp-btn btn-small round resource-btn-download" data-title="Guía de networking para estudiantes de RRNN">
+                                            <i class="feather-download"></i> Descargar
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Card 6 -->
+                                <div class="resource-card" data-category="Empleabilidad" data-title="Plantilla de CV internacional (Formato Harvard)">
+                                    <div class="resource-card-left">
+                                        <div class="resource-file-icon icon-docx">
+                                            <i class="feather-file-text"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <div class="resource-title-wrapper">
+                                                <h4 class="resource-title">Plantilla de CV internacional (Formato Harvard)</h4>
+                                                <span class="resource-badge badge-ni-pro"><i class="feather-lock"></i> NI Pro</span>
+                                            </div>
+                                            <div class="resource-meta">
+                                                <span class="meta-category">Empleabilidad</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-info">DOCX · 0.3 MB</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-downloads">612 descargas</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="resource-card-right">
+                                        <button type="button" class="tmp-btn btn-small round resource-btn-locked" data-required="NI Pro" data-title="Plantilla de CV internacional (Formato Harvard)">
+                                            <i class="feather-lock"></i> Bloqueado
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Card 7 -->
+                                <div class="resource-card" data-category="Talleres con Ponentes" data-title="Grabación: Finanzas Internacionales — Dra. Mendoza">
+                                    <div class="resource-card-left">
+                                        <div class="resource-file-icon icon-video">
+                                            <i class="feather-video"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <div class="resource-title-wrapper">
+                                                <h4 class="resource-title">Grabación: Finanzas Internacionales — Dra. Mendoza</h4>
+                                                <span class="resource-badge badge-ni-pro"><i class="feather-lock"></i> NI Pro</span>
+                                            </div>
+                                            <div class="resource-meta">
+                                                <span class="meta-category">Talleres con Ponentes</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-info">VIDEO · 1.2 GB</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-downloads">98 descargas</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="resource-card-right">
+                                        <button type="button" class="tmp-btn btn-small round resource-btn-locked" data-required="NI Pro" data-title="Grabación: Finanzas Internacionales — Dra. Mendoza">
+                                            <i class="feather-lock"></i> Bloqueado
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Card 8 -->
+                                <div class="resource-card" data-category="Logística" data-title="Manual de logística aduanera Perú 2026">
+                                    <div class="resource-card-left">
+                                        <div class="resource-file-icon icon-pdf">
+                                            <i class="feather-file-text"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <div class="resource-title-wrapper">
+                                                <h4 class="resource-title">Manual de logística aduanera Perú 2026</h4>
+                                                <span class="resource-badge badge-ni-elite"><i class="feather-lock"></i> NI Elite</span>
+                                            </div>
+                                            <div class="resource-meta">
+                                                <span class="meta-category">Logística</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-info">PDF · 4.6 MB</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-downloads">67 descargas</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="resource-card-right">
+                                        <button type="button" class="tmp-btn btn-small round resource-btn-locked" data-required="NI Elite" data-title="Manual de logística aduanera Perú 2026">
+                                            <i class="feather-lock"></i> Bloqueado
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Card 9 -->
+                                <div class="resource-card" data-category="Finanzas Internacionales" data-title="Análisis de riesgo cambiario — Herramientas Excel">
+                                    <div class="resource-card-left">
+                                        <div class="resource-file-icon icon-excel">
+                                            <i class="feather-grid"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <div class="resource-title-wrapper">
+                                                <h4 class="resource-title">Análisis de riesgo cambiario — Herramientas Excel</h4>
+                                                <span class="resource-badge badge-ni-pro"><i class="feather-lock"></i> NI Pro</span>
+                                            </div>
+                                            <div class="resource-meta">
+                                                <span class="meta-category">Finanzas Internacionales</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-info">XLSX · 1.1 MB</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-downloads">143 descargas</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="resource-card-right">
+                                        <button type="button" class="tmp-btn btn-small round resource-btn-locked" data-required="NI Pro" data-title="Análisis de riesgo cambiario — Herramientas Excel">
+                                            <i class="feather-lock"></i> Bloqueado
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Card 10 -->
+                                <div class="resource-card" data-category="Certificados" data-title="Contenido estratégico exclusivo NI Elite Q2 2026">
+                                    <div class="resource-card-left">
+                                        <div class="resource-file-icon icon-pdf">
+                                            <i class="feather-file-text"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <div class="resource-title-wrapper">
+                                                <h4 class="resource-title">Contenido estratégico exclusivo NI Elite Q2 2026</h4>
+                                                <span class="resource-badge badge-ni-elite"><i class="feather-lock"></i> NI Elite</span>
+                                            </div>
+                                            <div class="resource-meta">
+                                                <span class="meta-category">Certificados</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-info">PDF · 5.0 MB</span>
+                                                <span class="meta-dot">·</span>
+                                                <span class="meta-downloads">34 descargas</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="resource-card-right">
+                                        <button type="button" class="tmp-btn btn-small round resource-btn-locked" data-required="NI Elite" data-title="Contenido estratégico exclusivo NI Elite Q2 2026">
+                                            <i class="feather-lock"></i> Bloqueado
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- No Results State (Hidden by default) -->
+                                <div id="resource-no-results" class="resource-no-results" style="display: none;">
+                                    <div class="no-results-icon">
+                                        <i class="feather-inbox"></i>
+                                    </div>
+                                    <h5 class="no-results-title">No se encontraron recursos</h5>
+                                    <p class="no-results-text">No hay materiales que coincidan con los criterios de búsqueda o categoría seleccionada.</p>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- our business service area end -->
+            <!-- End Resource Library Area -->
 
 
         </div>

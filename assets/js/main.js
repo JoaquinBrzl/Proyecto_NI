@@ -58,6 +58,7 @@
             invJs.gridMask();
             invJs.gymTabs();
             invJs.positionStickyJs();
+            invJs.academicResourceLibrary();
         },
         
 
@@ -1459,8 +1460,114 @@
 
         },
 
+        /*--------------------------------------------------
+            Academic Resource Library Interaction
+        ---------------------------------------------------*/
+        academicResourceLibrary: function () {
+            $(document).ready(function () {
+                const searchInput = document.getElementById('resource-search');
+                const categorySelect = document.getElementById('resource-category-filter');
+                const resourceCards = document.querySelectorAll('.resource-card');
+                const noResults = document.getElementById('resource-no-results');
 
+                if (!resourceCards || resourceCards.length === 0) return;
 
+                // Reactive Filter Function
+                function filterResources() {
+                    const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+                    const selectedCategory = (categorySelect ? categorySelect.value : '').trim().toLowerCase();
+                    let visibleCount = 0;
+
+                    resourceCards.forEach(card => {
+                        const cardCategory = (card.getAttribute('data-category') || '').trim().toLowerCase();
+                        const cardTitle = (card.getAttribute('data-title') || '').trim().toLowerCase();
+
+                        const matchesSearch = query === '' || cardTitle.includes(query) || cardCategory.includes(query);
+                        const matchesCategory = selectedCategory === '' || cardCategory === selectedCategory;
+
+                        if (matchesSearch && matchesCategory) {
+                            card.style.display = 'flex';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    if (noResults) {
+                        noResults.style.display = (visibleCount === 0) ? 'block' : 'none';
+                    }
+                }
+
+                // Event Listeners for Filters
+                if (searchInput) {
+                    searchInput.addEventListener('input', filterResources);
+                }
+
+                if (categorySelect) {
+                    categorySelect.addEventListener('change', filterResources);
+                }
+
+                // Floating Toast Notifications
+                function showToast(title, message, type) {
+                    let container = document.querySelector('.resource-toast-container');
+                    if (!container) {
+                        container = document.createElement('div');
+                        container.className = 'resource-toast-container';
+                        document.body.appendChild(container);
+                    }
+
+                    const toast = document.createElement('div');
+                    toast.className = `resource-toast toast-${type}`;
+                    
+                    const iconClass = type === 'download' ? 'feather-check' : 'feather-lock';
+                    toast.innerHTML = `
+                        <div class="toast-icon">
+                            <i class="${iconClass}"></i>
+                        </div>
+                        <div class="toast-body">
+                            <div class="toast-title">${title}</div>
+                            <p class="toast-desc">${message}</p>
+                        </div>
+                    `;
+
+                    container.appendChild(toast);
+
+                    if (window.feather && typeof window.feather.replace === 'function') {
+                        window.feather.replace();
+                    }
+
+                    setTimeout(() => {
+                        toast.classList.add('toast-hide');
+                        setTimeout(() => {
+                            toast.remove();
+                        }, 300);
+                    }, 3500);
+                }
+
+                // Download Buttons Event
+                document.querySelectorAll('.resource-btn-download').forEach(btn => {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const title = this.getAttribute('data-title') || 'Recurso';
+                        showToast('Descarga iniciada', `Iniciando la descarga de "${title}".`, 'download');
+                    });
+                });
+
+                // Locked Buttons Event
+                document.querySelectorAll('.resource-btn-locked').forEach(btn => {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const required = this.getAttribute('data-required') || 'NI Pro';
+                        showToast('Contenido Exclusivo', `Este recurso requiere membresía ${required} activa para su visualización y descarga.`, 'locked');
+                    });
+                });
+
+                // Feather icon renderer
+                if (window.feather && typeof window.feather.replace === 'function') {
+                    window.feather.replace();
+                }
+            });
+        }
 
     }
 
