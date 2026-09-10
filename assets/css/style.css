@@ -31873,4 +31873,56 @@ body.tmp-body-star::before {
   }
 }
 
+/* Contenedor principal */
+.custom-pagination {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Estilo individual de cada botón */
+.custom-pagination .custom-btn-page {
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 45px !important;
+    height: 45px !important;
+    background-color: #ffffff !important;
+    color: #333333 !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    border-radius: 8px !important;
+    border: none !important; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Efecto hover */
+.custom-pagination .custom-btn-page:hover:not(.disabled):not(.active) {
+    background-color: #f8f9fa !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Estilo del botón activo (morado) */
+.custom-pagination .custom-btn-page.active {
+    background-color: #5534eb !important; 
+    color: #ffffff !important;
+    pointer-events: none;
+    box-shadow: 0 4px 15px rgba(85, 52, 235, 0.3) !important;
+}
+
+/* Estilo de botones desactivados */
+.custom-pagination .custom-btn-page.disabled {
+    opacity: 0.5 !important;
+    pointer-events: none;
+    cursor: not-allowed;
+    box-shadow: none !important;
+}
+
+
 /*# sourceMappingURL=../maps/style.css.map */
