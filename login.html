@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-style-mode" content="1">
+    <title>Ingresar || Grupo NI</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.3.1">
+</head>
+<body class="active-light-mode" data-ni-page="login">
+    <main class="page-wrapper">
+        <header class="tmp-header header-default header-not-transparent header-sticky">
+            <div class="container position-relative">
+                <div class="row align-items-center row--0">
+                    <div class="col-xl-2 col-lg-2 col-md-6 col-4">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img class="logo-light" src="assets/images/logo/event-logo.svg" alt="Grupo NI">
+                                <img class="logo-dark" src="assets/images/logo/event-logo-dark.svg" alt="Grupo NI">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-6 col-8 position-static">
+                        <div class="header-right with-search">
+                            <nav class="mainmenu-nav d-none d-lg-block">
+                                <ul class="mainmenu">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="about-white.html">Nosotros</a></li>
+                                    <li><a href="contact-white.html">Contact</a></li>
+                                </ul>
+                            </nav>
+                            <div class="header-btn">
+                                <a class="tmp-btn" href="pricing-three-white.html">Membresia</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="inv-appoinment-area-start tmp-section-gap">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <div class="tmp-section-title-border text-center mb--30">
+                                <h2 class="title w-700">Ingresar</h2>
+                                <p class="description">Accede a tu cuenta Grupo NI</p>
+                            </div>
+                            <p id="ni-auth-msg" hidden class="text-center mb--20"></p>
+                            <form id="ni-login-form" class="contact-form-1 appoinment-form-wrapper tmponhover">
+                                <div class="form-group tmponhover">
+                                    <input type="email" name="email" placeholder="Email" required autocomplete="email">
+                                </div>
+                                <div class="form-group tmponhover">
+                                    <input type="password" name="password" placeholder="Contraseña" required autocomplete="current-password" minlength="6">
+                                </div>
+                                <div class="form-group tmponhover">
+                                    <button type="submit" class="btn-default btn-large tmp-btn" style="width:100%"><span>Ingresar</span></button>
+                                </div>
+                            </form>
+                            <div class="text-center mt--20" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+                                <a href="#" class="tmp-btn btn-border btn-small" data-ni-oauth="google">Google</a>
+                                <a href="#" class="tmp-btn btn-border btn-small" data-ni-oauth="github">GitHub</a>
+                            </div>
+                            <p class="text-center mt--30">
+                                <a href="register.html">Crear cuenta</a> ·
+                                <a href="reset-password.html">Olvidé mi contraseña</a> ·
+                                <a href="verify.html">Verificar email</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/vendor/jquery.min.js" defer></script>
+    <script src="assets/js/vendor/bootstrap.min.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+    <script type="module">
+      import { initLoginPage } from './assets/js/ni/auth-pages.js';
+      import { mountHeaderAuth } from './assets/js/ni/header.js';
+      mountHeaderAuth();
+      initLoginPage();
+    </script>
+</body>
+</html>

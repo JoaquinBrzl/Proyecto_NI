@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-style-mode" content="1">
+    <title>Verificar email || Grupo NI</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.3.1">
+</head>
+<body class="active-light-mode" data-ni-page="verify">
+    <main class="page-wrapper">
+        <header class="tmp-header header-default header-not-transparent header-sticky">
+            <div class="container position-relative">
+                <div class="row align-items-center row--0">
+                    <div class="col-xl-2 col-lg-2 col-md-6 col-4">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img class="logo-light" src="assets/images/logo/event-logo.svg" alt="Grupo NI">
+                                <img class="logo-dark" src="assets/images/logo/event-logo-dark.svg" alt="Grupo NI">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-6 col-8 position-static">
+                        <div class="header-right with-search">
+                            <div class="header-btn">
+                                <a class="tmp-btn" href="login.html">Ingresar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="inv-appoinment-area-start tmp-section-gap">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <div class="tmp-section-title-border text-center mb--30">
+                                <h2 class="title w-700">Verificar email</h2>
+                                <p class="description">Ingresa el código de 6 dígitos</p>
+                            </div>
+                            <p id="ni-auth-msg" hidden class="text-center mb--20"></p>
+                            <form id="ni-verify-form" class="contact-form-1 appoinment-form-wrapper tmponhover">
+                                <div class="form-group tmponhover">
+                                    <input type="email" name="email" placeholder="Email" required autocomplete="email">
+                                </div>
+                                <div class="form-group tmponhover">
+                                    <input type="text" name="otp" placeholder="Código de 6 dígitos" required maxlength="6" inputmode="numeric" autocomplete="one-time-code">
+                                </div>
+                                <div class="form-group tmponhover">
+                                    <button type="submit" class="btn-default btn-large tmp-btn" style="width:100%"><span>Verificar</span></button>
+                                </div>
+                            </form>
+                            <p class="text-center mt--20"><a href="#" id="ni-resend-verify">Reenviar código</a> · <a href="login.html">Volver</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/vendor/jquery.min.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+    <script type="module">
+      import { initVerifyPage } from './assets/js/ni/auth-pages.js';
+      initVerifyPage();
+    </script>
+</body>
+</html>

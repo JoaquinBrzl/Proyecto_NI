@@ -1,0 +1,29 @@
+{
+  "name": "landing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "ni:config": "node scripts/sync-ni-config.js",
+    "ni:bundle-sdk": "esbuild node_modules/@insforge/sdk/dist/index.mjs --bundle --format=esm --outfile=assets/js/ni/vendor/insforge-sdk.js --platform=browser --alias:crypto=./assets/js/ni/vendor/crypto-shim.js",
+    "ni:setup": "npm run ni:config && npm run ni:bundle-sdk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoaquinBrzl/Proyecto_NI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JoaquinBrzl/Proyecto_NI/issues"
+  },
+  "homepage": "https://github.com/JoaquinBrzl/Proyecto_NI#readme",
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  },
+  "dependencies": {
+    "@insforge/sdk": "^1.5.2"
+  }
+}

@@ -26,11 +26,11 @@
     <link href="assets/css/plugins/slick-theme.css" rel="stylesheet">
     <link href="assets/css/plugins/lightbox.css" rel="stylesheet">
     <link href="assets/css/plugins/odometer.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=4.3.1">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.3.3">
 </head>
 
 
-<body class="active-light-mode">
+<body class="active-light-mode" data-ni-page="anuncios">
     <main class="page-wrapper">
 
         <!-- Start Header Area  -->
@@ -147,32 +147,131 @@
 
         <!-- Start Service Area  -->
 
-            <!-- Start Service__Style--1 Area  -->
-                <div class="tmp-service-area tmp-section-gap">
+            <div data-ni-module="anuncios" hidden aria-hidden="true"></div>
+        <!-- Start Anuncios Area  -->
+                <div class="tmp-service-area tmp-section-gap ni-catalog-area">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="tmp-section-title-border text-center">
-                                    <div class="pres-line-separator-wrapper text-center mb--10 tmp-title-split">
-                                        <div class="line-separator line-left"></div>
-                                        <span class="subtitle">
-                                            <span class="number">04</span>
-                                            <span class="subtitle-text">Recursos</span>
-                                        </span>
-                                        <div class="line-separator line-right"></div>
+                                <div class="tmp-section-title-border text-start mb--35">
+                                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+                                        <div>
+                                            <h2 class="title w-700 tmp-title-split mb--10">Anuncios</h2>
+                                            <p class="description mb-0">Novedades, eventos, convocatorias y comunicados de Grupo NI.</p>
+                                        </div>
+                                        <button type="button" id="ni-anuncios-admin-create" class="tmp-btn" hidden>
+                                            <span>Crear anuncio</span>
+                                        </button>
                                     </div>
-                                    <h2 class="title w-700 tmp-title-split">Biblioteca de Recursos</h2>
+                                    <p id="ni-anuncios-status" class="mt--15 mb-0" hidden data-ni-status=""></p>
                                 </div>
                             </div>
                         </div>
-                
-                        <!-- Aquí luego va la barra de búsqueda + filtros -->
-                        <!-- <div id="resource-filter-bar">...</div> -->
+
+                        <div class="ni-filter-bar mb--30" id="ni-anuncios-filters">
+                            <div class="ni-filter-search">
+                                <i class="feather-search search-icon" aria-hidden="true"></i>
+                                <input id="ni-anuncios-search" type="search" name="q" placeholder="Buscar anuncios…" autocomplete="off" aria-label="Buscar anuncios">
+                            </div>
+                            <div class="ni-filter-chips" id="ni-anuncios-category" role="group" aria-label="Filtrar por categoría">
+                                <button type="button" data-ni-category="" class="is-checked">Todos</button>
+                                <button type="button" data-ni-category="eventos">Eventos</button>
+                                <button type="button" data-ni-category="talleres">Talleres</button>
+                                <button type="button" data-ni-category="oportunidades">Oportunidades</button>
+                                <button type="button" data-ni-category="comunicados">Comunicados</button>
+                                <button type="button" data-ni-category="recursos">Recursos</button>
+                            </div>
+                        </div>
+
+                        <div id="ni-anuncios-pub-wrap" class="mb--20" hidden>
+                            <label class="d-block mb--10">Publicación (admin)</label>
+                            <div class="filter-button-default" id="ni-anuncios-pub" role="group" aria-label="Filtrar por publicación">
+                                <button type="button" data-ni-pub="" class="is-checked">Todos</button>
+                                <button type="button" data-ni-pub="published">Publicados</button>
+                                <button type="button" data-ni-pub="draft">Borradores</button>
+                            </div>
+                        </div>
+
+                        <div id="ni-anuncios-list" class="row g-4 ni-catalog-grid"></div>
+
+                        <ul id="ni-anuncios-pagination" class="tmp-pagination mt--60" hidden aria-label="Paginación de anuncios"></ul>
                     </div>
                 </div>
-            <!-- End Service__Style--1 Area  -->
+            <!-- End Anuncios Area  -->
 
-        <!-- End Service Area  -->
+        <!-- Modal crear / editar anuncio -->
+        <div class="modal fade ni-modal" id="ni-anuncios-modal" tabindex="-1" aria-labelledby="ni-anuncios-modal-title" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <form class="modal-content" id="ni-anuncios-form" autocomplete="off">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ni-anuncios-modal-title">Crear anuncio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="ni-ann-id" name="id" value="">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <div class="form-group mb-0">
+                                    <label for="ni-ann-title">Título</label>
+                                    <input id="ni-ann-title" name="title" type="text" required maxlength="200">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-0">
+                                    <label for="ni-ann-category">Categoría</label>
+                                    <select id="ni-ann-category" name="category" required>
+                                        <option value="eventos">Eventos</option>
+                                        <option value="talleres">Talleres</option>
+                                        <option value="oportunidades">Oportunidades</option>
+                                        <option value="comunicados">Comunicados</option>
+                                        <option value="recursos">Recursos</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-0">
+                                    <label for="ni-ann-published-at">Fecha de publicación</label>
+                                    <input id="ni-ann-published-at" name="published_at" type="datetime-local">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group mb-0">
+                                    <label for="ni-ann-description">Descripción</label>
+                                    <textarea id="ni-ann-description" name="description" required maxlength="4000" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group mb-0">
+                                    <label for="ni-ann-image">Imagen (JPEG, PNG o WebP · máx. 2 MB)</label>
+                                    <input id="ni-ann-image" name="image" type="file" accept="image/jpeg,image/png,image/webp">
+                                    <img id="ni-ann-image-preview" alt="Vista previa" hidden>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group mb-0">
+                                    <label for="ni-ann-link">Enlace “Ver más”</label>
+                                    <input id="ni-ann-link" name="link_url" type="text" required maxlength="500" placeholder="https://… o página local">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-0">
+                                    <label for="ni-ann-status">Estado</label>
+                                    <select id="ni-ann-status" name="status" required>
+                                        <option value="draft">Borrador</option>
+                                        <option value="published">Publicado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <p id="ni-anuncios-form-status" class="mt--20 mb-0" hidden></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="tmp-btn btn-border" data-bs-dismiss="modal"><span>Cancelar</span></button>
+                        <button type="submit" class="tmp-btn" id="ni-anuncios-form-submit"><span>Guardar</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <!-- Start Footer Area  -->
         <footer class="tmp-footer footer-style-default variation-two position-relative">
@@ -371,6 +470,7 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js" defer></script>
+    <script type="module" src="assets/js/ni/boot.js"></script>
 
 </body>
 

@@ -1,4 +1,10 @@
 /vendor/
+node_modules/
+.env
+.env.local
+.env*.local
+assets/js/ni/config.js
+
 # InsForge & AI agent skills
 .insforge
 .agent

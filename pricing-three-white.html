@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="assets/css/style.css?v=4.3.1">
 </head>
 
-<body class="active-light-mode">
+<body class="active-light-mode" data-ni-page="pricing">
     <main class="page-wrapper">
         <!-- Start Header Area  -->
             <header class="tmp-header header-default header-not-transparent header-sticky">
@@ -142,6 +142,7 @@
 
         <!-- Start Pricing Area  -->
         <div class="main-content">
+            <div data-ni-module="pricing" hidden aria-hidden="true"></div>
             <!-- tmp Pricing area start -->
             <div class="tmp-pricing-area tmp-section-gap">
                 <div class="container">
@@ -170,8 +171,103 @@
                             </ul>
                             <div class="tab-content pricing-table-items mt--40" id="myTabContent">
                                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <!-- AQUI VA -->
-                                     
+                                    <p class="description b1 text-center mb--30" data-ni-pricing-status hidden aria-live="polite"></p>
+                                    <div class="row g-5 invers-arrange-container">
+                                        <!-- NI Free -->
+                                        <div class="col-lg-4 col-md-6 col-12 invers-arrange-item" data-ni-plan="ni_free">
+                                            <div class="tmp-pricing tmponhover">
+                                                <div class="pricing-table-inner">
+                                                    <div class="pricing-header">
+                                                        <h4 class="title tmp-badge-2" data-ni-plan-title>NI Free</h4>
+                                                        <div class="pricing">
+                                                            <div class="price-wrapper">
+                                                                <span class="currency">S/</span>
+                                                                <span class="price" data-ni-plan-price>0</span>
+                                                            </div>
+                                                            <span class="subtitle" data-ni-plan-tagline>Acceso base a la comunidad</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pricing-body">
+                                                        <ul class="list-style--1" data-ni-plan-features>
+                                                            <li><i class="feather-check"></i> Perfil en Grupo NI</li>
+                                                            <li><i class="feather-check"></i> Acceso a anuncios públicos</li>
+                                                            <li><i class="feather-check"></i> Recursos básicos</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="pricing-footer">
+                                                        <a class="tmp-btn icon-hover text-center btn-border" href="login.html" data-ni-cta="free">
+                                                            <span class="btn-text">Incluido</span>
+                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- NI Pro (payment placeholder) -->
+                                        <div class="col-lg-4 col-md-6 col-12" data-ni-plan="ni_pro">
+                                            <div class="tmp-pricing tmponhover active with-gradient-bg">
+                                                <div class="pricing-table-inner">
+                                                    <div class="pricing-header">
+                                                        <h4 class="title tmp-badge-2" data-ni-plan-title>NI Pro</h4>
+                                                        <div class="pricing">
+                                                            <div class="price-wrapper">
+                                                                <span class="currency">S/</span>
+                                                                <span class="price" data-ni-plan-price>30</span>
+                                                            </div>
+                                                            <span class="subtitle" data-ni-plan-tagline>Mensual · pago simulado</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pricing-body">
+                                                        <ul class="list-style--1" data-ni-plan-features>
+                                                            <li><i class="feather-check"></i> Todo lo de Free</li>
+                                                            <li><i class="feather-check"></i> Talleres y recursos Pro</li>
+                                                            <li><i class="feather-check"></i> Prioridad en networking</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="pricing-footer">
+                                                        <a class="tmp-btn icon-hover text-center" href="login.html" data-ni-cta="pro">
+                                                            <span class="btn-text">Activar Pro (demo)</span>
+                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="popular-tag">Popular</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- NI Elite (application only) -->
+                                        <div class="col-lg-4 col-md-6 col-12 invers-arrange-item" data-ni-plan="ni_elite">
+                                            <div class="tmp-pricing tmponhover">
+                                                <div class="pricing-table-inner">
+                                                    <div class="pricing-header">
+                                                        <h4 class="title tmp-badge-2" data-ni-plan-title>NI Elite</h4>
+                                                        <div class="pricing">
+                                                            <div class="price-wrapper">
+                                                                <span class="currency">S/</span>
+                                                                <span class="price" data-ni-plan-price>50</span>
+                                                            </div>
+                                                            <span class="subtitle" data-ni-plan-tagline>Solo por postulación</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pricing-body">
+                                                        <ul class="list-style--1" data-ni-plan-features>
+                                                            <li><i class="feather-check"></i> Todo lo de Pro</li>
+                                                            <li><i class="feather-check"></i> Acceso Elite</li>
+                                                            <li><i class="feather-check"></i> Mentoría y exclusivos</li>
+                                                        </ul>
+                                                        <p class="description b1 mt--20 mb--0" data-ni-elite-note hidden aria-live="polite"></p>
+                                                    </div>
+                                                    <div class="pricing-footer">
+                                                        <a class="tmp-btn icon-hover text-center btn-border" href="login.html" data-ni-cta="elite">
+                                                            <span class="btn-text">Postular a Elite</span>
+                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -613,6 +709,7 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js" defer></script>
+    <script type="module" src="assets/js/ni/boot.js"></script>
 
 </body>
 

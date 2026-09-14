@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-style-mode" content="1">
+    <title>Mi perfil || Grupo NI</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.3.1">
+    <style>
+      .ni-avatar-circle {
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: #fff;
+        background: linear-gradient(135deg, #1f3c88 0%, #0d1b3d 100%);
+        margin: 0 auto 1rem;
+      }
+      .ni-interest-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+      }
+      .ni-interest-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        border-radius: 4px;
+        padding: 0.45rem 0.75rem;
+        cursor: pointer;
+        margin: 0;
+        background: #fff;
+        font-size: 0.95rem;
+      }
+      .ni-interest-chip input {
+        margin: 0;
+      }
+      .ni-field-hint {
+        display: block;
+        font-size: 0.8rem;
+        opacity: 0.7;
+        margin-top: 0.35rem;
+      }
+      #ni-profile-form textarea {
+        width: 100%;
+        min-height: 110px;
+        border: 0;
+        background: transparent;
+        resize: vertical;
+        padding: 0;
+      }
+      #ni-profile-form input[readonly] {
+        opacity: 0.75;
+        cursor: not-allowed;
+      }
+    </style>
+</head>
+<body class="active-light-mode" data-ni-page="perfil">
+    <main class="page-wrapper">
+        <header class="tmp-header header-default header-not-transparent header-sticky">
+            <div class="container position-relative">
+                <div class="row align-items-center row--0">
+                    <div class="col-xl-2 col-lg-2 col-md-6 col-4">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img class="logo-light" src="assets/images/logo/event-logo.svg" alt="Grupo NI">
+                                <img class="logo-dark" src="assets/images/logo/event-logo-dark.svg" alt="Grupo NI">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-6 col-8 position-static">
+                        <div class="header-right with-search">
+                            <nav class="mainmenu-nav d-none d-lg-block">
+                                <ul class="mainmenu">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="anuncios.html">Anuncios</a></li>
+                                    <li><a href="talleres.html">Talleres</a></li>
+                                    <li><a href="recursos.html">Recursos</a></li>
+                                    <li><a href="about-white.html">Nosotros</a></li>
+                                    <li><a href="contact-white.html">Contact</a></li>
+                                </ul>
+                            </nav>
+                            <div class="header-btn">
+                                <a class="tmp-btn" href="pricing-three-white.html">Membresia</a>
+                            </div>
+                            <div class="mobile-menu-bar ml--5 d-block d-lg-none">
+                                <div class="hamberger">
+                                    <button class="hamberger-button" type="button">
+                                        <i class="feather-menu"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="popup-mobile-menu">
+            <div class="inner">
+                <div class="header-top">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img class="logo-light" src="assets/images/logo/logo.png" alt="Grupo NI">
+                            <img class="logo-dark" src="assets/images/logo/logo-dark.png" alt="Grupo NI">
+                        </a>
+                    </div>
+                    <div class="close-menu">
+                        <button class="close-button" type="button">
+                            <i class="feather-x"></i>
+                        </button>
+                    </div>
+                </div>
+                <ul class="mainmenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="anuncios.html">Anuncios</a></li>
+                    <li><a href="talleres.html">Talleres</a></li>
+                    <li><a href="recursos.html">Recursos</a></li>
+                    <li><a href="about-white.html">Nosotros</a></li>
+                    <li><a href="contact-white.html">Contact</a></li>
+                    <li><a href="pricing-three-white.html">Membresia</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="inv-appoinment-area-start tmp-section-gap" id="ni-profile-gate" hidden>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="tmp-section-title-border text-center mb--30">
+                                <div class="ni-avatar-circle" id="ni-profile-avatar" aria-hidden="true">?</div>
+                                <h2 class="title w-700" id="ni-profile-display-name">Mi perfil</h2>
+                                <p class="description" id="ni-identity-meta">Cargando…</p>
+                                <p class="description mb--0" id="ni-privacy-note" hidden>
+                                    Email y WhatsApp son privados: solo tú (y admins) pueden verlos.
+                                </p>
+                            </div>
+                            <p id="ni-auth-msg" hidden class="text-center mb--20"></p>
+                            <form id="ni-profile-form" class="contact-form-1 appoinment-form-wrapper tmponhover" data-ni-module="profile" autocomplete="on">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group tmponhover">
+                                            <input type="text" name="nombres" placeholder="Nombres" required maxlength="80">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group tmponhover">
+                                            <input type="text" name="apellidos" placeholder="Apellidos" required maxlength="80">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group tmponhover">
+                                            <input type="text" name="username" placeholder="Username" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_]{3,30}" title="3–30 caracteres: letras, números o _">
+                                            <span class="ni-field-hint">Único en Grupo NI</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group tmponhover">
+                                            <input type="email" id="ni-profile-email" name="email" placeholder="Email" readonly tabindex="-1">
+                                            <span class="ni-field-hint">Privado · no público</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group tmponhover">
+                                            <input type="text" name="universidad" placeholder="Universidad" maxlength="120">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group tmponhover">
+                                            <input type="text" name="carrera" placeholder="Carrera" maxlength="120">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group tmponhover">
+                                            <input type="text" name="ciclo_academico" placeholder="Ciclo académico" maxlength="40">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group tmponhover">
+                                            <input type="tel" name="whatsapp" placeholder="WhatsApp" maxlength="40" autocomplete="tel">
+                                            <span class="ni-field-hint">Privado · no público</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group tmponhover">
+                                            <textarea name="bio" placeholder="Bio (opcional)" maxlength="500"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb--20">
+                                        <h6 class="title mb--15">Intereses</h6>
+                                        <div class="ni-interest-list" id="ni-interests"></div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group tmponhover">
+                                            <button type="submit" class="btn-default btn-large tmp-btn" style="width:100%"><span>Guardar perfil</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <p class="text-center mt--20">
+                                <a href="#" id="ni-logout">Cerrar sesión</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="tmp-footer footer-style-default variation-two position-relative">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="tmp-footer-widget">
+                                <div class="logo">
+                                    <a href="index.html">
+                                        <img class="logo-light" src="assets/images/logo/logo.png" alt="Grupo NI">
+                                        <img class="logo-dark" src="assets/images/logo/logo-dark.png" alt="Grupo NI">
+                                    </a>
+                                </div>
+                                <p class="subtitle mt--30">Grupo NI — comunidad académica y profesional.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
+                            <div class="tmp-footer-widget">
+                                <h4 class="title">Explorar</h4>
+                                <div class="inner">
+                                    <ul class="footer-link link-hover">
+                                        <li><a href="anuncios.html">Anuncios</a></li>
+                                        <li><a href="talleres.html">Talleres</a></li>
+                                        <li><a href="recursos.html">Recursos</a></li>
+                                        <li><a href="pricing-three-white.html">Membresía</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
+                            <div class="tmp-footer-widget">
+                                <h4 class="title">Cuenta</h4>
+                                <div class="inner">
+                                    <ul class="footer-link link-hover">
+                                        <li><a href="perfil.html">Mi perfil</a></li>
+                                        <li><a href="login.html">Ingresar</a></li>
+                                        <li><a href="register.html">Registrarse</a></li>
+                                        <li><a href="contact-white.html">Contacto</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="tmp-footer-widget">
+                                <h4 class="title">Grupo NI</h4>
+                                <div class="inner">
+                                    <h6 class="subtitle">Edita tu perfil académico e intereses. Match Académico llega después.</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="assets/js/vendor/jquery.min.js" defer></script>
+    <script src="assets/js/vendor/bootstrap.min.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+    <script type="module">
+      import { initProfilePage } from './assets/js/ni/auth-pages.js';
+      import { mountHeaderAuth } from './assets/js/ni/header.js';
+      mountHeaderAuth();
+      initProfilePage();
+    </script>
+</body>
+</html>

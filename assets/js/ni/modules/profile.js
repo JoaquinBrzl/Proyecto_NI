@@ -1,0 +1,241 @@
+import { getClient } from '../client.js';
+import { setProfile as setNativeProfile } from '../session.js';
+
+/**
+ * Own-profile load/save: public profiles + private WhatsApp + interests.
+ * Email stays on Auth and is never written to app tables.
+ */
+
+function firstRow(data) {
+  if (!data) return null;
+  return Array.isArray(data) ? data[0] || null : data;
+}
+
+function normalizeUsername(raw) {
+  return String(raw || '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '_')
+    .replace(/[^a-z0-9_]/g, '');
+}
+
+export function profileInitial(profile, user) {
+  const fromNames = `${profile?.nombres || ''} ${profile?.apellidos || ''}`.trim();
+  const source =
+    fromNames ||
+    profile?.username ||
+    user?.profile?.name ||
+    user?.email ||
+    '?';
+  const letter = source.replace(/[^a-zA-ZÀ-ÿ0-9]/g, '').charAt(0);
+  return (letter || '?').toUpperCase();
+}
+
+export function displayName(profile, user) {
+  const composed = `${profile?.nombres || ''} ${profile?.apellidos || ''}`.trim();
+  return composed || profile?.username || user?.profile?.name || user?.email || 'Usuario';
+}
+
+export async function fetchInterestsCatalog() {
+  const insforge = getClient();
+  const { data, error } = await insforge.database
+    .from('interests')
+    .select('id,slug,label,sort_order')
+    .order('sort_order', { ascending: true })
+    .limit(100);
+  if (error) return { interests: [], error };
+  return { interests: Array.isArray(data) ? data : [], error: null };
+}
+
+export async function fetchUserInterestIds(userId) {
+  if (!userId) return { ids: [], error: null };
+  const insforge = getClient();
+  const { data, error } = await insforge.database
+    .from('user_interests')
+    .select('interest_id')
+    .eq('user_id', userId)
+    .limit(100);
+  if (error) return { ids: [], error };
+  const rows = Array.isArray(data) ? data : [];
+  return { ids: rows.map((r) => r.interest_id).filter(Boolean), error: null };
+}
+
+export async function fetchOwnProfile(userId) {
+  if (!userId) {
+    return { profile: null, privateContact: null, interestIds: [], error: new Error('missing user') };
+  }
+  const insforge = getClient();
+  const [profileRes, privateRes, interestsRes] = await Promise.all([
+    insforge.database
+      .from('profiles')
+      .select('user_id,username,nombres,apellidos,universidad,carrera,ciclo_academico,bio,updated_at')
+      .eq('user_id', userId)
+      .limit(1),
+    insforge.database
+      .from('user_private_contacts')
+      .select('user_id,whatsapp')
+      .eq('user_id', userId)
+      .limit(1),
+    fetchUserInterestIds(userId),
+  ]);
+
+  const error = profileRes.error || privateRes.error || interestsRes.error || null;
+  return {
+    profile: firstRow(profileRes.data),
+    privateContact: firstRow(privateRes.data),
+    interestIds: interestsRes.ids || [],
+    error,
+  };
+}
+
+/**
+ * Public-safe projection helper for future public profile pages.
+ * Never includes email or WhatsApp.
+ */
+export function toPublicProfile(profile, interestLabels = []) {
+  if (!profile) return null;
+  return {
+    user_id: profile.user_id,
+    username: profile.username,
+    nombres: profile.nombres,
+    apellidos: profile.apellidos,
+    universidad: profile.universidad,
+    carrera: profile.carrera,
+    ciclo_academico: profile.ciclo_academico,
+    bio: profile.bio,
+    interests: interestLabels,
+  };
+}
+
+async function upsertProfile(userId, fields) {
+  const insforge = getClient();
+  const username = normalizeUsername(fields.username);
+  if (!username || username.length < 3) {
+    return { error: { message: 'El username debe tener entre 3 y 30 caracteres (letras, números o _).' } };
+  }
+
+  const row = {
+    user_id: userId,
+    username,
+    nombres: String(fields.nombres || '').trim(),
+    apellidos: String(fields.apellidos || '').trim(),
+    universidad: String(fields.universidad || '').trim(),
+    carrera: String(fields.carrera || '').trim(),
+    ciclo_academico: String(fields.ciclo_academico || '').trim(),
+    bio: String(fields.bio || '').trim(),
+  };
+
+  const existing = await insforge.database
+    .from('profiles')
+    .select('user_id')
+    .eq('user_id', userId)
+    .limit(1);
+
+  if (existing.error) return { error: existing.error };
+
+  if (firstRow(existing.data)) {
+    const { user_id: _uid, ...patch } = row;
+    const { data, error } = await insforge.database
+      .from('profiles')
+      .update(patch)
+      .eq('user_id', userId);
+    return { data, error };
+  }
+
+  const { data, error } = await insforge.database.from('profiles').insert([row]);
+  return { data, error };
+}
+
+async function upsertPrivateContact(userId, whatsapp) {
+  const insforge = getClient();
+  const row = {
+    user_id: userId,
+    whatsapp: String(whatsapp || '').trim(),
+  };
+
+  const existing = await insforge.database
+    .from('user_private_contacts')
+    .select('user_id')
+    .eq('user_id', userId)
+    .limit(1);
+
+  if (existing.error) return { error: existing.error };
+
+  if (firstRow(existing.data)) {
+    return insforge.database
+      .from('user_private_contacts')
+      .update({ whatsapp: row.whatsapp })
+      .eq('user_id', userId);
+  }
+
+  return insforge.database.from('user_private_contacts').insert([row]);
+}
+
+async function syncUserInterests(userId, interestIds) {
+  const insforge = getClient();
+  const wanted = Array.from(new Set((interestIds || []).filter(Boolean)));
+
+  const { ids: current, error: readError } = await fetchUserInterestIds(userId);
+  if (readError) return { error: readError };
+
+  const currentSet = new Set(current);
+  const wantedSet = new Set(wanted);
+  const toAdd = wanted.filter((id) => !currentSet.has(id));
+  const toRemove = current.filter((id) => !wantedSet.has(id));
+
+  if (toRemove.length) {
+    for (const interestId of toRemove) {
+      const { error } = await insforge.database
+        .from('user_interests')
+        .delete()
+        .eq('user_id', userId)
+        .eq('interest_id', interestId);
+      if (error) return { error };
+    }
+  }
+
+  if (toAdd.length) {
+    const { error } = await insforge.database.from('user_interests').insert(
+      toAdd.map((interest_id) => ({ user_id: userId, interest_id }))
+    );
+    if (error) return { error };
+  }
+
+  return { error: null };
+}
+
+/**
+ * Persist own profile + private WhatsApp + interests.
+ * Also syncs Auth native `name` (public display) — never WhatsApp/email.
+ */
+export async function saveOwnProfile(userId, payload) {
+  if (!userId) return { error: { message: 'Sesión inválida' } };
+
+  const profileResult = await upsertProfile(userId, payload);
+  if (profileResult.error) {
+    const msg = profileResult.error.message || '';
+    if (/unique|duplicate|profiles_username/i.test(msg)) {
+      return { error: { message: 'Ese username ya está en uso. Elige otro.' } };
+    }
+    return { error: profileResult.error };
+  }
+
+  const privateResult = await upsertPrivateContact(userId, payload.whatsapp);
+  if (privateResult.error) return { error: privateResult.error };
+
+  const interestsResult = await syncUserInterests(userId, payload.interestIds);
+  if (interestsResult.error) return { error: interestsResult.error };
+
+  const name = `${String(payload.nombres || '').trim()} ${String(payload.apellidos || '').trim()}`.trim()
+    || normalizeUsername(payload.username)
+    || undefined;
+  if (name) {
+    const { error: nativeError } = await setNativeProfile({ name });
+    if (nativeError) {
+      // Non-fatal: app tables already saved
+      console.warn('[ni] native name sync failed', nativeError);
+    }
+  }
+
+  return { error: null };
+}
