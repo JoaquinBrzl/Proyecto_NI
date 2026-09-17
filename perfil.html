@@ -10,62 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=4.3.1">
-    <style>
-      .ni-avatar-circle {
-        width: 88px;
-        height: 88px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: 0.02em;
-        color: #fff;
-        background: linear-gradient(135deg, #1f3c88 0%, #0d1b3d 100%);
-        margin: 0 auto 1rem;
-      }
-      .ni-interest-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-        margin-bottom: 1rem;
-      }
-      .ni-interest-chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        border: 1px solid rgba(15, 23, 42, 0.12);
-        border-radius: 4px;
-        padding: 0.45rem 0.75rem;
-        cursor: pointer;
-        margin: 0;
-        background: #fff;
-        font-size: 0.95rem;
-      }
-      .ni-interest-chip input {
-        margin: 0;
-      }
-      .ni-field-hint {
-        display: block;
-        font-size: 0.8rem;
-        opacity: 0.7;
-        margin-top: 0.35rem;
-      }
-      #ni-profile-form textarea {
-        width: 100%;
-        min-height: 110px;
-        border: 0;
-        background: transparent;
-        resize: vertical;
-        padding: 0;
-      }
-      #ni-profile-form input[readonly] {
-        opacity: 0.75;
-        cursor: not-allowed;
-      }
-    </style>
+    <link href="assets/css/plugins/feature.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.5.3">
 </head>
 <body class="active-light-mode" data-ni-page="perfil">
     <main class="page-wrapper">
@@ -88,6 +34,7 @@
                                     <li><a href="anuncios.html">Anuncios</a></li>
                                     <li><a href="talleres.html">Talleres</a></li>
                                     <li><a href="recursos.html">Recursos</a></li>
+                                    <li><a href="match.html">Match</a></li>
                                     <li><a href="about-white.html">Nosotros</a></li>
                                     <li><a href="contact-white.html">Contact</a></li>
                                 </ul>
@@ -128,6 +75,7 @@
                     <li><a href="anuncios.html">Anuncios</a></li>
                     <li><a href="talleres.html">Talleres</a></li>
                     <li><a href="recursos.html">Recursos</a></li>
+                    <li><a href="match.html">Match</a></li>
                     <li><a href="about-white.html">Nosotros</a></li>
                     <li><a href="contact-white.html">Contact</a></li>
                     <li><a href="pricing-three-white.html">Membresia</a></li>
@@ -136,84 +84,196 @@
         </div>
 
         <div class="main-content">
-            <div class="inv-appoinment-area-start tmp-section-gap" id="ni-profile-gate" hidden>
+            <div class="ni-profile-area" id="ni-profile-gate" hidden>
                 <div class="container">
-                    <div class="row justify-content-center">
+                    <div class="ni-profile-header">
+                        <h1 class="ni-profile-title">Mi Perfil</h1>
+                        <p class="ni-profile-subtitle">Gestiona tu información y revisa tu estado en la plataforma</p>
+                        <p id="ni-auth-msg" hidden class="ni-profile-msg"></p>
+                    </div>
+
+                    <div class="row g-4 ni-profile-layout">
+                        <!-- Left / top: overview card -->
+                        <div class="col-lg-4">
+                            <aside class="ni-profile-card ni-profile-card--overview">
+                                <div class="ni-profile-avatar" id="ni-profile-avatar" aria-hidden="true">?</div>
+                                <h2 class="ni-profile-name" id="ni-profile-display-name">—</h2>
+                                <p class="ni-profile-email" id="ni-profile-email-view">—</p>
+                                <span class="ni-profile-plan-badge" id="ni-profile-plan-badge">
+                                    <i class="feather-star" aria-hidden="true"></i>
+                                    <span id="ni-profile-plan-label">NI Free</span>
+                                </span>
+                                <div class="ni-profile-stats" aria-label="Estadísticas">
+                                    <div class="ni-profile-stat">
+                                        <strong id="ni-stat-completed">0</strong>
+                                        <span>Completados</span>
+                                    </div>
+                                    <div class="ni-profile-stat">
+                                        <strong id="ni-stat-enrolled">0</strong>
+                                        <span>Inscritos</span>
+                                    </div>
+                                    <div class="ni-profile-stat">
+                                        <strong id="ni-stat-resources">0</strong>
+                                        <span>Recursos</span>
+                                    </div>
+                                </div>
+                                <div class="ni-profile-overview-actions">
+                                    <button type="button" class="ni-profile-btn ni-profile-btn--primary" id="ni-profile-edit-toggle">
+                                        Editar perfil
+                                    </button>
+                                    <a href="#" id="ni-logout" class="ni-profile-logout">Cerrar sesión</a>
+                                </div>
+                            </aside>
+                        </div>
+
+                        <!-- Right: academic + membership -->
                         <div class="col-lg-8">
-                            <div class="tmp-section-title-border text-center mb--30">
-                                <div class="ni-avatar-circle" id="ni-profile-avatar" aria-hidden="true">?</div>
-                                <h2 class="title w-700" id="ni-profile-display-name">Mi perfil</h2>
-                                <p class="description" id="ni-identity-meta">Cargando…</p>
-                                <p class="description mb--0" id="ni-privacy-note" hidden>
-                                    Email y WhatsApp son privados: solo tú (y admins) pueden verlos.
-                                </p>
-                            </div>
-                            <p id="ni-auth-msg" hidden class="text-center mb--20"></p>
-                            <form id="ni-profile-form" class="contact-form-1 appoinment-form-wrapper tmponhover" data-ni-module="profile" autocomplete="on">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group tmponhover">
-                                            <input type="text" name="nombres" placeholder="Nombres" required maxlength="80">
+                            <div class="ni-profile-card mb-4">
+                                <h3 class="ni-profile-card-title">Información académica</h3>
+                                <div class="ni-profile-info-grid">
+                                    <div class="ni-profile-info-item">
+                                        <span class="ni-profile-info-icon" aria-hidden="true"><i class="feather-home"></i></span>
+                                        <div>
+                                            <span class="ni-profile-info-label">Universidad</span>
+                                            <p class="ni-profile-info-value" id="ni-view-universidad">—</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group tmponhover">
-                                            <input type="text" name="apellidos" placeholder="Apellidos" required maxlength="80">
+                                    <div class="ni-profile-info-item">
+                                        <span class="ni-profile-info-icon" aria-hidden="true"><i class="feather-briefcase"></i></span>
+                                        <div>
+                                            <span class="ni-profile-info-label">Carrera</span>
+                                            <p class="ni-profile-info-value" id="ni-view-carrera">—</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group tmponhover">
-                                            <input type="text" name="username" placeholder="Username" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_]{3,30}" title="3–30 caracteres: letras, números o _">
-                                            <span class="ni-field-hint">Único en Grupo NI</span>
+                                    <div class="ni-profile-info-item">
+                                        <span class="ni-profile-info-icon" aria-hidden="true"><i class="feather-book-open"></i></span>
+                                        <div>
+                                            <span class="ni-profile-info-label">Ciclo académico</span>
+                                            <p class="ni-profile-info-value" id="ni-view-ciclo">—</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group tmponhover">
-                                            <input type="email" id="ni-profile-email" name="email" placeholder="Email" readonly tabindex="-1">
-                                            <span class="ni-field-hint">Privado · no público</span>
+                                    <div class="ni-profile-info-item">
+                                        <span class="ni-profile-info-icon" aria-hidden="true"><i class="feather-phone"></i></span>
+                                        <div>
+                                            <span class="ni-profile-info-label">WhatsApp</span>
+                                            <p class="ni-profile-info-value" id="ni-view-whatsapp">—</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group tmponhover">
-                                            <input type="text" name="universidad" placeholder="Universidad" maxlength="120">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group tmponhover">
-                                            <input type="text" name="carrera" placeholder="Carrera" maxlength="120">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group tmponhover">
-                                            <input type="text" name="ciclo_academico" placeholder="Ciclo académico" maxlength="40">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group tmponhover">
-                                            <input type="tel" name="whatsapp" placeholder="WhatsApp" maxlength="40" autocomplete="tel">
-                                            <span class="ni-field-hint">Privado · no público</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group tmponhover">
-                                            <textarea name="bio" placeholder="Bio (opcional)" maxlength="500"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 mb--20">
-                                        <h6 class="title mb--15">Intereses</h6>
-                                        <div class="ni-interest-list" id="ni-interests"></div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group tmponhover">
-                                            <button type="submit" class="btn-default btn-large tmp-btn" style="width:100%"><span>Guardar perfil</span></button>
+                                    <div class="ni-profile-info-item">
+                                        <span class="ni-profile-info-icon" aria-hidden="true"><i class="feather-linkedin"></i></span>
+                                        <div>
+                                            <span class="ni-profile-info-label">LinkedIn</span>
+                                            <p class="ni-profile-info-value" id="ni-view-linkedin">—</p>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                            <p class="text-center mt--20">
-                                <a href="#" id="ni-logout">Cerrar sesión</a>
-                            </p>
+                                <div class="ni-profile-interests-block">
+                                    <span class="ni-profile-info-label">Intereses</span>
+                                    <div class="ni-profile-interest-tags" id="ni-view-interests"></div>
+                                </div>
+                                <p class="ni-profile-privacy-note" id="ni-privacy-note" hidden>
+                                    Email y WhatsApp son privados. LinkedIn es público y se usa en Match Académico.
+                                </p>
+                            </div>
+
+                            <div class="ni-profile-card">
+                                <h3 class="ni-profile-card-title">Membresía y acceso</h3>
+                                <div class="ni-profile-membership-row">
+                                    <span class="ni-profile-plan-badge" id="ni-membership-plan-badge">
+                                        <i class="feather-star" aria-hidden="true"></i>
+                                        <span id="ni-membership-plan-label">NI Free</span>
+                                    </span>
+                                    <span class="ni-profile-status-badge" id="ni-membership-status">Activa</span>
+                                </div>
+                                <div class="ni-profile-membership-actions">
+                                    <a class="ni-profile-btn ni-profile-btn--primary" href="pricing-three-white.html">Actualizar plan</a>
+                                    <a class="ni-profile-btn ni-profile-btn--ghost" href="pricing-three-white.html" id="ni-elite-cta">Postular a NI Elite</a>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+
+                    <!-- Edit panel (collapsed by default) -->
+                    <div class="ni-profile-card ni-profile-edit-panel mt-4" id="ni-profile-edit-panel" hidden>
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb--20">
+                            <h3 class="ni-profile-card-title mb-0">Editar perfil</h3>
+                            <button type="button" class="ni-profile-btn ni-profile-btn--ghost" id="ni-profile-edit-cancel">Cancelar</button>
+                        </div>
+                        <form id="ni-profile-form" data-ni-module="profile" autocomplete="on">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        <label for="ni-edit-nombres">Nombres</label>
+                                        <input id="ni-edit-nombres" type="text" name="nombres" required maxlength="80">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        <label for="ni-edit-apellidos">Apellidos</label>
+                                        <input id="ni-edit-apellidos" type="text" name="apellidos" required maxlength="80">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        <label for="ni-edit-username">Username</label>
+                                        <input id="ni-edit-username" type="text" name="username" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_]{3,30}" title="3–30 caracteres: letras, números o _">
+                                        <span class="ni-field-hint">Único en Grupo NI</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        <label for="ni-profile-email">Email</label>
+                                        <input type="email" id="ni-profile-email" name="email" readonly tabindex="-1">
+                                        <span class="ni-field-hint">Privado · no público</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        <label for="ni-edit-universidad">Universidad</label>
+                                        <input id="ni-edit-universidad" type="text" name="universidad" maxlength="120">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        <label for="ni-edit-carrera">Carrera</label>
+                                        <input id="ni-edit-carrera" type="text" name="carrera" maxlength="120">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        <label for="ni-edit-ciclo">Ciclo académico</label>
+                                        <input id="ni-edit-ciclo" type="text" name="ciclo_academico" maxlength="40">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        <label for="ni-edit-whatsapp">WhatsApp</label>
+                                        <input id="ni-edit-whatsapp" type="tel" name="whatsapp" maxlength="40" autocomplete="tel">
+                                        <span class="ni-field-hint">Privado · no público</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        <label for="ni-edit-linkedin">LinkedIn</label>
+                                        <input id="ni-edit-linkedin" type="url" name="linkedin_url" maxlength="200" placeholder="https://www.linkedin.com/in/…">
+                                        <span class="ni-field-hint">Público · usado en Match Académico</span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group mb-0">
+                                        <label for="ni-edit-bio">Bio (opcional)</label>
+                                        <textarea id="ni-edit-bio" name="bio" maxlength="500" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="ni-profile-info-label d-block mb--10">Intereses</label>
+                                    <div class="ni-interest-list" id="ni-interests"></div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="ni-profile-btn ni-profile-btn--primary"><span>Guardar perfil</span></button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -242,6 +302,7 @@
                                         <li><a href="anuncios.html">Anuncios</a></li>
                                         <li><a href="talleres.html">Talleres</a></li>
                                         <li><a href="recursos.html">Recursos</a></li>
+                                        <li><a href="match.html">Match</a></li>
                                         <li><a href="pricing-three-white.html">Membresía</a></li>
                                     </ul>
                                 </div>
@@ -264,7 +325,7 @@
                             <div class="tmp-footer-widget">
                                 <h4 class="title">Grupo NI</h4>
                                 <div class="inner">
-                                    <h6 class="subtitle">Edita tu perfil académico e intereses. Match Académico llega después.</h6>
+                                    <h6 class="subtitle">Completa tu perfil y LinkedIn para aparecer mejor en Match Académico.</h6>
                                 </div>
                             </div>
                         </div>
@@ -276,6 +337,7 @@
 
     <script src="assets/js/vendor/jquery.min.js" defer></script>
     <script src="assets/js/vendor/bootstrap.min.js" defer></script>
+    <script src="assets/js/vendor/feather.min.js" defer></script>
     <script src="assets/js/main.js" defer></script>
     <script type="module">
       import { initProfilePage } from './assets/js/ni/auth-pages.js';

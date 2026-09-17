@@ -742,17 +742,23 @@
     },
 
     headerSticky: function () {
-      // 🔹 Global Sticky Header for all headers
-      $(window).scroll(function () {
-        if ($(this).scrollTop() > 250) {
-          $(".header-sticky").addClass("sticky");
-        } else {
-          $(".header-sticky").removeClass("sticky");
-        }
-      });
+      // Visual sticky only — position uses CSS sticky (no fixed jump/animation).
+      var $headers = $(".header-sticky");
+      if (!$headers.length) return;
 
-      // 🔹 Extra Padding Only for header-top-padding header
-      $(window).scroll(function () {
+      function syncSticky() {
+        if ($(window).scrollTop() > 250) {
+          $headers.addClass("sticky");
+        } else {
+          $headers.removeClass("sticky");
+        }
+      }
+
+      syncSticky();
+      $(window).on("scroll", syncSticky);
+
+      // Extra padding only for header-top-padding / smooth sticky variants
+      $(window).on("scroll", function () {
         var $header = $(".header-sticky.header-sticky-smooth");
 
         if ($header.length) {

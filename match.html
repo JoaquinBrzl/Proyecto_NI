@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-style-mode" content="1">
+    <title>Match Académico || Grupo NI</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/plugins/feature.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.5.3">
+</head>
+<body class="active-light-mode ni-match-page" data-ni-page="match">
+    <main class="page-wrapper">
+            <header class="tmp-header header-default header-not-transparent header-sticky">
+                <div class="container position-relative">
+                    <div class="row align-items-center row--0">
+                        <div class="col-xl-2 col-lg-2 col-md-6 col-4">
+                            <div class="logo">
+                                <a href="index.html">
+                                    <img class="logo-light" src="assets/images/logo/event-logo.svg" alt="Corporate Logo">
+                                    <img class="logo-dark" src="assets/images/logo/event-logo-dark.svg" alt="Corporate Logo">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-10 col-md-6 col-8 position-static">
+                            <div class="header-right with-search">
+
+                                <nav class="mainmenu-nav d-none d-lg-block">
+                                    <ul class="mainmenu">
+                                        
+                                       <li><a href="index.html">Home</a></li>
+                                        
+                                        <li class="has-droupdown has-menu-child-item"><a href="#">Blog</a>
+                                            <ul class="submenu">
+                                                <li><a href="anuncios.html">Anuncios</a></li>
+                                                <li><a href="talleres.html">Talleres</a></li>
+                                                <li><a href="recursos.html">Recursos</a></li>
+                                                <li><a href="match.html">Match</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li><a href="about-white.html">Nosotros</a></li>
+
+                                        <li><a href="contact-white.html">Contact</a></li>
+
+                                    </ul>
+                                </nav>
+
+                                <!-- Start Header Btn  -->
+                                <div class="header-btn">
+                                    <a class="tmp-btn @@btnClass" href="pricing-three-white.html">Membresia</a>
+                                </div>
+                                <!-- End Header Btn  -->
+
+                                <!-- Start Mobile-Menu-Bar -->
+                                <div class="mobile-menu-bar ml--5 d-block d-lg-none">
+                                    <div class="hamberger">
+                                        <button class="hamberger-button">
+                                            <i class="feather-menu"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- Start Mobile-Menu-Bar -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+        <div class="popup-mobile-menu">
+            <div class="inner">
+                <div class="header-top">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img class="logo-light" src="assets/images/logo/logo.png" alt="Grupo NI">
+                            <img class="logo-dark" src="assets/images/logo/logo-dark.png" alt="Grupo NI">
+                        </a>
+                    </div>
+                    <div class="close-menu">
+                        <button class="close-button" type="button">
+                            <i class="feather-x"></i>
+                        </button>
+                    </div>
+                </div>
+                <ul class="mainmenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="anuncios.html">Anuncios</a></li>
+                    <li><a href="talleres.html">Talleres</a></li>
+                    <li><a href="recursos.html">Recursos</a></li>
+                    <li><a href="match.html">Match</a></li>
+                    <li><a href="about-white.html">Nosotros</a></li>
+                    <li><a href="contact-white.html">Contact</a></li>
+                    <li><a href="pricing-three-white.html">Membresia</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div data-ni-module="match" hidden aria-hidden="true"></div>
+        <div class="ni-match-area" id="ni-match-root" hidden>
+            <div class="container">
+                <div class="ni-match-header">
+                    <div class="ni-match-header-copy">
+                        <h1 class="ni-match-title">Match Académico</h1>
+                        <p class="ni-match-subtitle">Conecta con estudiantes de Negocios Internacionales que comparten tus intereses.</p>
+                    </div>
+                    <div class="ni-match-self-chip" aria-label="Tu resumen">
+                        <span class="ni-match-self-initial" id="ni-match-self-initial">?</span>
+                        <div>
+                            <strong id="ni-match-self-name">—</strong>
+                            <span id="ni-match-self-interest-count">0 intereses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p id="ni-match-status" class="ni-match-status" hidden></p>
+
+                <div class="ni-match-summary">
+                    <div class="ni-match-summary-interests">
+                        <span class="ni-match-summary-label">Tu perfil de intereses</span>
+                        <div class="ni-match-tags" id="ni-match-self-tags"></div>
+                    </div>
+                    <div class="ni-match-summary-count">
+                        <span class="ni-match-summary-label">Compatibilidades encontradas</span>
+                        <p class="ni-match-summary-number"><strong id="ni-match-count">0</strong> estudiantes</p>
+                    </div>
+                </div>
+
+                <div class="ni-match-filters">
+                    <div class="ni-filter-search ni-match-search">
+                        <i class="feather-search search-icon" aria-hidden="true"></i>
+                        <input id="ni-match-search" type="search" placeholder="Buscar por nombre o universidad..." autocomplete="off" aria-label="Buscar">
+                    </div>
+                    <div class="ni-match-filter-selects">
+                        <label class="ni-match-select">
+                            <span>Interés</span>
+                            <select id="ni-match-filter-interest" aria-label="Filtrar por interés"></select>
+                        </label>
+                        <label class="ni-match-select">
+                            <span>Universidad</span>
+                            <select id="ni-match-filter-universidad" aria-label="Filtrar por universidad"></select>
+                        </label>
+                        <label class="ni-match-select">
+                            <span>Membresía</span>
+                            <select id="ni-match-filter-plan" aria-label="Filtrar por membresía"></select>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="ni-match-list" class="ni-match-grid"></div>
+            </div>
+        </div>
+
+        <div class="modal fade ni-modal ni-match-modal" id="ni-match-modal" tabindex="-1" aria-labelledby="ni-match-modal-name" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Perfil público</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="ni-match-modal-hero">
+                            <div class="ni-match-avatar ni-match-avatar--lg" id="ni-match-modal-avatar">?</div>
+                            <div>
+                                <h3 id="ni-match-modal-name">—</h3>
+                                <p id="ni-match-modal-meta" class="ni-match-card-meta mb-2">—</p>
+                                <div class="d-flex flex-wrap gap-2 align-items-center">
+                                    <span class="ni-match-plan" id="ni-match-modal-plan">NI Free</span>
+                                    <span class="ni-match-score" id="ni-match-modal-score">0% match</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="ni-match-modal-privacy">Vista pública: sin email ni WhatsApp.</p>
+                        <h4 class="ni-match-modal-section">Bio</h4>
+                        <p id="ni-match-modal-bio">—</p>
+                        <h4 class="ni-match-modal-section">Intereses</h4>
+                        <div class="ni-match-tags" id="ni-match-modal-interests"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="ni-match-btn ni-match-btn--ghost" data-bs-dismiss="modal">Cerrar</button>
+                        <a class="ni-match-btn ni-match-btn--primary" id="ni-match-modal-connect" href="#">Conectar en LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="tmp-footer footer-style-default variation-two position-relative">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="tmp-footer-widget">
+                                <div class="logo">
+                                    <a href="index.html">
+                                        <img class="logo-light" src="assets/images/logo/logo.png" alt="Grupo NI">
+                                        <img class="logo-dark" src="assets/images/logo/logo-dark.png" alt="Grupo NI">
+                                    </a>
+                                </div>
+                                <p class="subtitle mt--30">Grupo NI — comunidad académica y profesional.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
+                            <div class="tmp-footer-widget">
+                                <h4 class="title">Explorar</h4>
+                                <div class="inner">
+                                    <ul class="footer-link link-hover">
+                                        <li><a href="anuncios.html">Anuncios</a></li>
+                                        <li><a href="talleres.html">Talleres</a></li>
+                                        <li><a href="recursos.html">Recursos</a></li>
+                                        <li><a href="match.html">Match</a></li>
+                                        <li><a href="pricing-three-white.html">Membresía</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
+                            <div class="tmp-footer-widget">
+                                <h4 class="title">Cuenta</h4>
+                                <div class="inner">
+                                    <ul class="footer-link link-hover">
+                                        <li><a href="perfil.html">Mi perfil</a></li>
+                                        <li><a href="login.html">Ingresar</a></li>
+                                        <li><a href="register.html">Registrarse</a></li>
+                                        <li><a href="contact-white.html">Contacto</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="tmp-footer-widget">
+                                <h4 class="title">Grupo NI</h4>
+                                <div class="inner">
+                                    <h6 class="subtitle">Encuentra peers por intereses, carrera y universidad.</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="assets/js/vendor/jquery.min.js" defer></script>
+    <script src="assets/js/vendor/bootstrap.min.js" defer></script>
+    <script src="assets/js/vendor/feather.min.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+    <script type="module" src="assets/js/ni/boot.js"></script>
+</body>
+</html>

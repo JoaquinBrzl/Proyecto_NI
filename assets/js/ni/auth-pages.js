@@ -16,6 +16,8 @@ import {
   displayName,
   fetchInterestsCatalog,
   fetchOwnProfile,
+  fetchProfileStats,
+  membershipPlanLabel,
   profileInitial,
   saveOwnProfile,
 } from './modules/profile.js';
@@ -254,6 +256,41 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
+function setText(el, text) {
+  if (!el) return;
+  el.textContent = text || '—';
+}
+
+function dash(value) {
+  const t = String(value || '').trim();
+  return t || '—';
+}
+
+function refreshFeatherIcons(root) {
+  try {
+    if (window.feather?.replace) window.feather.replace({ root: root || document });
+  } catch {
+    /* ignore */
+  }
+}
+
+function renderInterestTags(container, catalog, selectedIds) {
+  if (!container) return;
+  const selected = new Set(selectedIds || []);
+  const labels = (catalog || [])
+    .filter((item) => selected.has(item.id))
+    .map((item) => item.label)
+    .filter(Boolean);
+
+  if (!labels.length) {
+    container.innerHTML = '<p class="ni-profile-empty">Sin intereses seleccionados.</p>';
+    return;
+  }
+  container.innerHTML = labels
+    .map((label) => `<span class="ni-profile-interest-tag">${escapeHtml(label)}</span>`)
+    .join('');
+}
+
 function renderInterestOptions(container, catalog, selectedIds) {
   if (!container) return;
   const selected = new Set(selectedIds || []);
@@ -280,16 +317,61 @@ function suggestUsername(user) {
   return raw.slice(0, 30) || 'usuario';
 }
 
-/** perfil.html — edit own profile only; session required */
+function fillProfileView({ profile, whatsapp, email, identity, catalog, interestIds, stats }) {
+  const planLabel = membershipPlanLabel(identity?.membership?.plan);
+  const active = !identity?.membership || identity.membership.status === 'active';
+
+  setText($('#ni-profile-display-name'), displayName(profile, { email }));
+  setText($('#ni-profile-email-view'), email || '—');
+  setText($('#ni-profile-plan-label'), planLabel);
+  setText($('#ni-membership-plan-label'), planLabel);
+
+  const statusEl = $('#ni-membership-status');
+  if (statusEl) {
+    statusEl.textContent = active ? 'Activa' : 'Inactiva';
+    statusEl.classList.toggle('is-inactive', !active);
+  }
+
+  setText($('#ni-view-universidad'), dash(profile?.universidad));
+  setText($('#ni-view-carrera'), dash(profile?.carrera));
+  setText($('#ni-view-ciclo'), dash(profile?.ciclo_academico));
+  setText($('#ni-view-whatsapp'), dash(whatsapp));
+
+  const linkedinEl = $('#ni-view-linkedin');
+  if (linkedinEl) {
+    const url = String(profile?.linkedin_url || '').trim();
+    if (url) {
+      linkedinEl.innerHTML = `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Ver LinkedIn</a>`;
+    } else {
+      linkedinEl.textContent = '—';
+    }
+  }
+
+  renderInterestTags($('#ni-view-interests'), catalog, interestIds);
+
+  setText($('#ni-stat-completed'), String(stats?.completed ?? 0));
+  setText($('#ni-stat-enrolled'), String(stats?.enrolled ?? 0));
+  setText($('#ni-stat-resources'), String(stats?.resources ?? 0));
+
+  const eliteCta = $('#ni-elite-cta');
+  if (eliteCta) {
+    const level = Number(identity?.level) || 0;
+    eliteCta.hidden = level >= 2;
+  }
+}
+
+/** perfil.html — dashboard view + edit panel; session required */
 export async function initProfilePage() {
   const msg = $('#ni-auth-msg');
   const form = $('#ni-profile-form');
-  const meta = $('#ni-identity-meta');
   const gate = $('#ni-profile-gate');
   const avatar = $('#ni-profile-avatar');
   const emailEl = $('#ni-profile-email');
   const interestsBox = $('#ni-interests');
   const privacyNote = $('#ni-privacy-note');
+  const editPanel = $('#ni-profile-edit-panel');
+  const editToggle = $('#ni-profile-edit-toggle');
+  const editCancel = $('#ni-profile-edit-cancel');
 
   await refreshSession();
   const snap = getSessionSnapshot();
@@ -302,19 +384,15 @@ export async function initProfilePage() {
   if (privacyNote) show(privacyNote, true);
 
   const identity = await fetchIdentity(snap.user.id);
-  if (meta) {
-    const plan = identity.membership?.plan || 'ni_free';
-    const planLabel = plan.replace(/^ni_/, 'NI ').replace(/\b\w/g, (c) => c.toUpperCase());
-    meta.textContent = `Rol: ${identity.role} · Membresía: ${planLabel} (nivel ${identity.level})`;
-  }
 
   if (emailEl) {
     emailEl.value = snap.user.email || '';
   }
 
-  const [{ interests: catalog }, own] = await Promise.all([
+  const [{ interests: catalog }, own, stats] = await Promise.all([
     fetchInterestsCatalog(),
     fetchOwnProfile(snap.user.id),
+    fetchProfileStats(snap.user.id),
   ]);
 
   if (own.error) {
@@ -323,6 +401,16 @@ export async function initProfilePage() {
 
   const profile = own.profile || {};
   const whatsapp = own.privateContact?.whatsapp || '';
+
+  fillProfileView({
+    profile,
+    whatsapp,
+    email: snap.user.email || '',
+    identity,
+    catalog,
+    interestIds: own.interestIds,
+    stats,
+  });
 
   if (form) {
     if (form.nombres) form.nombres.value = profile.nombres || '';
@@ -334,14 +422,33 @@ export async function initProfilePage() {
     if (form.carrera) form.carrera.value = profile.carrera || '';
     if (form.ciclo_academico) form.ciclo_academico.value = profile.ciclo_academico || '';
     if (form.whatsapp) form.whatsapp.value = whatsapp;
+    if (form.linkedin_url) form.linkedin_url.value = profile.linkedin_url || '';
     if (form.bio) form.bio.value = profile.bio || '';
   }
 
   renderInterestOptions(interestsBox, catalog, own.interestIds);
   setAvatarInitial(avatar, profileInitial(profile, snap.user));
+  refreshFeatherIcons(gate);
 
-  const titleName = $('#ni-profile-display-name');
-  if (titleName) titleName.textContent = displayName(profile, snap.user);
+  function setEditOpen(open) {
+    if (!editPanel) return;
+    editPanel.hidden = !open;
+    if (editToggle) {
+      editToggle.textContent = open ? 'Ocultar edición' : 'Editar perfil';
+    }
+    if (open) {
+      editPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  if (editToggle) {
+    editToggle.addEventListener('click', () => {
+      setEditOpen(!!editPanel?.hidden);
+    });
+  }
+  if (editCancel) {
+    editCancel.addEventListener('click', () => setEditOpen(false));
+  }
 
   if (form) {
     const refreshInitial = () => {
@@ -349,9 +456,12 @@ export async function initProfilePage() {
         nombres: form.nombres?.value,
         apellidos: form.apellidos?.value,
         username: form.username?.value,
+        universidad: form.universidad?.value,
+        carrera: form.carrera?.value,
+        ciclo_academico: form.ciclo_academico?.value,
       };
       setAvatarInitial(avatar, profileInitial(draft, snap.user));
-      if (titleName) titleName.textContent = displayName(draft, snap.user);
+      setText($('#ni-profile-display-name'), displayName(draft, snap.user));
     };
     form.nombres?.addEventListener('input', refreshInitial);
     form.apellidos?.addEventListener('input', refreshInitial);
@@ -360,6 +470,7 @@ export async function initProfilePage() {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       setMsg(msg, '');
+      if (msg) msg.dataset.niStatus = '';
       const submitBtn = form.querySelector('button[type="submit"]');
       if (submitBtn) submitBtn.disabled = true;
 
@@ -367,7 +478,7 @@ export async function initProfilePage() {
         form.querySelectorAll('input[name="interest_ids"]:checked')
       ).map((el) => el.value);
 
-      const { error } = await saveOwnProfile(snap.user.id, {
+      const payload = {
         nombres: form.nombres.value,
         apellidos: form.apellidos.value,
         username: form.username.value,
@@ -375,17 +486,35 @@ export async function initProfilePage() {
         carrera: form.carrera.value,
         ciclo_academico: form.ciclo_academico.value,
         whatsapp: form.whatsapp.value,
+        linkedin_url: form.linkedin_url?.value || '',
         bio: form.bio.value,
         interestIds,
-      });
+      };
+
+      const { error } = await saveOwnProfile(snap.user.id, payload);
 
       if (submitBtn) submitBtn.disabled = false;
       if (error) {
         setMsg(msg, error.message || 'No se pudo guardar', true);
+        if (msg) msg.dataset.niStatus = 'error';
         return;
       }
+
       setMsg(msg, 'Perfil guardado.');
+      if (msg) msg.dataset.niStatus = 'ok';
+
+      fillProfileView({
+        profile: payload,
+        whatsapp: payload.whatsapp,
+        email: snap.user.email || '',
+        identity,
+        catalog,
+        interestIds,
+        stats,
+      });
       refreshInitial();
+      setEditOpen(false);
+      refreshFeatherIcons(gate);
     });
   }
 

@@ -26,7 +26,7 @@
     <link href="assets/css/plugins/slick-theme.css" rel="stylesheet">
     <link href="assets/css/plugins/lightbox.css" rel="stylesheet">
     <link href="assets/css/plugins/odometer.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=4.3.3">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.5.3">
 </head>
 
 <body class="active-light-mode" data-ni-page="talleres">
@@ -57,6 +57,7 @@
                                                 <li><a href="anuncios.html">Anuncios</a></li>
                                                 <li><a href="talleres.html">Talleres</a></li>
                                                 <li><a href="recursos.html">Recursos</a></li>
+                                                <li><a href="match.html">Match</a></li>
                                             </ul>
                                         </li>
 
@@ -121,6 +122,7 @@
                                             <li><a href="anuncios.html">Anuncios</a></li>
                                             <li><a href="talleres.html">Talleres</a></li>
                                             <li><a href="recursos.html">Recursos</a></li>
+                                                <li><a href="match.html">Match</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -144,7 +146,7 @@
                                 <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
                                     <div>
                                         <h1 class="title w-700 tmp-title-split mb--10">Talleres y Eventos</h1>
-                                        <p class="description mb-0">Aprende con expertos en comercio exterior, logística, finanzas y más.</p>
+                                        <p class="description mb-0">Aprende con expertos en comercio exterior, logÃ­stica, finanzas y mÃ¡s.</p>
                                     </div>
                                     <button type="button" id="ni-talleres-admin-create" class="tmp-btn" hidden>
                                         <span>Crear taller</span>
@@ -158,19 +160,19 @@
                     <div class="ni-filter-bar mb--30" id="ni-talleres-filters">
                         <div class="ni-filter-search">
                             <i class="feather-search search-icon" aria-hidden="true"></i>
-                            <input id="ni-talleres-search" type="search" name="q" placeholder="Buscar por título o ponente…" autocomplete="off" aria-label="Buscar talleres">
+                            <input id="ni-talleres-search" type="search" name="q" placeholder="Buscar por tÃ­tulo o ponenteâ€¦" autocomplete="off" aria-label="Buscar talleres">
                         </div>
                         <div class="ni-filter-chips" id="ni-talleres-temporal" role="group" aria-label="Filtrar por estado">
                             <button type="button" data-ni-temporal="" class="is-checked">Todos</button>
-                            <button type="button" data-ni-temporal="upcoming">Próximos</button>
+                            <button type="button" data-ni-temporal="upcoming">PrÃ³ximos</button>
                             <button type="button" data-ni-temporal="live">Disponibles</button>
                             <button type="button" data-ni-temporal="ended">Finalizados</button>
                         </div>
                     </div>
 
                     <div id="ni-talleres-pub-wrap" class="mb--20" hidden>
-                        <label class="d-block mb--10">Publicación (admin)</label>
-                        <div class="filter-button-default" id="ni-talleres-pub" role="group" aria-label="Filtrar por publicación">
+                        <label class="d-block mb--10">PublicaciÃ³n (admin)</label>
+                        <div class="filter-button-default" id="ni-talleres-pub" role="group" aria-label="Filtrar por publicaciÃ³n">
                             <button type="button" data-ni-pub="" class="is-checked">Todos</button>
                             <button type="button" data-ni-pub="published">Publicados</button>
                             <button type="button" data-ni-pub="draft">Borradores</button>
@@ -178,7 +180,7 @@
                     </div>
 
                     <div id="ni-talleres-list" class="row g-4 ni-catalog-grid"></div>
-                    <ul id="ni-talleres-pagination" class="tmp-pagination mt--60" hidden aria-label="Paginación de talleres"></ul>
+                    <ul id="ni-talleres-pagination" class="tmp-pagination mt--60" hidden aria-label="PaginaciÃ³n de talleres"></ul>
                 </div>
             </div>
         <!-- End Talleres List View  -->
@@ -196,13 +198,13 @@
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ws-title">Título</label>
+                                    <label for="ni-ws-title">TÃ­tulo</label>
                                     <input id="ni-ws-title" name="title" type="text" required maxlength="200">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ws-desc">Descripción corta</label>
+                                    <label for="ni-ws-desc">DescripciÃ³n corta</label>
                                     <textarea id="ni-ws-desc" name="short_description" required maxlength="1000" rows="3"></textarea>
                                 </div>
                             </div>
@@ -218,7 +220,7 @@
                                     <select id="ni-ws-modality" name="modality" required>
                                         <option value="virtual">Virtual</option>
                                         <option value="presencial">Presencial</option>
-                                        <option value="hibrido">Híbrido</option>
+                                        <option value="hibrido">HÃ­brido</option>
                                     </select>
                                 </div>
                             </div>
@@ -237,18 +239,18 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-0">
                                     <label for="ni-ws-location">Lugar</label>
-                                    <input id="ni-ws-location" name="location" type="text" maxlength="200" placeholder="Vacío = Próximamente">
+                                    <input id="ni-ws-location" name="location" type="text" maxlength="200" placeholder="VacÃ­o = PrÃ³ximamente">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-0">
                                     <label for="ni-ws-virtual">Enlace virtual</label>
-                                    <input id="ni-ws-virtual" name="virtual_url" type="url" maxlength="500" placeholder="https://…">
+                                    <input id="ni-ws-virtual" name="virtual_url" type="url" maxlength="500" placeholder="https://â€¦">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ws-level">Membresía requerida</label>
+                                    <label for="ni-ws-level">MembresÃ­a requerida</label>
                                     <select id="ni-ws-level" name="required_membership_level" required>
                                         <option value="0">NI Free (0)</option>
                                         <option value="1">NI Pro (1)</option>
@@ -264,20 +266,20 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ws-deadline">Límite de inscripción</label>
+                                    <label for="ni-ws-deadline">LÃ­mite de inscripciÃ³n</label>
                                     <input id="ni-ws-deadline" name="registration_deadline" type="datetime-local" required>
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ws-recording">URL de grabación (opcional)</label>
-                                    <input id="ni-ws-recording" name="recording_url" type="url" maxlength="500" placeholder="https://…">
-                                    <small class="d-block mt--5">Se guarda de forma privada; solo se entrega tras validar inscripción y membresía.</small>
+                                    <label for="ni-ws-recording">URL de grabaciÃ³n (opcional)</label>
+                                    <input id="ni-ws-recording" name="recording_url" type="url" maxlength="500" placeholder="https://â€¦">
+                                    <small class="d-block mt--5">Se guarda de forma privada; solo se entrega tras validar inscripciÃ³n y membresÃ­a.</small>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ws-status">Estado de publicación</label>
+                                    <label for="ni-ws-status">Estado de publicaciÃ³n</label>
                                     <select id="ni-ws-status" name="status" required>
                                         <option value="draft">Borrador</option>
                                         <option value="published">Publicado</option>
@@ -286,7 +288,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ws-image">Imagen de la card (JPEG, PNG o WebP · máx. 2 MB)</label>
+                                    <label for="ni-ws-image">Imagen de la card (JPEG, PNG o WebP Â· mÃ¡x. 2 MB)</label>
                                     <input id="ni-ws-image" name="image" type="file" accept="image/jpeg,image/png,image/webp">
                                     <img id="ni-ws-image-preview" alt="Vista previa" hidden>
                                 </div>
@@ -406,7 +408,7 @@
                         </div>
                         <div class="col-lg-6 col-md-4 col-sm-12 col-12">
                             <div class="copyright-right text-center text-lg-end">
-                                <p class="copyright-text">All Right Reserved © Corpox
+                                <p class="copyright-text">All Right Reserved Â© Corpox
                                     <span id="year"></span>
                                 </p>
                             </div>
@@ -444,7 +446,7 @@
         <div class="container">
             <div class="search-input-inner">
                 <form action="#" class="input-div tmponhover">
-                    <input id="searchInput1" class="search-input" type="text" placeholder="🔎 Search products, topics, or #tags" required>
+                    <input id="searchInput1" class="search-input" type="text" placeholder="ðŸ”Ž Search products, topics, or #tags" required>
                     <button>
                         <!-- <img src="assets/images/icons/search.svg" alt=""> -->
                         <i class="feather-search"></i>

@@ -1,53 +1,66 @@
 /* NI header: account in popup on small screens; hamburger is responsive-only. */
 
-body.ni-header-compact .tmp-header .header-right {
+body.ni-header-compact .tmp-header .header-right,
+html.ni-header-compact .tmp-header .header-right {
   flex-wrap: nowrap;
   gap: 12px;
 }
 
-body.ni-header-compact .tmp-header [data-ni-auth-slot] {
+body.ni-header-compact .tmp-header [data-ni-auth-slot],
+html.ni-header-compact .tmp-header [data-ni-auth-slot] {
   display: none !important;
 }
 
-body.ni-header-compact .tmp-header .header-btn {
+body.ni-header-compact .tmp-header .header-btn,
+html.ni-header-compact .tmp-header .header-btn {
   display: flex;
   align-items: center;
   margin-left: 0;
 }
 
-body.ni-header-compact .tmp-header .header-btn > a.tmp-btn {
+body.ni-header-compact .tmp-header .header-btn > a.tmp-btn,
+html.ni-header-compact .tmp-header .header-btn > a.tmp-btn {
   display: inline-flex;
 }
 
 /* Hamburger + Membresia collapse only in the theme's mobile breakpoint. */
-body.ni-header-compact .tmp-header .mobile-menu-bar {
+body.ni-header-compact .tmp-header .mobile-menu-bar,
+html.ni-header-compact .tmp-header .mobile-menu-bar {
   display: none !important;
 }
 
 @media only screen and (max-width: 991px) {
-  body.ni-header-compact .tmp-header .mobile-menu-bar {
+  body.ni-header-compact .tmp-header .mobile-menu-bar,
+  html.ni-header-compact .tmp-header .mobile-menu-bar {
     display: flex !important;
     align-items: center;
     margin-left: 8px;
   }
 
+  /* Same hide as style.css (static) — kept for when ni-header-compact loads later.
+     Mobile CTA must not flash: primary rule is in style.css without JS. */
   body.ni-header-compact .tmp-header .header-btn > a.tmp-btn,
-  body.ni-header-compact .tmp-header .header-btn .dot-btn {
+  body.ni-header-compact .tmp-header .header-btn .dot-btn,
+  html.ni-header-compact .tmp-header .header-btn > a.tmp-btn,
+  html.ni-header-compact .tmp-header .header-btn .dot-btn {
     display: none !important;
   }
 
   /* Overlay fade only (opacity is cheap). Panel slides with transform (GPU). */
-  body.ni-header-compact .popup-mobile-menu {
+  body.ni-header-compact .popup-mobile-menu,
+  html.ni-header-compact .popup-mobile-menu {
     transition: opacity 0.2s ease;
   }
 
-  body.ni-header-compact .popup-mobile-menu .inner {
+  body.ni-header-compact .popup-mobile-menu .inner,
+  html.ni-header-compact .popup-mobile-menu .inner {
     left: 0;
     transform: translate3d(-100%, 0, 0);
     transition: transform 0.22s ease;
   }
 
-  body.ni-header-compact .popup-mobile-menu.active .inner {
+  body.ni-header-compact .popup-mobile-menu.active .inner,
+  html.ni-header-compact .popup-mobile-menu.active .inner {
     transform: translate3d(0, 0, 0);
     overflow-y: auto;
   }
@@ -55,7 +68,9 @@ body.ni-header-compact .tmp-header .mobile-menu-bar {
 
 @media (prefers-reduced-motion: reduce) {
   body.ni-header-compact .popup-mobile-menu,
-  body.ni-header-compact .popup-mobile-menu .inner {
+  body.ni-header-compact .popup-mobile-menu .inner,
+  html.ni-header-compact .popup-mobile-menu,
+  html.ni-header-compact .popup-mobile-menu .inner {
     transition: none;
   }
 }

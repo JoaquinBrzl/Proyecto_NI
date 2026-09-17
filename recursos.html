@@ -26,7 +26,7 @@
     <link href="assets/css/plugins/slick-theme.css" rel="stylesheet">
     <link href="assets/css/plugins/lightbox.css" rel="stylesheet">
     <link href="assets/css/plugins/odometer.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=4.3.3">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.5.3">
 </head>
 
 <body class="active-light-mode" data-ni-page="recursos">
@@ -59,6 +59,7 @@
                                                 <li><a href="anuncios.html">Anuncios</a></li>
                                                 <li><a href="talleres.html">Talleres</a></li>
                                                 <li><a href="recursos.html">Recursos</a></li>
+                                                <li><a href="match.html">Match</a></li>
                                             </ul>
                                         </li>
 
@@ -122,6 +123,7 @@
                                             <li><a href="anuncios.html">Anuncios</a></li>
                                             <li><a href="talleres.html">Talleres</a></li>
                                             <li><a href="recursos.html">Recursos</a></li>
+                                                <li><a href="match.html">Match</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -150,14 +152,14 @@
                             <div class="tmp-section-title-border text-start mb--35">
                                 <div class="pres-line-separator-wrapper text-start mb--10">
                                     <span class="subtitle">
-                                        <span class="subtitle-text">RECURSOS ACADÉMICOS</span>
+                                        <span class="subtitle-text">RECURSOS ACADÃ‰MICOS</span>
                                     </span>
                                     <div class="line-separator line-right"></div>
                                 </div>
                                 <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
                                     <div>
                                         <h2 class="title w-700 tmp-title-split">Biblioteca de Recursos</h2>
-                                        <p class="description mt--10">Materiales de talleres, plantillas, guías y más para tu desarrollo académico.</p>
+                                        <p class="description mt--10">Materiales de talleres, plantillas, guÃ­as y mÃ¡s para tu desarrollo acadÃ©mico.</p>
                                     </div>
                                     <button type="button" id="ni-recursos-admin-create" class="tmp-btn" hidden>
                                         <span>Crear recurso</span>
@@ -170,17 +172,17 @@
                             <div class="resource-filter-bar mb--30">
                                 <div class="resource-search-box">
                                     <i class="feather-search search-icon" aria-hidden="true"></i>
-                                    <input id="ni-recursos-search" type="search" name="q" placeholder="Buscar recursos…" autocomplete="off" aria-label="Buscar recursos">
+                                    <input id="ni-recursos-search" type="search" name="q" placeholder="Buscar recursosâ€¦" autocomplete="off" aria-label="Buscar recursos">
                                 </div>
                                 <div class="resource-select-box">
-                                    <select id="ni-recursos-category" aria-label="Filtrar por categoría">
-                                        <option value="">Todas las categorías</option>
+                                    <select id="ni-recursos-category" aria-label="Filtrar por categorÃ­a">
+                                        <option value="">Todas las categorÃ­as</option>
                                         <option value="comercio_internacional">Comercio Internacional</option>
                                         <option value="empleabilidad">Empleabilidad</option>
-                                        <option value="logistica">Logística</option>
+                                        <option value="logistica">LogÃ­stica</option>
                                         <option value="finanzas">Finanzas</option>
                                         <option value="marketing">Marketing</option>
-                                        <option value="tecnologia">Tecnología</option>
+                                        <option value="tecnologia">TecnologÃ­a</option>
                                         <option value="otros">Otros</option>
                                     </select>
                                     <i class="feather-chevron-down select-arrow" aria-hidden="true"></i>
@@ -188,8 +190,8 @@
                             </div>
 
                             <div id="ni-recursos-pub-wrap" class="mb--20" hidden>
-                                <label class="d-block mb--10">Publicación (admin)</label>
-                                <div class="filter-button-default" id="ni-recursos-pub" role="group" aria-label="Filtrar por publicación">
+                                <label class="d-block mb--10">PublicaciÃ³n (admin)</label>
+                                <div class="filter-button-default" id="ni-recursos-pub" role="group" aria-label="Filtrar por publicaciÃ³n">
                                     <button type="button" data-ni-pub="" class="is-checked">Todos</button>
                                     <button type="button" data-ni-pub="published">Publicados</button>
                                     <button type="button" data-ni-pub="draft">Borradores</button>
@@ -221,33 +223,33 @@
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-res-title">Título</label>
+                                    <label for="ni-res-title">TÃ­tulo</label>
                                     <input id="ni-res-title" name="title" type="text" required maxlength="200">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-res-desc">Descripción (opcional)</label>
+                                    <label for="ni-res-desc">DescripciÃ³n (opcional)</label>
                                     <textarea id="ni-res-desc" name="description" maxlength="2000" rows="3"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-0">
-                                    <label for="ni-res-category">Categoría</label>
+                                    <label for="ni-res-category">CategorÃ­a</label>
                                     <select id="ni-res-category" name="category" required>
                                         <option value="comercio_internacional">Comercio Internacional</option>
                                         <option value="empleabilidad">Empleabilidad</option>
-                                        <option value="logistica">Logística</option>
+                                        <option value="logistica">LogÃ­stica</option>
                                         <option value="finanzas">Finanzas</option>
                                         <option value="marketing">Marketing</option>
-                                        <option value="tecnologia">Tecnología</option>
+                                        <option value="tecnologia">TecnologÃ­a</option>
                                         <option value="otros">Otros</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
-                                    <label for="ni-res-level">Membresía requerida</label>
+                                    <label for="ni-res-level">MembresÃ­a requerida</label>
                                     <select id="ni-res-level" name="required_membership_level" required>
                                         <option value="0">NI Free (0)</option>
                                         <option value="1">NI Pro (1)</option>
@@ -266,9 +268,9 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-res-file">Archivo (PDF, DOCX, PPTX, XLSX, MP4 · máx. 50 MB)</label>
+                                    <label for="ni-res-file">Archivo (PDF, DOCX, PPTX, XLSX, MP4 Â· mÃ¡x. 50 MB)</label>
                                     <input id="ni-res-file" name="file" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.mp4,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,video/mp4">
-                                    <small id="ni-res-file-hint" class="d-block mt--5">Al crear es obligatorio. Al editar, déjalo vacío para conservar el archivo actual.</small>
+                                    <small id="ni-res-file-hint" class="d-block mt--5">Al crear es obligatorio. Al editar, dÃ©jalo vacÃ­o para conservar el archivo actual.</small>
                                 </div>
                             </div>
                         </div>
@@ -384,7 +386,7 @@
                         </div>
                         <div class="col-lg-6 col-md-4 col-sm-12 col-12">
                             <div class="copyright-right text-center text-lg-end">
-                                <p class="copyright-text">All Right Reserved © Corpox
+                                <p class="copyright-text">All Right Reserved Â© Corpox
                                     <span id="year"></span>
                                 </p>
                             </div>
@@ -422,7 +424,7 @@
         <div class="container">
             <div class="search-input-inner">
                 <form action="#" class="input-div tmponhover">
-                    <input id="searchInput1" class="search-input" type="text" placeholder="🔎 Search products, topics, or #tags" required>
+                    <input id="searchInput1" class="search-input" type="text" placeholder="ðŸ”Ž Search products, topics, or #tags" required>
                     <button>
                         <!-- <img src="assets/images/icons/search.svg" alt=""> -->
                         <i class="feather-search"></i>

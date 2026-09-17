@@ -26,7 +26,7 @@
     <link href="assets/css/plugins/slick-theme.css" rel="stylesheet">
     <link href="assets/css/plugins/lightbox.css" rel="stylesheet">
     <link href="assets/css/plugins/odometer.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=4.3.3">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.5.3">
 </head>
 
 
@@ -58,6 +58,7 @@
                                                 <li><a href="anuncios.html">Anuncios</a></li>
                                                 <li><a href="talleres.html">Talleres</a></li>
                                                 <li><a href="recursos.html">Recursos</a></li>
+                                                <li><a href="match.html">Match</a></li>
                                             </ul>
                                         </li>
 
@@ -120,6 +121,7 @@
                                             <li><a href="anuncios.html">Anuncios</a></li>
                                             <li><a href="talleres.html">Talleres</a></li>
                                             <li><a href="recursos.html">Recursos</a></li>
+                                                <li><a href="match.html">Match</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -160,9 +162,9 @@
                         <div class="ni-filter-bar mb--30" id="ni-anuncios-filters">
                             <div class="ni-filter-search">
                                 <i class="feather-search search-icon" aria-hidden="true"></i>
-                                <input id="ni-anuncios-search" type="search" name="q" placeholder="Buscar anuncios…" autocomplete="off" aria-label="Buscar anuncios">
+                                <input id="ni-anuncios-search" type="search" name="q" placeholder="Buscar anunciosâ€¦" autocomplete="off" aria-label="Buscar anuncios">
                             </div>
-                            <div class="ni-filter-chips" id="ni-anuncios-category" role="group" aria-label="Filtrar por categoría">
+                            <div class="ni-filter-chips" id="ni-anuncios-category" role="group" aria-label="Filtrar por categorÃ­a">
                                 <button type="button" data-ni-category="" class="is-checked">Todos</button>
                                 <button type="button" data-ni-category="eventos">Eventos</button>
                                 <button type="button" data-ni-category="talleres">Talleres</button>
@@ -173,8 +175,8 @@
                         </div>
 
                         <div id="ni-anuncios-pub-wrap" class="mb--20" hidden>
-                            <label class="d-block mb--10">Publicación (admin)</label>
-                            <div class="filter-button-default" id="ni-anuncios-pub" role="group" aria-label="Filtrar por publicación">
+                            <label class="d-block mb--10">PublicaciÃ³n (admin)</label>
+                            <div class="filter-button-default" id="ni-anuncios-pub" role="group" aria-label="Filtrar por publicaciÃ³n">
                                 <button type="button" data-ni-pub="" class="is-checked">Todos</button>
                                 <button type="button" data-ni-pub="published">Publicados</button>
                                 <button type="button" data-ni-pub="draft">Borradores</button>
@@ -183,7 +185,7 @@
 
                         <div id="ni-anuncios-list" class="row g-4 ni-catalog-grid"></div>
 
-                        <ul id="ni-anuncios-pagination" class="tmp-pagination mt--60" hidden aria-label="Paginación de anuncios"></ul>
+                        <ul id="ni-anuncios-pagination" class="tmp-pagination mt--60" hidden aria-label="PaginaciÃ³n de anuncios"></ul>
                     </div>
                 </div>
             <!-- End Anuncios Area  -->
@@ -201,13 +203,13 @@
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ann-title">Título</label>
+                                    <label for="ni-ann-title">TÃ­tulo</label>
                                     <input id="ni-ann-title" name="title" type="text" required maxlength="200">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ann-category">Categoría</label>
+                                    <label for="ni-ann-category">CategorÃ­a</label>
                                     <select id="ni-ann-category" name="category" required>
                                         <option value="eventos">Eventos</option>
                                         <option value="talleres">Talleres</option>
@@ -219,27 +221,27 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ann-published-at">Fecha de publicación</label>
+                                    <label for="ni-ann-published-at">Fecha de publicaciÃ³n</label>
                                     <input id="ni-ann-published-at" name="published_at" type="datetime-local">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ann-description">Descripción</label>
+                                    <label for="ni-ann-description">DescripciÃ³n</label>
                                     <textarea id="ni-ann-description" name="description" required maxlength="4000" rows="4"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ann-image">Imagen (JPEG, PNG o WebP · máx. 2 MB)</label>
+                                    <label for="ni-ann-image">Imagen (JPEG, PNG o WebP Â· mÃ¡x. 2 MB)</label>
                                     <input id="ni-ann-image" name="image" type="file" accept="image/jpeg,image/png,image/webp">
                                     <img id="ni-ann-image-preview" alt="Vista previa" hidden>
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ann-link">Enlace “Ver más”</label>
-                                    <input id="ni-ann-link" name="link_url" type="text" required maxlength="500" placeholder="https://… o página local">
+                                    <label for="ni-ann-link">Enlace â€œVer mÃ¡sâ€</label>
+                                    <input id="ni-ann-link" name="link_url" type="text" required maxlength="500" placeholder="https://â€¦ o pÃ¡gina local">
                                 </div>
                             </div>
                             <div class="col-md-4">

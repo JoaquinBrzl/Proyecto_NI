@@ -68,7 +68,7 @@ export async function fetchOwnProfile(userId) {
   const [profileRes, privateRes, interestsRes] = await Promise.all([
     insforge.database
       .from('profiles')
-      .select('user_id,username,nombres,apellidos,universidad,carrera,ciclo_academico,bio,updated_at')
+      .select('user_id,username,nombres,apellidos,universidad,carrera,ciclo_academico,bio,linkedin_url,updated_at')
       .eq('user_id', userId)
       .limit(1),
     insforge.database
@@ -103,8 +103,28 @@ export function toPublicProfile(profile, interestLabels = []) {
     carrera: profile.carrera,
     ciclo_academico: profile.ciclo_academico,
     bio: profile.bio,
+    linkedin_url: profile.linkedin_url || '',
     interests: interestLabels,
   };
+}
+
+/** Normalize / validate LinkedIn URL for storage. Empty string if blank. */
+export function normalizeLinkedinUrl(raw) {
+  const t = String(raw || '').trim();
+  if (!t) return '';
+  let url = t;
+  if (!/^https?:\/\//i.test(url)) url = `https://${url}`;
+  try {
+    const u = new URL(url);
+    const host = u.hostname.replace(/^www\./i, '').toLowerCase();
+    if (host !== 'linkedin.com' && !host.endsWith('.linkedin.com')) {
+      return null;
+    }
+    u.hash = '';
+    return u.toString().replace(/\/$/, '');
+  } catch {
+    return null;
+  }
 }
 
 async function upsertProfile(userId, fields) {
@@ -112,6 +132,11 @@ async function upsertProfile(userId, fields) {
   const username = normalizeUsername(fields.username);
   if (!username || username.length < 3) {
     return { error: { message: 'El username debe tener entre 3 y 30 caracteres (letras, números o _).' } };
+  }
+
+  const linkedin = normalizeLinkedinUrl(fields.linkedin_url);
+  if (linkedin === null) {
+    return { error: { message: 'LinkedIn inválido. Usa una URL de linkedin.com.' } };
   }
 
   const row = {
@@ -123,6 +148,7 @@ async function upsertProfile(userId, fields) {
     carrera: String(fields.carrera || '').trim(),
     ciclo_academico: String(fields.ciclo_academico || '').trim(),
     bio: String(fields.bio || '').trim(),
+    linkedin_url: linkedin,
   };
 
   const existing = await insforge.database
@@ -238,4 +264,74 @@ export async function saveOwnProfile(userId, payload) {
   }
 
   return { error: null };
+}
+
+/**
+ * Profile dashboard counts. Failures → zeros (do not break the page).
+ * - enrolled: workshop_enrollments for user
+ * - completed: enrolled workshops with ends_at in the past
+ * - resources: resource_downloads for user
+ */
+export async function fetchProfileStats(userId) {
+  const empty = { completed: 0, enrolled: 0, resources: 0 };
+  if (!userId) return empty;
+
+  const insforge = getClient();
+  const nowIso = new Date().toISOString();
+
+  try {
+    const [enrollRes, downloadsRes] = await Promise.all([
+      insforge.database
+        .from('workshop_enrollments')
+        .select('id,workshop_id')
+        .eq('user_id', userId)
+        .limit(500),
+      insforge.database
+        .from('resource_downloads')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', userId),
+    ]);
+
+    const enrollRows = Array.isArray(enrollRes.data) ? enrollRes.data : [];
+    const enrolled = enrollRows.length;
+    let completed = 0;
+
+    const workshopIds = [...new Set(enrollRows.map((r) => r.workshop_id).filter(Boolean))];
+    if (workshopIds.length) {
+      const { data: workshops, error: wsError } = await insforge.database
+        .from('workshops')
+        .select('id,ends_at')
+        .in('id', workshopIds)
+        .limit(500);
+      if (!wsError && Array.isArray(workshops)) {
+        const ended = new Set(
+          workshops.filter((w) => w.ends_at && String(w.ends_at) < nowIso).map((w) => w.id),
+        );
+        completed = enrollRows.filter((r) => ended.has(r.workshop_id)).length;
+      }
+    }
+
+    const resources =
+      typeof downloadsRes.count === 'number'
+        ? downloadsRes.count
+        : Array.isArray(downloadsRes.data)
+          ? downloadsRes.data.length
+          : 0;
+
+    if (enrollRes.error || downloadsRes.error) {
+      console.warn('[ni] profile stats partial', enrollRes.error || downloadsRes.error);
+    }
+
+    return { completed, enrolled, resources };
+  } catch (err) {
+    console.warn('[ni] profile stats failed', err);
+    return empty;
+  }
+}
+
+export function membershipPlanLabel(plan) {
+  const p = String(plan || 'ni_free').toLowerCase();
+  if (p === 'ni_elite' || p === 'elite') return 'NI Elite';
+  if (p === 'ni_pro' || p === 'pro') return 'NI Pro';
+  return 'NI Free';
 }

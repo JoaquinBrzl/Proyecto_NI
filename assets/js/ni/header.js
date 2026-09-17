@@ -4,9 +4,13 @@ import { fetchIdentity } from './identity.js';
 /**
  * Session-aware header: account lives in the mobile popup (<992px)
  * and as text links in the desktop nav. Hamburger is responsive-only.
+ *
+ * Header account UI is hydrated from sessionStorage first so navigating
+ * between pages does not shrink/expand while auth reloads.
  */
 
 const MEMBRESIA_HREF = 'pricing-three-white.html';
+const HEADER_AUTH_KEY = 'ni_header_auth_v1';
 
 function escapeHtml(str) {
   return String(str)
@@ -16,6 +20,48 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
+function planLabelFrom(plan) {
+  return String(plan || 'ni_free')
+    .replace('ni_', 'NI ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function readHeaderAuthCache() {
+  try {
+    const raw = sessionStorage.getItem(HEADER_AUTH_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed?.userId || !parsed?.name) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writeHeaderAuthCache(payload) {
+  try {
+    if (!payload) sessionStorage.removeItem(HEADER_AUTH_KEY);
+    else sessionStorage.setItem(HEADER_AUTH_KEY, JSON.stringify(payload));
+  } catch {
+    /* ignore quota / private mode */
+  }
+}
+
+function persistHeaderAuth(user, identity) {
+  if (!user?.id) {
+    writeHeaderAuthCache(null);
+    return null;
+  }
+  const payload = {
+    userId: user.id,
+    name: user?.profile?.name || user?.name || user?.email || 'Cuenta',
+    plan: identity?.membership?.plan || 'ni_free',
+    role: identity?.role || 'user',
+  };
+  writeHeaderAuthCache(payload);
+  return payload;
+}
+
 function ensureStyles() {
   if (document.getElementById('ni-header-css')) return;
   const link = document.createElement('link');
@@ -23,6 +69,7 @@ function ensureStyles() {
   link.rel = 'stylesheet';
   link.href = new URL('../../css/ni-header.css', import.meta.url).href;
   document.head.appendChild(link);
+  document.documentElement.classList.add('ni-header-compact');
   document.body.classList.add('ni-header-compact');
 }
 
@@ -138,8 +185,7 @@ function accountItemsHtml(user, identity, { includeMembresia }) {
     `;
   }
   const name = user?.profile?.name || user?.name || user?.email || 'Cuenta';
-  const plan = identity?.membership?.plan || 'ni_free';
-  const planLabel = plan.replace('ni_', 'NI ').replace(/\b\w/g, (c) => c.toUpperCase());
+  const planLabel = planLabelFrom(identity?.membership?.plan);
   const adminItem = identity?.role === 'admin' ? `<li><a href="admin.html" data-ni-admin>Admin</a></li>` : '';
   return `
     ${membership}
@@ -149,20 +195,53 @@ function accountItemsHtml(user, identity, { includeMembresia }) {
   `;
 }
 
-function renderPopupAccount(menu, { user, identity }) {
-  menu.innerHTML = accountItemsHtml(user, identity, { includeMembresia: true });
+function accountItemsFromCache(cache, { includeMembresia }) {
+  if (!cache) return accountItemsHtml(null, null, { includeMembresia });
+  return accountItemsHtml(
+    { id: cache.userId, profile: { name: cache.name } },
+    { role: cache.role, membership: { plan: cache.plan } },
+    { includeMembresia },
+  );
 }
 
-function renderDesktopAccount({ user, identity }) {
-  const nav = document.querySelector('.tmp-header .mainmenu-nav > .mainmenu');
-  if (!nav) return;
-  nav.querySelectorAll('[data-ni-auth-desktop]').forEach((el) => el.remove());
+function applyAccountHtml(target, html, fpKey) {
+  if (!target) return;
+  if (target.dataset[fpKey] === html) return;
+  target.dataset[fpKey] = html;
+  if (target.hasAttribute('data-ni-auth-menu')) {
+    target.innerHTML = html;
+    return;
+  }
+  // Desktop: replace only auth items inside main nav
+  target.querySelectorAll('[data-ni-auth-desktop]').forEach((el) => el.remove());
   const tmp = document.createElement('ul');
-  tmp.innerHTML = accountItemsHtml(user, identity, { includeMembresia: false });
+  tmp.innerHTML = html;
   tmp.querySelectorAll('li').forEach((li) => {
     li.setAttribute('data-ni-auth-desktop', '1');
-    nav.appendChild(li);
+    target.appendChild(li);
   });
+}
+
+function renderPopupAccount(menu, { user, identity, cache }) {
+  const html = cache
+    ? accountItemsFromCache(cache, { includeMembresia: true })
+    : accountItemsHtml(user, identity, { includeMembresia: true });
+  applyAccountHtml(menu, html, 'niAuthFp');
+}
+
+function renderDesktopAccount({ user, identity, cache }) {
+  const nav = document.querySelector('.tmp-header .mainmenu-nav > .mainmenu');
+  if (!nav) return;
+  const html = cache
+    ? accountItemsFromCache(cache, { includeMembresia: false })
+    : accountItemsHtml(user, identity, { includeMembresia: false });
+  applyAccountHtml(nav, html, 'niAuthFp');
+}
+
+function paintHeaderAccount({ user = null, identity = null, cache = null } = {}) {
+  const menu = document.querySelector('.popup-mobile-menu [data-ni-auth-menu]');
+  renderPopupAccount(menu, { user, identity, cache });
+  renderDesktopAccount({ user, identity, cache });
 }
 
 let logoutBound = false;
@@ -174,6 +253,7 @@ function bindLogoutDelegation() {
     if (!logout) return;
     e.preventDefault();
     closePopup();
+    writeHeaderAuthCache(null);
     await signOut();
     window.location.href = 'index.html';
   });
@@ -188,24 +268,38 @@ export function mountHeaderAuth() {
   bindLogoutDelegation();
   if (!menu) return () => {};
 
-  let identityCache = null;
+  // Instant paint from last known account (avoids shrink/grow on every page).
+  const warm = readHeaderAuthCache();
+  if (warm) {
+    paintHeaderAccount({ cache: warm });
+  }
+
+  let identityCache = warm
+    ? {
+        userId: warm.userId,
+        role: warm.role,
+        membership: { plan: warm.plan },
+      }
+    : null;
 
   const unsub = subscribeSession(async (snap) => {
-    if (snap.loading) {
-      menu.innerHTML = `<li><span class="ni-auth-loading">…</span></li>`;
-      return;
-    }
+    // Keep warm UI while session refreshes — do not wipe to "…" / logged-out.
+    if (snap.loading) return;
+
     if (!snap.user) {
       identityCache = null;
-      renderPopupAccount(menu, { user: null, identity: null });
-      renderDesktopAccount({ user: null, identity: null });
+      writeHeaderAuthCache(null);
+      paintHeaderAccount({ user: null, identity: null });
       return;
     }
-    if (!identityCache || identityCache.userId !== snap.user.id) {
+
+    const needIdentity = !identityCache || identityCache.userId !== snap.user.id;
+    if (needIdentity) {
       identityCache = { userId: snap.user.id, ...(await fetchIdentity(snap.user.id)) };
     }
-    renderPopupAccount(menu, { user: snap.user, identity: identityCache });
-    renderDesktopAccount({ user: snap.user, identity: identityCache });
+
+    persistHeaderAuth(snap.user, identityCache);
+    paintHeaderAccount({ user: snap.user, identity: identityCache });
   });
 
   refreshSession();
