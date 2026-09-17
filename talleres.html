@@ -69,18 +69,9 @@
 
                                 <!-- Start Header Btn  -->
                                 <div class="header-btn">
-                                    <div class="dot-btn">
-                                        <!-- <img src="assets/images/shop/dot.svg" alt=""> -->
-                                        <span class="offcanvas-trigger">
-                                        <span class="offcanvas-bars">
-                                            <span></span>
-                                        <span></span>
-                                        <span></span>
-                                        </span>
-                                        </span>
-                                    </div>
                                     <a class="tmp-btn @@btnClass" href="pricing-three-white.html">Membresia</a>
                                 </div>
+                                
                                 <!-- End Header Btn  -->
 
                                 <!-- Start Mobile-Menu-Bar -->
@@ -98,8 +89,9 @@
                     </div>
                 </div>
             </header>
+
         <!-- End Header Area  -->
-                <div class="popup-mobile-menu">
+        <div class="popup-mobile-menu">
             <div class="inner">
                 <div class="header-top">
                     <div class="logo">
@@ -143,21 +135,24 @@
 
 
         <!-- Start Talleres List View  -->
-        <div class="main-content">
-            <div data-ni-module="talleres" hidden aria-hidden="true"></div>
-            <div class="tmp-blog-area tmp-section-gapBottom ni-catalog-area">
+        <div data-ni-module="talleres" hidden aria-hidden="true"></div>
+            <div class="tmp-blog-area tmp-section-gap ni-catalog-area">
                 <div class="container">
-                    <div class="tmp-section-title-border text-start mb--35">
-                        <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
-                            <div>
-                                <h1 class="title w-700 tmp-title-split mb--10">Talleres y Eventos</h1>
-                                <p class="description mb-0">Aprende con expertos en comercio exterior, logística, finanzas y más.</p>
+                    <div class="row">
+                        <div class="col-lg-12"> 
+                            <div class="tmp-section-title-border text-start mb--35">
+                                <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+                                    <div>
+                                        <h1 class="title w-700 tmp-title-split mb--10">Talleres y Eventos</h1>
+                                        <p class="description mb-0">Aprende con expertos en comercio exterior, logística, finanzas y más.</p>
+                                    </div>
+                                    <button type="button" id="ni-talleres-admin-create" class="tmp-btn" hidden>
+                                        <span>Crear taller</span>
+                                    </button>
+                                </div>
+                                <p id="ni-talleres-status" class="mt--15 mb-0" hidden data-ni-status=""></p>
                             </div>
-                            <button type="button" id="ni-talleres-admin-create" class="tmp-btn" hidden>
-                                <span>Crear taller</span>
-                            </button>
                         </div>
-                        <p id="ni-talleres-status" class="mt--15 mb-0" hidden data-ni-status=""></p>
                     </div>
 
                     <div class="ni-filter-bar mb--30" id="ni-talleres-filters">
@@ -186,7 +181,6 @@
                     <ul id="ni-talleres-pagination" class="tmp-pagination mt--60" hidden aria-label="Paginación de talleres"></ul>
                 </div>
             </div>
-        </div>
         <!-- End Talleres List View  -->
 
         <!-- Modal crear / editar taller -->

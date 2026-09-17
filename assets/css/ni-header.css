@@ -1,0 +1,72 @@
+/* NI header: account in popup on small screens; hamburger is responsive-only. */
+
+body.ni-header-compact .tmp-header .header-right {
+  flex-wrap: nowrap;
+  gap: 12px;
+}
+
+body.ni-header-compact .tmp-header [data-ni-auth-slot] {
+  display: none !important;
+}
+
+body.ni-header-compact .tmp-header .header-btn {
+  display: flex;
+  align-items: center;
+  margin-left: 0;
+}
+
+body.ni-header-compact .tmp-header .header-btn > a.tmp-btn {
+  display: inline-flex;
+}
+
+/* Hamburger + Membresia collapse only in the theme's mobile breakpoint. */
+body.ni-header-compact .tmp-header .mobile-menu-bar {
+  display: none !important;
+}
+
+@media only screen and (max-width: 991px) {
+  body.ni-header-compact .tmp-header .mobile-menu-bar {
+    display: flex !important;
+    align-items: center;
+    margin-left: 8px;
+  }
+
+  body.ni-header-compact .tmp-header .header-btn > a.tmp-btn,
+  body.ni-header-compact .tmp-header .header-btn .dot-btn {
+    display: none !important;
+  }
+
+  /* Overlay fade only (opacity is cheap). Panel slides with transform (GPU). */
+  body.ni-header-compact .popup-mobile-menu {
+    transition: opacity 0.2s ease;
+  }
+
+  body.ni-header-compact .popup-mobile-menu .inner {
+    left: 0;
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 0.22s ease;
+  }
+
+  body.ni-header-compact .popup-mobile-menu.active .inner {
+    transform: translate3d(0, 0, 0);
+    overflow-y: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.ni-header-compact .popup-mobile-menu,
+  body.ni-header-compact .popup-mobile-menu .inner {
+    transition: none;
+  }
+}
+
+.popup-mobile-menu .ni-auth-menu {
+  margin-top: auto;
+  border-top: 1px solid var(--color-border);
+}
+
+.popup-mobile-menu .ni-auth-menu .ni-auth-loading {
+  display: block;
+  padding: 8px 0;
+  opacity: 0.6;
+}
