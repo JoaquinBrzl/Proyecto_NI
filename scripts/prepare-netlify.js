@@ -8,7 +8,6 @@ const root = path.join(__dirname, '..');
 const dest = path.join(root, 'dist');
 const skip = new Set([
   'node_modules',
-  'vendor',
   'dist',
   '.git',
   '.insforge',
