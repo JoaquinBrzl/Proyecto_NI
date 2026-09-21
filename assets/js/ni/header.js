@@ -160,7 +160,7 @@ function ensureStyles() {
     const link = document.createElement('link');
     link.id = 'ni-header-css';
     link.rel = 'stylesheet';
-    link.href = `${new URL('../../css/ni-header.css', import.meta.url).href}?v=5.1.2`;
+    link.href = `${new URL('../../css/ni-header.css', import.meta.url).href}?v=5.1.4`;
     document.head.appendChild(link);
   }
   if (!document.getElementById('ni-brand-css')) {
@@ -301,8 +301,8 @@ function enhanceZenitChrome() {
     const hamburger = headerRight.querySelector('.mobile-menu-bar');
     if (hamburger) headerRight.insertBefore(actions, hamburger);
     else headerRight.appendChild(actions);
-    paintThemeToggle(readStoredTheme());
   }
+  paintThemeToggle(readStoredTheme());
 
   ensureSearchPanel(header);
   bindHeaderSurface();

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="ni-zenit">
 
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <meta name="theme-style-mode" content="1">
     <meta name="description" content="Transform your business with expert consulting. Our team delivers strategic insights, innovative solutions, and professional guidance to help you achieve lasting success.">
 
-    <title>Service || Corpox Business and Consulting Bootstrap5 Template</title>
+    <title>Anuncios || Grupo NI</title>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
     <!-- CSS ============================================ -->
@@ -28,6 +28,10 @@
     <link href="assets/css/plugins/odometer.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css?v=4.5.6">
     <link rel="stylesheet" href="assets/css/ni-admin.css?v=1.4.3">
+    <link rel="stylesheet" href="assets/css/ni-header.css?v=5.1.4">
+    <link rel="stylesheet" href="assets/css/ni-footer.css?v=1.1.0">
+    <link rel="stylesheet" href="assets/css/ni-brand.css?v=1.0.1">
+    <script src="assets/js/ni/header-boot.js?v=1.0.1"></script>
 </head>
 
 
@@ -35,14 +39,19 @@
     <main class="page-wrapper">
 
         <!-- Start Header Area  -->
-                <header class="tmp-header header-default header-not-transparent header-sticky">
+                <header class="tmp-header ni-zenit-header header-default header-not-transparent header-sticky">
                 <div class="container position-relative">
                     <div class="row align-items-center row--0">
                         <div class="col-xl-2 col-lg-2 col-md-6 col-4">
                             <div class="logo">
-                                <a href="index.html">
-                                    <img class="logo-light" src="assets/images/logo/event-logo.svg" alt="Corporate Logo">
-                                    <img class="logo-dark" src="assets/images/logo/event-logo-dark.svg" alt="Corporate Logo">
+                                <a class="ni-zenit-brand" href="index.html">
+                                    <span class="ni-zenit-brand-mark" aria-hidden="true">
+                                        <img src="assets/images/logo/ni-logo.png" alt="">
+                                    </span>
+                                    <span class="ni-zenit-brand-text">
+                                        <strong>Zenit</strong>
+                                        <span>por Grupo NI</span>
+                                    </span>
                                 </a>
                             </div>
                         </div>
@@ -72,7 +81,22 @@
                                 </nav>
 
                                 <!-- Start Header Btn  -->
-                                <div class="header-btn">
+                                                            <div class="ni-zenit-actions" data-ni-zenit-actions="1">
+                                <button type="button" class="ni-zenit-search-toggle" data-ni-search-open aria-expanded="false" aria-label="Buscar">
+                                    <i class="feather-search" aria-hidden="true"></i>
+                                    <span class="ni-zenit-search-label">Buscar</span>
+                                </button>
+                                <button type="button" class="ni-zenit-theme-toggle" data-ni-theme-toggle aria-pressed="false" aria-label="Cambiar tema" title="Modo oscuro">
+                                    <i class="feather-moon" aria-hidden="true"></i>
+                                </button>
+                                <div class="ni-zenit-account" data-ni-zenit-account>
+                                    <a class="ni-zenit-user" href="login.html" data-ni-login>
+                                        <i class="feather-user" aria-hidden="true"></i>
+                                        <span>Ingresar</span>
+                                    </a>
+                                </div>
+                            </div>
+                                <div class="header-btn" hidden>
                                     <a class="tmp-btn @@btnClass" href="pricing-three-white.html">Membresia</a>
                                 </div>
                                 <!-- End Header Btn  -->
@@ -97,11 +121,16 @@
             <div class="inner">
                 <div class="header-top">
                     <div class="logo">
-                        <a href="index.html">
-                            <img class="logo-light" src="assets/images/logo/logo.png" alt="Corporate Logo">
-                            <img class="logo-dark" src="assets/images/logo/logo-dark.png" alt="Corporate Logo">
-                        </a>
-                    </div>
+                                <a class="ni-zenit-brand" href="index.html">
+                                    <span class="ni-zenit-brand-mark" aria-hidden="true">
+                                        <img src="assets/images/logo/ni-logo.png" alt="">
+                                    </span>
+                                    <span class="ni-zenit-brand-text">
+                                        <strong>Zenit</strong>
+                                        <span>por Grupo NI</span>
+                                    </span>
+                                </a>
+                            </div>
                     <div class="close-menu">
                         <button class="close-button">
                             <i class="feather-x"></i>
@@ -280,7 +309,7 @@
 
     <!-- pre loader end -->
 
-    <div id="anywhere-home" class="">
+    <div id="anywhere-home" class="" hidden>
     </div>
 
     <div class="mouse-cursor cursor-outer"></div>
@@ -293,7 +322,7 @@
 
 
     <!-- sidebar desktop -->
-    <div class="inverweb-side-bar-close">
+    <div class="inverweb-side-bar-close" hidden>
         <div class="shape-right-top">
             <img src="assets/images/banner/shape-it-1.svg" alt="">
         </div>

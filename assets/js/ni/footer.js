@@ -70,7 +70,7 @@ function ensureFooterStyles() {
   const link = document.createElement('link');
   link.id = 'ni-footer-css';
   link.rel = 'stylesheet';
-  link.href = `${new URL('../../css/ni-footer.css', import.meta.url).href}?v=1.0.9`;
+  link.href = `${new URL('../../css/ni-footer.css', import.meta.url).href}?v=1.1.0`;
   document.head.appendChild(link);
 }
 

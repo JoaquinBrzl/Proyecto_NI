@@ -184,3 +184,8 @@
 footer.tmp-footer:not(.ni-footer) {
   display: none !important;
 }
+
+html.ni-zenit footer#ni-site-footer.ni-footer:empty {
+  min-height: 240px;
+  background: #0b1f4a;
+}

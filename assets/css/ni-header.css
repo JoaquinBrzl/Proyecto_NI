@@ -82,6 +82,78 @@ html.ni-header-compact .tmp-header .mobile-menu-bar {
   opacity: 0.6;
 }
 
+/* First paint (before header.js): hide Corpox chrome, show Zenit bar. */
+html.ni-zenit .tmp-header {
+  --ni-zenit-bg: #0f172a;
+  --ni-zenit-bg-2: #1a233b;
+  --ni-zenit-text: #f8fafc;
+  --ni-zenit-muted: #93c5fd;
+  --ni-zenit-accent: #f59e0b;
+  --ni-zenit-glass: rgba(15, 23, 42, 0.52);
+  background: var(--ni-zenit-glass) !important;
+  background-image: none !important;
+  backdrop-filter: blur(18px) saturate(1.35);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  min-height: 72px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+html.ni-zenit .tmp-header .header-btn {
+  display: none !important;
+}
+
+html.ni-zenit .tmp-header .mainmenu > li > a {
+  color: #e2e8f0 !important;
+}
+
+html.ni-zenit .tmp-header .logo > a:not(.ni-zenit-brand) {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none !important;
+}
+
+html.ni-zenit .tmp-header .logo > a:not(.ni-zenit-brand) img {
+  display: none !important;
+}
+
+html.ni-zenit .tmp-header .logo > a:not(.ni-zenit-brand)::before {
+  content: '';
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #f59e0b url('../images/logo/ni-logo.png') center / 86% no-repeat;
+  flex-shrink: 0;
+}
+
+html.ni-zenit .tmp-header .logo > a:not(.ni-zenit-brand)::after {
+  content: 'Zenit';
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+/* Template leftovers that flash Corpox chrome / dummy contact data */
+html.ni-zenit .inverweb-side-bar-close,
+html.ni-zenit .inverweb-side-bar-close.show,
+html.ni-zenit .tmp-search-input-area,
+html.ni-zenit .tmp-search-input-area.show,
+html.ni-zenit #anywhere-home,
+html.ni-zenit #anywhere-home.bgshow,
+html.ni-zenit .popup-mobile-menu .logo img.logo-light,
+html.ni-zenit .popup-mobile-menu .logo img.logo-dark,
+html.ni-zenit footer.tmp-footer:not(.ni-footer) {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
 /* ---------------------------------------------------------------------------
    Zenit dark header — glass / translucent
 --------------------------------------------------------------------------- */
