@@ -87,10 +87,28 @@ export async function resetPassword(newPassword, otp) {
   return insforge.auth.resetPassword({ newPassword, otp });
 }
 
-export async function signInWithOAuth(provider) {
+export async function signInWithOAuth(provider, options = {}) {
   const insforge = getClient();
-  const redirectTo = new URL('perfil.html', window.location.href).href;
-  return insforge.auth.signInWithOAuth(provider, { redirectTo });
+  // Must match allowlisted URLs EXACTLY (no query string — InsForge rejects ?oauth=1 / ?next=).
+  const page = options.redirectPage || 'login.html';
+  const redirectTo = new URL(page, window.location.href);
+  redirectTo.search = '';
+  redirectTo.hash = '';
+
+  // Preserve post-login destination outside the OAuth redirect URL.
+  try {
+    const next =
+      options.next ||
+      new URLSearchParams(window.location.search).get('next') ||
+      '';
+    if (next) sessionStorage.setItem('ni_oauth_next', next);
+    else sessionStorage.removeItem('ni_oauth_next');
+    sessionStorage.setItem('ni_oauth_pending', '1');
+  } catch {
+    /* ignore */
+  }
+
+  return insforge.auth.signInWithOAuth(provider, { redirectTo: redirectTo.href });
 }
 
 export async function signOut() {

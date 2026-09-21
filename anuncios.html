@@ -26,7 +26,8 @@
     <link href="assets/css/plugins/slick-theme.css" rel="stylesheet">
     <link href="assets/css/plugins/lightbox.css" rel="stylesheet">
     <link href="assets/css/plugins/odometer.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=4.5.3">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.5.6">
+    <link rel="stylesheet" href="assets/css/ni-admin.css?v=1.4.3">
 </head>
 
 
@@ -65,6 +66,7 @@
                                         <li><a href="about-white.html">Nosotros</a></li>
 
                                         <li><a href="contact-white.html">Contact</a></li>
+                                        <li><a href="pricing-three-white.html">Membresia</a></li>
 
                                     </ul>
                                 </nav>
@@ -130,6 +132,7 @@
                     </li>
                     <li><a href="about-white.html">Nosotros</a></li>
                     <li><a href="contact-white.html">Contacto</a></li>
+                    <li><a href="pricing-three-white.html">Membresia</a></li>
                 </ul>
             </div>
         </div>
@@ -147,7 +150,7 @@
                                 <div class="tmp-section-title-border text-start mb--35">
                                     <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
                                         <div>
-                                            <h2 class="title w-700 tmp-title-split mb--10">Anuncios</h2>
+                                            <h2 class="title w-700 mb--10">Anuncios</h2>
                                             <p class="description mb-0">Novedades, eventos, convocatorias y comunicados de Grupo NI.</p>
                                         </div>
                                         <button type="button" id="ni-anuncios-admin-create" class="tmp-btn" hidden>
@@ -162,9 +165,9 @@
                         <div class="ni-filter-bar mb--30" id="ni-anuncios-filters">
                             <div class="ni-filter-search">
                                 <i class="feather-search search-icon" aria-hidden="true"></i>
-                                <input id="ni-anuncios-search" type="search" name="q" placeholder="Buscar anunciosâ€¦" autocomplete="off" aria-label="Buscar anuncios">
+                                <input id="ni-anuncios-search" type="search" name="q" placeholder="Buscar anuncios…" autocomplete="off" aria-label="Buscar anuncios">
                             </div>
-                            <div class="ni-filter-chips" id="ni-anuncios-category" role="group" aria-label="Filtrar por categorÃ­a">
+                            <div class="ni-filter-chips" id="ni-anuncios-category" role="group" aria-label="Filtrar por categoría">
                                 <button type="button" data-ni-category="" class="is-checked">Todos</button>
                                 <button type="button" data-ni-category="eventos">Eventos</button>
                                 <button type="button" data-ni-category="talleres">Talleres</button>
@@ -175,8 +178,8 @@
                         </div>
 
                         <div id="ni-anuncios-pub-wrap" class="mb--20" hidden>
-                            <label class="d-block mb--10">PublicaciÃ³n (admin)</label>
-                            <div class="filter-button-default" id="ni-anuncios-pub" role="group" aria-label="Filtrar por publicaciÃ³n">
+                            <label class="d-block mb--10">Publicación (admin)</label>
+                            <div class="filter-button-default" id="ni-anuncios-pub" role="group" aria-label="Filtrar por publicación">
                                 <button type="button" data-ni-pub="" class="is-checked">Todos</button>
                                 <button type="button" data-ni-pub="published">Publicados</button>
                                 <button type="button" data-ni-pub="draft">Borradores</button>
@@ -191,9 +194,9 @@
             <!-- End Anuncios Area  -->
 
         <!-- Modal crear / editar anuncio -->
-        <div class="modal fade ni-modal" id="ni-anuncios-modal" tabindex="-1" aria-labelledby="ni-anuncios-modal-title" aria-hidden="true">
+        <div class="modal fade ni-admin-modal" id="ni-anuncios-modal" tabindex="-1" aria-labelledby="ni-anuncios-modal-title" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
-                <form class="modal-content" id="ni-anuncios-form" autocomplete="off">
+                <form class="modal-content ni-admin-form" id="ni-anuncios-form" autocomplete="off">
                     <div class="modal-header">
                         <h5 class="modal-title" id="ni-anuncios-modal-title">Crear anuncio</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -203,13 +206,13 @@
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ann-title">TÃ­tulo</label>
+                                    <label for="ni-ann-title">Título</label>
                                     <input id="ni-ann-title" name="title" type="text" required maxlength="200">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ann-category">CategorÃ­a</label>
+                                    <label for="ni-ann-category">Categoría</label>
                                     <select id="ni-ann-category" name="category" required>
                                         <option value="eventos">Eventos</option>
                                         <option value="talleres">Talleres</option>
@@ -221,27 +224,27 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ann-published-at">Fecha de publicaciÃ³n</label>
+                                    <label for="ni-ann-published-at">Fecha de publicación</label>
                                     <input id="ni-ann-published-at" name="published_at" type="datetime-local">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ann-description">DescripciÃ³n</label>
+                                    <label for="ni-ann-description">Descripción</label>
                                     <textarea id="ni-ann-description" name="description" required maxlength="4000" rows="4"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ann-image">Imagen (JPEG, PNG o WebP Â· mÃ¡x. 2 MB)</label>
+                                    <label for="ni-ann-image">Imagen (JPEG, PNG o WebP · máx. 2 MB)</label>
                                     <input id="ni-ann-image" name="image" type="file" accept="image/jpeg,image/png,image/webp">
                                     <img id="ni-ann-image-preview" alt="Vista previa" hidden>
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group mb-0">
-                                    <label for="ni-ann-link">Enlace â€œVer mÃ¡sâ€</label>
-                                    <input id="ni-ann-link" name="link_url" type="text" required maxlength="500" placeholder="https://â€¦ o pÃ¡gina local">
+                                    <label for="ni-ann-link">Enlace “Ver más”</label>
+                                    <input id="ni-ann-link" name="link_url" type="text" required maxlength="500" placeholder="https://… o página local">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -254,101 +257,17 @@
                                 </div>
                             </div>
                         </div>
-                        <p id="ni-anuncios-form-status" class="mt--20 mb-0" hidden></p>
+                        <p id="ni-anuncios-form-status" class="ni-admin-msg" hidden></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="tmp-btn btn-border" data-bs-dismiss="modal"><span>Cancelar</span></button>
-                        <button type="submit" class="tmp-btn" id="ni-anuncios-form-submit"><span>Guardar</span></button>
+                        <button type="button" class="ni-admin-btn ni-admin-btn--ghost" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="ni-admin-btn" id="ni-anuncios-form-submit">Guardar</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <!-- Start Footer Area  -->
-        <footer class="tmp-footer footer-style-default variation-two position-relative">
-
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <div class="logo">
-                                    <a href="index.html">
-                                        <img class="logo-light" src="assets/images/logo/logo.png" alt="Corporate Logo">
-                                        <img class="logo-dark" src="assets/images/logo/logo-dark.png" alt="Corporate Logo">
-                                    </a>
-                                </div>
-                                <p class="subtitle mt--30">If you want to create a corporate template you can purshace now
-                                    our Corpex
-                                    template.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Company</h4>
-                                <div class="inner">
-                                    <ul class="footer-link link-hover">
-                                        <li><a href="pricing-white.html">Pricing</a></li>
-                                        <li><a href="tab-white.html">Tab Styles</a></li>
-                                        <li><a href="service-white.html">Service</a></li>
-                                        <li><a href="social-share-white.html">Social</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Resources</h4>
-                                <div class="inner">
-                                    <ul class="footer-link link-hover">
-                                        <li><a href="team-white.html">Team</a></li>
-                                        <li><a href="testimonial-white.html">Testimonial</a></li>
-                                        <li><a href="service-white.html">Service</a></li>
-                                        <li><a href="timeline-white.html">Timeline</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Stay With Us.</h4>
-                                <div class="inner">
-                                    <h6 class="subtitle">1200+ trusted clients are subscribe Us around the world</h6>
-                                    <ul class="social-icon social-default justify-content-start">
-                                        <li><a href="https://www.facebook.com/">
-                                                <i class="feather-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li><a href="https://www.twitter.com">
-                                                <i class="feather-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li><a href="https://www.instagram.com/">
-                                                <i class="feather-instagram"></i>
-                                            </a>
-                                        </li>
-                                        <li><a href="https://www.linkdin.com/">
-                                                <i class="feather-linkedin"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div class="jumping-text">
-        <h2 class="title end">
-            Contact Us
-        </h2>
-     </div> -->
-
-            <!-- Start Copy Right Area  -->
-            <!-- End Copy Right Area  -->
-        </footer>
-        <!-- End Footer Area  -->
+                <footer id="ni-site-footer" class="ni-footer" aria-label="Pie de página"></footer>
     </main>
 
     <!-- All Scripts  -->

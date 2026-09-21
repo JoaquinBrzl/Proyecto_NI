@@ -1,3 +1,4 @@
+import { mountAdminContent } from './admin-content.js';
 import { getClient } from '../client.js';
 import { rpcIsAdmin } from '../identity.js';
 import { registerModule } from './registry.js';
@@ -9,6 +10,7 @@ import { registerModule } from './registry.js';
 
 const LOGIN_HREF = 'login.html';
 const HOME_HREF = 'index.html';
+const PAGE_SIZE = 10;
 
 function escapeHtml(str) {
   return String(str ?? '')
@@ -43,6 +45,72 @@ function formatDate(iso) {
   } catch {
     return String(iso).slice(0, 16);
   }
+}
+
+function statusLabel(status) {
+  const map = {
+    pending: 'Pendiente',
+    approved: 'Aprobada',
+    rejected: 'Rechazada',
+  };
+  return map[status] || status || '—';
+}
+
+function statusBadge(status) {
+  const kind =
+    status === 'approved' ? 'ok' : status === 'rejected' ? 'error' : status === 'pending' ? 'warn' : '';
+  return `<span class="ni-admin-pill${kind ? ` ni-admin-pill--${kind}` : ''}">${escapeHtml(statusLabel(status))}</span>`;
+}
+
+function detailField(label, value, { multiline = false } = {}) {
+  const text = value == null || value === '' ? '—' : String(value);
+  return `
+    <div class="ni-admin-field${multiline ? ' ni-admin-field--block' : ''}">
+      <span class="ni-admin-field__label">${escapeHtml(label)}</span>
+      <span class="ni-admin-field__value${multiline ? ' is-multiline' : ''}">${escapeHtml(text)}</span>
+    </div>`;
+}
+
+function parseAnswers(row) {
+  let answers = row?.answers;
+  if (typeof answers === 'string') {
+    try {
+      answers = JSON.parse(answers);
+    } catch {
+      answers = null;
+    }
+  }
+  if (answers && typeof answers === 'object' && !Array.isArray(answers)) return answers;
+  return null;
+}
+
+const AVAILABILITY_LABELS = {
+  alta: 'Alta — casi siempre disponible',
+  media: 'Media — varios días a la semana',
+  baja: 'Baja — solo fines de semana / ocasional',
+};
+
+function renderEliteAnswers(row) {
+  const answers = parseAnswers(row);
+  if (answers) {
+    const disponibilidad =
+      AVAILABILITY_LABELS[answers.disponibilidad] || answers.disponibilidad || '—';
+    return `
+      <div class="ni-admin-fields">
+        ${detailField('Motivo', answers.motivo, { multiline: true })}
+        ${detailField('Objetivos', answers.objetivos, { multiline: true })}
+        ${detailField('Temas', answers.temas, { multiline: true })}
+        ${detailField('Participación previa', answers.participacion, { multiline: true })}
+        ${detailField('Aporte', answers.aporte, { multiline: true })}
+        ${detailField('Disponibilidad', disponibilidad)}
+        ${detailField('WhatsApp', answers.whatsapp)}
+        ${detailField('LinkedIn', answers.linkedin || '—')}
+      </div>`;
+  }
+  return `
+    <div class="ni-admin-fields">
+      ${detailField('Mensaje', row.message || '(sin mensaje)', { multiline: true })}
+    </div>`;
 }
 
 async function assertAdminAccess(ctx) {
@@ -114,11 +182,45 @@ function groupEnrollmentsByWorkshop(rows) {
   );
 }
 
+function renderPagination(root, { page, totalPages, onPage }) {
+  if (!root) return;
+  if (totalPages <= 1) {
+    root.innerHTML = '';
+    return;
+  }
+  const buttons = [];
+  buttons.push(
+    `<button type="button" class="ni-admin-page-btn" data-page="${page - 1}" ${page <= 1 ? 'disabled' : ''}>‹</button>`,
+  );
+  const start = Math.max(1, page - 2);
+  const end = Math.min(totalPages, page + 2);
+  for (let p = start; p <= end; p += 1) {
+    buttons.push(
+      `<button type="button" class="ni-admin-page-btn${p === page ? ' is-active' : ''}" data-page="${p}">${p}</button>`,
+    );
+  }
+  buttons.push(
+    `<button type="button" class="ni-admin-page-btn" data-page="${page + 1}" ${page >= totalPages ? 'disabled' : ''}>›</button>`,
+  );
+  root.innerHTML = buttons.join('');
+  root.querySelectorAll('[data-page]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const next = Number(btn.getAttribute('data-page'));
+      if (!Number.isFinite(next) || next < 1 || next > totalPages || next === page) return;
+      onPage(next);
+    });
+  });
+}
+
 function createAdminController(root) {
   const eliteStatusEl = document.getElementById('ni-admin-elite-status');
   const wsEnrollStatusEl = document.getElementById('ni-admin-ws-enroll-status');
   const eliteTableBody = document.querySelector('#ni-admin-elite-table tbody');
+  const elitePager = document.getElementById('ni-admin-elite-pagination');
+  const eliteSearch = document.getElementById('ni-admin-elite-search');
+  const eliteFilterChips = document.getElementById('ni-admin-elite-filter-chips');
   const wsEnrollGroups = document.getElementById('ni-admin-ws-enroll-groups');
+  const wsEnrollPager = document.getElementById('ni-admin-ws-enroll-pagination');
   const detailPanel = document.getElementById('ni-admin-elite-detail');
   const detailBody = document.getElementById('ni-admin-elite-detail-body');
   const approveBtn = document.getElementById('ni-admin-elite-approve');
@@ -130,15 +232,84 @@ function createAdminController(root) {
 
   const state = {
     eliteRows: [],
+    elitePage: 1,
+    eliteQuery: '',
+    eliteStatus: '',
     selectedEliteId: null,
     wsEnrollRows: [],
+    wsGroups: [],
+    wsPage: 1,
   };
+
+  function filteredEliteRows() {
+    const q = state.eliteQuery.trim().toLowerCase();
+    const status = state.eliteStatus;
+    return state.eliteRows.filter((row) => {
+      if (status && row.status !== status) return false;
+      if (!q) return true;
+      const name = `${row.nombres || ''} ${row.apellidos || ''}`.trim().toLowerCase();
+      const hay = [
+        name,
+        row.email,
+        row.universidad,
+        row.carrera,
+        statusLabel(row.status),
+      ]
+        .map((v) => String(v || '').toLowerCase())
+        .join(' ');
+      return hay.includes(q);
+    });
+  }
+
+  function paintElitePage() {
+    if (!eliteTableBody) return;
+    eliteTableBody.innerHTML = '';
+    const rows = filteredEliteRows();
+    const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+    if (state.elitePage > totalPages) state.elitePage = totalPages;
+    const start = (state.elitePage - 1) * PAGE_SIZE;
+    const slice = rows.slice(start, start + PAGE_SIZE);
+
+    if (!state.eliteRows.length) {
+      setStatus(eliteStatusEl, 'No hay postulaciones Elite.', 'empty');
+    } else if (!rows.length) {
+      setStatus(eliteStatusEl, 'No hay resultados con este filtro o búsqueda.', 'empty');
+    } else {
+      setStatus(eliteStatusEl, '', '');
+    }
+
+    for (const row of slice) {
+      const name = `${row.nombres || ''} ${row.apellidos || ''}`.trim() || '—';
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${escapeHtml(name)}</td>
+        <td>${escapeHtml(row.email || '—')}</td>
+        <td>${escapeHtml(row.universidad || '—')}</td>
+        <td>${escapeHtml(row.carrera || '—')}</td>
+        <td>${escapeHtml(formatDate(row.created_at))}</td>
+        <td>${statusBadge(row.status)}</td>
+        <td>
+          <button type="button" class="tmp-btn btn-border btn-small" data-ni-elite-open="${escapeHtml(row.id)}">Ver</button>
+        </td>
+      `;
+      eliteTableBody.appendChild(tr);
+    }
+    renderPagination(elitePager, {
+      page: state.elitePage,
+      totalPages: rows.length ? totalPages : 1,
+      onPage: (next) => {
+        state.elitePage = next;
+        paintElitePage();
+      },
+    });
+  }
 
   async function refreshElite() {
     if (!eliteTableBody) return;
     setStatus(eliteStatusEl, 'Cargando postulaciones…', 'info');
     const { data, error } = await listEliteApplicationsAdmin();
     eliteTableBody.innerHTML = '';
+    if (elitePager) elitePager.innerHTML = '';
     state.eliteRows = data;
     if (error) {
       setStatus(eliteStatusEl, error.message || 'No se pudieron cargar postulaciones.', 'error');
@@ -149,22 +320,7 @@ function createAdminController(root) {
       return;
     }
     setStatus(eliteStatusEl, '', '');
-    for (const row of data) {
-      const name = `${row.nombres || ''} ${row.apellidos || ''}`.trim() || '—';
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${escapeHtml(name)}</td>
-        <td>${escapeHtml(row.email || '—')}</td>
-        <td>${escapeHtml(row.universidad || '—')}</td>
-        <td>${escapeHtml(row.carrera || '—')}</td>
-        <td>${escapeHtml(formatDate(row.created_at))}</td>
-        <td><span class="tmp-badge">${escapeHtml(row.status)}</span></td>
-        <td>
-          <button type="button" class="tmp-btn btn-border btn-small" data-ni-elite-open="${escapeHtml(row.id)}">Ver</button>
-        </td>
-      `;
-      eliteTableBody.appendChild(tr);
-    }
+    paintElitePage();
   }
 
   function openEliteDetail(id) {
@@ -173,15 +329,22 @@ function createAdminController(root) {
     state.selectedEliteId = id;
     const name = `${row.nombres || ''} ${row.apellidos || ''}`.trim() || 'Sin nombre';
     const pending = row.status === 'pending';
+    const answers = parseAnswers(row);
     detailBody.innerHTML = `
-      <p><strong>Nombre:</strong> ${escapeHtml(name)}</p>
-      <p><strong>Email:</strong> ${escapeHtml(row.email || '—')}</p>
-      <p><strong>Universidad:</strong> ${escapeHtml(row.universidad || '—')}</p>
-      <p><strong>Carrera:</strong> ${escapeHtml(row.carrera || '—')}</p>
-      <p><strong>Fecha:</strong> ${escapeHtml(formatDate(row.created_at))}</p>
-      <p><strong>Estado:</strong> ${escapeHtml(row.status)}</p>
-      <p class="mb--0"><strong>Mensaje:</strong></p>
-      <p style="white-space:pre-wrap;">${escapeHtml(row.message || '(sin mensaje)')}</p>
+      <div class="ni-admin-fields">
+        ${detailField('Nombre', name)}
+        ${detailField('Email', row.email || '—')}
+        ${detailField('Universidad', answers?.universidad || row.universidad || '—')}
+        ${detailField('Carrera', answers?.carrera || row.carrera || '—')}
+        ${detailField('Ciclo académico', answers?.ciclo || '—')}
+        ${detailField('Fecha', formatDate(row.created_at))}
+        <div class="ni-admin-field">
+          <span class="ni-admin-field__label">Estado</span>
+          <span class="ni-admin-field__value">${statusBadge(row.status)}</span>
+        </div>
+      </div>
+      <h4 class="ni-admin-detail__section">Respuestas de la postulación</h4>
+      ${renderEliteAnswers(row)}
     `;
     if (approveBtn) {
       approveBtn.disabled = !pending;
@@ -200,27 +363,18 @@ function createAdminController(root) {
     if (detailPanel) detailPanel.hidden = true;
   }
 
-  async function refreshWorkshopEnrollments() {
+  function paintWsEnrollPage() {
     if (!wsEnrollGroups) return;
-    setStatus(wsEnrollStatusEl, 'Cargando inscripciones…', 'info');
-    const { data, error } = await listWorkshopEnrollmentsAdmin();
     wsEnrollGroups.innerHTML = '';
-    state.wsEnrollRows = data;
-    if (error) {
-      setStatus(wsEnrollStatusEl, error.message || 'No se pudieron cargar inscripciones.', 'error');
-      return;
-    }
-    if (!data.length) {
-      setStatus(wsEnrollStatusEl, 'No hay inscripciones a talleres.', 'empty');
-      return;
-    }
-    setStatus(wsEnrollStatusEl, '', '');
-
-    const groups = groupEnrollmentsByWorkshop(data);
-    for (const group of groups) {
+    const groups = state.wsGroups;
+    const totalPages = Math.max(1, Math.ceil(groups.length / PAGE_SIZE));
+    if (state.wsPage > totalPages) state.wsPage = totalPages;
+    const start = (state.wsPage - 1) * PAGE_SIZE;
+    const slice = groups.slice(start, start + PAGE_SIZE);
+    for (const group of slice) {
       const details = document.createElement('details');
       details.className = 'ni-admin-enroll-group';
-      details.open = groups.length <= 3;
+      details.open = slice.length <= 3;
 
       const rowsHtml = group.rows
         .map((row) => {
@@ -261,6 +415,35 @@ function createAdminController(root) {
       `;
       wsEnrollGroups.appendChild(details);
     }
+    renderPagination(wsEnrollPager, {
+      page: state.wsPage,
+      totalPages,
+      onPage: (next) => {
+        state.wsPage = next;
+        paintWsEnrollPage();
+      },
+    });
+  }
+
+  async function refreshWorkshopEnrollments() {
+    if (!wsEnrollGroups) return;
+    setStatus(wsEnrollStatusEl, 'Cargando inscripciones…', 'info');
+    const { data, error } = await listWorkshopEnrollmentsAdmin();
+    wsEnrollGroups.innerHTML = '';
+    if (wsEnrollPager) wsEnrollPager.innerHTML = '';
+    state.wsEnrollRows = data;
+    state.wsGroups = [];
+    if (error) {
+      setStatus(wsEnrollStatusEl, error.message || 'No se pudieron cargar inscripciones.', 'error');
+      return;
+    }
+    if (!data.length) {
+      setStatus(wsEnrollStatusEl, 'No hay inscripciones a talleres.', 'empty');
+      return;
+    }
+    setStatus(wsEnrollStatusEl, '', '');
+    state.wsGroups = groupEnrollmentsByWorkshop(data);
+    paintWsEnrollPage();
   }
 
   function openWsEnrollDetail(id) {
@@ -268,12 +451,14 @@ function createAdminController(root) {
     if (!row || !wsDetailPanel || !wsDetailBody) return;
     const name = `${row.nombres || ''} ${row.apellidos || ''}`.trim() || 'Sin nombre';
     wsDetailBody.innerHTML = `
-      <p><strong>Nombre:</strong> ${escapeHtml(name)}</p>
-      <p><strong>Email:</strong> ${escapeHtml(row.email || '—')}</p>
-      <p><strong>Universidad:</strong> ${escapeHtml(row.universidad || '—')}</p>
-      <p><strong>Carrera:</strong> ${escapeHtml(row.carrera || '—')}</p>
-      <p><strong>Taller:</strong> ${escapeHtml(row.workshop_title || '—')}</p>
-      <p class="mb--0"><strong>Fecha de inscripción:</strong> ${escapeHtml(formatDate(row.created_at))}</p>
+      <div class="ni-admin-fields">
+        ${detailField('Nombre', name)}
+        ${detailField('Email', row.email || '—')}
+        ${detailField('Universidad', row.universidad || '—')}
+        ${detailField('Carrera', row.carrera || '—')}
+        ${detailField('Taller', row.workshop_title || '—')}
+        ${detailField('Fecha de inscripción', formatDate(row.created_at))}
+      </div>
     `;
     wsDetailPanel.hidden = false;
     wsDetailPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -312,6 +497,26 @@ function createAdminController(root) {
 
     closeEliteDetail();
     await refreshElite();
+  }
+
+  if (eliteSearch) {
+    eliteSearch.addEventListener('input', () => {
+      state.eliteQuery = eliteSearch.value || '';
+      state.elitePage = 1;
+      paintElitePage();
+    });
+  }
+  if (eliteFilterChips) {
+    eliteFilterChips.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-ni-elite-status]');
+      if (!btn || !eliteFilterChips.contains(btn)) return;
+      eliteFilterChips.querySelectorAll('[data-ni-elite-status]').forEach((b) => {
+        b.classList.toggle('is-checked', b === btn);
+      });
+      state.eliteStatus = btn.getAttribute('data-ni-elite-status') || '';
+      state.elitePage = 1;
+      paintElitePage();
+    });
   }
 
   if (eliteTableBody) {
@@ -389,6 +594,7 @@ registerModule('admin', {
     const controller = createAdminController(hook);
     try {
       await controller.refresh();
+      mountAdminContent();
     } catch (err) {
       console.error('[ni/admin] mount failed', err);
       setStatus(

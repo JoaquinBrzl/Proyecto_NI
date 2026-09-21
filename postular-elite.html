@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-style-mode" content="1">
+    <title>Postular a NI Elite || Grupo NI</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/plugins/feature.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.5.7">
+    <link rel="stylesheet" href="assets/css/ni-elite-apply.css?v=1.0.2">
+</head>
+<body class="active-light-mode" data-ni-page="postular-elite">
+    <main class="page-wrapper">
+        <header class="tmp-header header-default header-not-transparent header-sticky">
+            <div class="container position-relative">
+                <div class="row align-items-center row--0">
+                    <div class="col-xl-2 col-lg-2 col-md-6 col-4">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img class="logo-light" src="assets/images/logo/event-logo.svg" alt="Grupo NI">
+                                <img class="logo-dark" src="assets/images/logo/event-logo-dark.svg" alt="Grupo NI">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-6 col-8 position-static">
+                        <div class="header-right with-search">
+                            <nav class="mainmenu-nav d-none d-lg-block">
+                                <ul class="mainmenu">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li class="has-droupdown has-menu-child-item"><a href="#">Blog</a>
+                                        <ul class="submenu">
+                                            <li><a href="anuncios.html">Anuncios</a></li>
+                                            <li><a href="talleres.html">Talleres</a></li>
+                                            <li><a href="recursos.html">Recursos</a></li>
+                                            <li><a href="match.html">Match</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="about-white.html">Nosotros</a></li>
+                                    <li><a href="contact-white.html">Contact</a></li>
+                                    <li><a href="pricing-three-white.html">Membresia</a></li>
+                                </ul>
+                            </nav>
+                            <div class="header-btn">
+                                <a class="tmp-btn" href="pricing-three-white.html">Membresia</a>
+                            </div>
+                            <div class="mobile-menu-bar ml--5 d-block d-lg-none">
+                                <div class="hamberger">
+                                    <button class="hamberger-button" type="button">
+                                        <i class="feather-menu"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="popup-mobile-menu">
+            <div class="inner">
+                <div class="header-top">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img class="logo-light" src="assets/images/logo/logo.png" alt="Grupo NI">
+                            <img class="logo-dark" src="assets/images/logo/logo-dark.png" alt="Grupo NI">
+                        </a>
+                    </div>
+                    <div class="close-menu">
+                        <button class="close-button" type="button"><i class="feather-x"></i></button>
+                    </div>
+                </div>
+                <ul class="mainmenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="anuncios.html">Anuncios</a></li>
+                    <li><a href="talleres.html">Talleres</a></li>
+                    <li><a href="recursos.html">Recursos</a></li>
+                    <li><a href="match.html">Match</a></li>
+                    <li><a href="about-white.html">Nosotros</a></li>
+                    <li><a href="contact-white.html">Contact</a></li>
+                    <li><a href="pricing-three-white.html">Membresia</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div data-ni-module="elite-apply" hidden aria-hidden="true"></div>
+
+        <section class="ni-elite-apply-area">
+            <div class="container">
+                <div class="ni-elite-apply-card" id="ni-elite-apply-root">
+                    <div class="ni-elite-apply-head">
+                        <span class="ni-elite-apply-head__icon" aria-hidden="true">★</span>
+                        <div>
+                            <h1 class="ni-elite-apply-head__title">Postular a NI Elite</h1>
+                            <p class="ni-elite-apply-head__sub">Completa el formulario de postulación. El equipo evaluará tu solicitud.</p>
+                        </div>
+                    </div>
+
+                    <p class="ni-elite-apply-alert" role="note">
+                        <span class="ni-elite-apply-alert__ico" aria-hidden="true">i</span>
+                        <span>El ingreso a NI Elite <strong>no es automático</strong>. Tu solicitud será revisada por los líderes de Grupo NI. Si eres aceptado, recibirás instrucciones para activar tu acceso.</span>
+                    </p>
+
+                    <p id="ni-elite-apply-status" class="ni-elite-apply-msg" hidden aria-live="polite"></p>
+
+                    <form id="ni-elite-apply-form" autocomplete="on">
+                        <div class="ni-elite-apply-grid">
+                            <div class="ni-elite-apply-field">
+                                <label for="ni-ea-nombre">Nombre completo <span class="ni-elite-apply-req">*</span></label>
+                                <input id="ni-ea-nombre" name="nombre" type="text" required maxlength="120">
+                            </div>
+                            <div class="ni-elite-apply-field">
+                                <label for="ni-ea-email">Correo registrado en Zenit <span class="ni-elite-apply-req">*</span></label>
+                                <input id="ni-ea-email" name="email" type="email" required maxlength="160" readonly>
+                            </div>
+                            <div class="ni-elite-apply-field">
+                                <label for="ni-ea-universidad">Universidad <span class="ni-elite-apply-req">*</span></label>
+                                <input id="ni-ea-universidad" name="universidad" type="text" required maxlength="160">
+                            </div>
+                            <div class="ni-elite-apply-field">
+                                <label for="ni-ea-carrera">Carrera <span class="ni-elite-apply-req">*</span></label>
+                                <input id="ni-ea-carrera" name="carrera" type="text" required maxlength="120">
+                            </div>
+                            <div class="ni-elite-apply-field">
+                                <label for="ni-ea-ciclo">Ciclo académico <span class="ni-elite-apply-req">*</span></label>
+                                <input id="ni-ea-ciclo" name="ciclo" type="text" required maxlength="40" placeholder="Ej. 6to ciclo">
+                            </div>
+                            <div class="ni-elite-apply-field">
+                                <label for="ni-ea-whatsapp">Número de WhatsApp <span class="ni-elite-apply-req">*</span></label>
+                                <input id="ni-ea-whatsapp" name="whatsapp" type="tel" required maxlength="40" placeholder="+51 987 654 321">
+                            </div>
+                            <div class="ni-elite-apply-field ni-elite-apply-field--full">
+                                <label for="ni-ea-linkedin">Perfil de LinkedIn (opcional)</label>
+                                <input id="ni-ea-linkedin" name="linkedin" type="url" maxlength="200" placeholder="linkedin.com/in/tuperfil">
+                            </div>
+                            <div class="ni-elite-apply-field ni-elite-apply-field--full">
+                                <label for="ni-ea-motivo">¿Por qué deseas formar parte de NI Elite? <span class="ni-elite-apply-req">*</span></label>
+                                <textarea id="ni-ea-motivo" name="motivo" required maxlength="1200" placeholder="Comparte tus motivaciones para unirte a esta comunidad exclusiva..."></textarea>
+                            </div>
+                            <div class="ni-elite-apply-field ni-elite-apply-field--full">
+                                <label for="ni-ea-objetivos">¿Qué esperas aprender o lograr dentro de esta comunidad? <span class="ni-elite-apply-req">*</span></label>
+                                <textarea id="ni-ea-objetivos" name="objetivos" required maxlength="1200" placeholder="Describe tus objetivos académicos y profesionales..."></textarea>
+                            </div>
+                            <div class="ni-elite-apply-field ni-elite-apply-field--full">
+                                <label for="ni-ea-temas">¿En qué temas te gustaría participar más? <span class="ni-elite-apply-req">*</span></label>
+                                <textarea id="ni-ea-temas" name="temas" required maxlength="800" placeholder="Ej: Comercio exterior, logística internacional, empleabilidad..."></textarea>
+                            </div>
+                            <div class="ni-elite-apply-field ni-elite-apply-field--full">
+                                <label for="ni-ea-participacion">¿Has participado antes en talleres o actividades de Grupo NI? <span class="ni-elite-apply-req">*</span></label>
+                                <textarea id="ni-ea-participacion" name="participacion" required maxlength="800" placeholder="Menciona en qué talleres, eventos o actividades has participado..."></textarea>
+                            </div>
+                            <div class="ni-elite-apply-field ni-elite-apply-field--full">
+                                <label for="ni-ea-aporte">¿Qué podrías aportar a la comunidad NI Elite? <span class="ni-elite-apply-req">*</span></label>
+                                <textarea id="ni-ea-aporte" name="aporte" required maxlength="800" placeholder="Describe tus habilidades, conocimientos o experiencias que puedes compartir..."></textarea>
+                            </div>
+                            <div class="ni-elite-apply-field ni-elite-apply-field--full">
+                                <label for="ni-ea-disponibilidad">Disponibilidad para reuniones y actividades <span class="ni-elite-apply-req">*</span></label>
+                                <select id="ni-ea-disponibilidad" name="disponibilidad" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="alta">Alta — casi siempre disponible</option>
+                                    <option value="media">Media — varios días a la semana</option>
+                                    <option value="baja">Baja — solo fines de semana / ocasional</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label class="ni-elite-apply-check" for="ni-ea-acepto">
+                            <input id="ni-ea-acepto" name="acepto" type="checkbox" required>
+                            <span class="ni-elite-apply-check__box" aria-hidden="true"></span>
+                            <span class="ni-elite-apply-check__text">Entiendo que el ingreso a NI Elite está <strong>sujeto a evaluación</strong> por parte de los líderes de Grupo NI. El pago solo se realizará si mi solicitud es aceptada.</span>
+                        </label>
+
+                        <div class="ni-elite-apply-actions">
+                            <button type="submit" class="ni-elite-apply-submit" id="ni-elite-apply-submit">Enviar solicitud →</button>
+                            <button type="button" class="ni-elite-apply-activate" id="ni-elite-activate" disabled title="Se habilitará cuando programes la activación">Activar acceso Elite (próximamente)</button>
+                        </div>
+                    </form>
+
+                    <a class="ni-elite-apply-back" href="pricing-three-white.html">← Volver a membresías</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="ni-site-footer" class="ni-footer" aria-label="Pie de página"></footer>
+
+    <script src="assets/js/vendor/jquery.min.js" defer></script>
+    <script src="assets/js/vendor/bootstrap.min.js" defer></script>
+    <script src="assets/js/vendor/feather.min.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+    <script type="module" src="assets/js/ni/boot.js"></script>
+</body>
+</html>

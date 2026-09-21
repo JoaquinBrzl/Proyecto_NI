@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-style-mode" content="1">
+    <title>Completa tu perfil || Grupo NI</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/ni-auth.css?v=1.0.6">
+</head>
+<body class="ni-auth-page ni-auth-page--prefill" data-ni-page="completar-perfil">
+    <div class="ni-auth-shell">
+        <a class="ni-auth-brand" href="index.html">
+            <img src="assets/images/logo/ni-logo.png" alt="">
+            <span>Grupo NI</span>
+        </a>
+
+        <div class="ni-auth-card ni-auth-card--modal" role="dialog" aria-modal="true" aria-labelledby="ni-prefill-title">
+            <p class="ni-auth-step">Paso final · Registro</p>
+            <h1 class="ni-auth-card__title" id="ni-prefill-title">Completa tu perfil</h1>
+            <p class="ni-auth-card__subtitle">Antes de entrar necesitamos tus datos. También aplica si entraste con Google o LinkedIn.</p>
+            <p class="ni-auth-hint">Los campos marcados son obligatorios. LinkedIn y bio son opcionales.</p>
+
+            <p id="ni-auth-msg" class="ni-auth-msg" hidden></p>
+
+            <form id="ni-onboarding-form" class="ni-auth-onboarding" autocomplete="on" novalidate>
+                <div class="ni-auth-grid" style="margin-bottom:12px">
+                    <div class="ni-auth-field">
+                        <label class="ni-auth-label" for="ni-onb-nombres">Nombres *</label>
+                        <input id="ni-onb-nombres" name="nombres" type="text" required minlength="2" maxlength="80" autocomplete="given-name" placeholder="Tus nombres">
+                    </div>
+                    <div class="ni-auth-field">
+                        <label class="ni-auth-label" for="ni-onb-apellidos">Apellidos *</label>
+                        <input id="ni-onb-apellidos" name="apellidos" type="text" required minlength="2" maxlength="80" autocomplete="family-name" placeholder="Tus apellidos">
+                    </div>
+                </div>
+
+                <div class="ni-auth-field">
+                    <label class="ni-auth-label" for="ni-onb-username">Usuario *</label>
+                    <input id="ni-onb-username" name="username" type="text" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_]{3,30}" title="3–30 caracteres: letras, números o _" autocomplete="username" placeholder="ej. juan_perez">
+                </div>
+
+                <div class="ni-auth-field">
+                    <label class="ni-auth-label" for="ni-onb-universidad">Centro de estudios *</label>
+                    <input id="ni-onb-universidad" name="universidad" type="text" required minlength="2" maxlength="120" placeholder="Universidad, instituto, etc.">
+                </div>
+
+                <div class="ni-auth-grid" style="margin-bottom:12px">
+                    <div class="ni-auth-field">
+                        <label class="ni-auth-label" for="ni-onb-carrera">Carrera *</label>
+                        <input id="ni-onb-carrera" name="carrera" type="text" required minlength="2" maxlength="120" placeholder="Tu carrera">
+                    </div>
+                    <div class="ni-auth-field">
+                        <label class="ni-auth-label" for="ni-onb-ciclo">Ciclo académico *</label>
+                        <input id="ni-onb-ciclo" name="ciclo_academico" type="text" required minlength="1" maxlength="40" placeholder="Ej. 7mo ciclo">
+                    </div>
+                </div>
+
+                <div class="ni-auth-field">
+                    <label class="ni-auth-label" for="ni-onb-whatsapp">WhatsApp *</label>
+                    <input id="ni-onb-whatsapp" name="whatsapp" type="tel" required minlength="7" maxlength="40" autocomplete="tel" placeholder="+51 999 999 999" pattern="[\d\s+\-()]{7,40}" title="Incluye tu número con código de país">
+                </div>
+
+                <div class="ni-auth-field ni-auth-interests">
+                    <label class="ni-auth-label">Intereses *</label>
+                    <p class="ni-auth-hint ni-auth-hint--left">Elige al menos uno entre los principales. Luego podrás agregar más desde tu perfil.</p>
+                    <div class="ni-interest-list" id="ni-onboarding-interests"></div>
+                </div>
+
+                <div class="ni-auth-field">
+                    <label class="ni-auth-label" for="ni-onb-linkedin">LinkedIn (opcional)</label>
+                    <input id="ni-onb-linkedin" name="linkedin_url" type="url" maxlength="200" placeholder="https://www.linkedin.com/in/…" inputmode="url">
+                </div>
+
+                <div class="ni-auth-field" style="margin-bottom:18px">
+                    <label class="ni-auth-label" for="ni-onb-bio">Bio corta (opcional)</label>
+                    <textarea id="ni-onb-bio" name="bio" maxlength="500" rows="3" placeholder="Cuéntanos un poco sobre ti"></textarea>
+                </div>
+
+                <button type="submit" class="ni-auth-submit">Ingresar</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+      import { initCompletarPerfilPage } from './assets/js/ni/auth-pages.js?v=1.0.8';
+      initCompletarPerfilPage();
+    </script>
+</body>
+</html>

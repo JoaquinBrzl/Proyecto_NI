@@ -1,6 +1,7 @@
 import { getClient } from '../client.js';
 import { rpcIsAdmin, rpcMembershipLevel } from '../identity.js';
 import { registerModule } from './registry.js';
+import { showCatalogLoading, clearCatalogLoading, ensureCatalogLoadingStyles } from '../catalog-loading.js';
 
 /**
  * Talleres: listado, CRUD admin (modal), inscripción y grabaciones gated.
@@ -639,6 +640,7 @@ function createController() {
 
   async function refresh() {
     if (!listEl) return;
+    showCatalogLoading(listEl, { count: 6, variant: 'cards' });
     setStatus(statusEl, 'Cargando talleres…', 'info');
     const { data, count, error } = await listWorkshops({
       modality: state.modality,
@@ -652,6 +654,7 @@ function createController() {
     });
 
     if (error) {
+      clearCatalogLoading(listEl);
       listEl.innerHTML = '';
       setStatus(statusEl, error.message || 'No se pudieron cargar los talleres.', 'error');
       return;
@@ -663,6 +666,7 @@ function createController() {
     state.statsById = new Map(statsRows.map((s) => [s.workshop_id, s]));
     state.itemsById = new Map(data.map((row) => [row.id, row]));
 
+    clearCatalogLoading(listEl);
     listEl.innerHTML = '';
     if (!data.length) {
       setStatus(statusEl, 'No hay talleres con estos filtros.', 'info');
@@ -933,6 +937,8 @@ function createController() {
 registerModule('talleres', {
   pages: ['talleres'],
   async mount({ hook }) {
+    ensureCatalogLoadingStyles();
+    showCatalogLoading(document.getElementById('ni-talleres-list'), { count: 6, variant: 'cards' });
     const controller = createController();
     await controller.init();
     if (hook) hook.setAttribute('data-ni-ready', '1');

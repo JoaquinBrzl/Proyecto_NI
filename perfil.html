@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/plugins/feature.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=4.5.3">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.6.2">
 </head>
 <body class="active-light-mode" data-ni-page="perfil">
     <main class="page-wrapper">
@@ -31,12 +31,17 @@
                             <nav class="mainmenu-nav d-none d-lg-block">
                                 <ul class="mainmenu">
                                     <li><a href="index.html">Home</a></li>
-                                    <li><a href="anuncios.html">Anuncios</a></li>
-                                    <li><a href="talleres.html">Talleres</a></li>
-                                    <li><a href="recursos.html">Recursos</a></li>
-                                    <li><a href="match.html">Match</a></li>
+                                    <li class="has-droupdown has-menu-child-item"><a href="#">Blog</a>
+                                        <ul class="submenu">
+                                            <li><a href="anuncios.html">Anuncios</a></li>
+                                            <li><a href="talleres.html">Talleres</a></li>
+                                            <li><a href="recursos.html">Recursos</a></li>
+                                            <li><a href="match.html">Match</a></li>
+                                        </ul>
+                                    </li>
                                     <li><a href="about-white.html">Nosotros</a></li>
                                     <li><a href="contact-white.html">Contact</a></li>
+                                    <li><a href="pricing-three-white.html">Membresia</a></li>
                                 </ul>
                             </nav>
                             <div class="header-btn">
@@ -72,10 +77,14 @@
                 </div>
                 <ul class="mainmenu">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="anuncios.html">Anuncios</a></li>
-                    <li><a href="talleres.html">Talleres</a></li>
-                    <li><a href="recursos.html">Recursos</a></li>
-                    <li><a href="match.html">Match</a></li>
+                    <li class="has-droupdown has-menu-child-item"><a href="#">Blog</a>
+                        <ul class="submenu">
+                            <li><a href="anuncios.html">Anuncios</a></li>
+                            <li><a href="talleres.html">Talleres</a></li>
+                            <li><a href="recursos.html">Recursos</a></li>
+                            <li><a href="match.html">Match</a></li>
+                        </ul>
+                    </li>
                     <li><a href="about-white.html">Nosotros</a></li>
                     <li><a href="contact-white.html">Contact</a></li>
                     <li><a href="pricing-three-white.html">Membresia</a></li>
@@ -134,7 +143,7 @@
                                     <div class="ni-profile-info-item">
                                         <span class="ni-profile-info-icon" aria-hidden="true"><i class="feather-home"></i></span>
                                         <div>
-                                            <span class="ni-profile-info-label">Universidad</span>
+                                            <span class="ni-profile-info-label">Centro de estudios</span>
                                             <p class="ni-profile-info-value" id="ni-view-universidad">—</p>
                                         </div>
                                     </div>
@@ -168,7 +177,12 @@
                                     </div>
                                 </div>
                                 <div class="ni-profile-interests-block">
-                                    <span class="ni-profile-info-label">Intereses</span>
+                                    <div class="ni-profile-interests-head">
+                                        <span class="ni-profile-info-label">Intereses</span>
+                                        <button type="button" class="ni-profile-btn ni-profile-btn--ghost ni-profile-btn--sm" id="ni-interests-open">
+                                            Gestionar intereses
+                                        </button>
+                                    </div>
                                     <div class="ni-profile-interest-tags" id="ni-view-interests"></div>
                                 </div>
                                 <p class="ni-profile-privacy-note" id="ni-privacy-note" hidden>
@@ -176,7 +190,7 @@
                                 </p>
                             </div>
 
-                            <div class="ni-profile-card">
+                            <div class="ni-profile-card" id="certificados">
                                 <h3 class="ni-profile-card-title">Membresía y acceso</h3>
                                 <div class="ni-profile-membership-row">
                                     <span class="ni-profile-plan-badge" id="ni-membership-plan-badge">
@@ -229,8 +243,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mb-0">
-                                        <label for="ni-edit-universidad">Universidad</label>
-                                        <input id="ni-edit-universidad" type="text" name="universidad" maxlength="120">
+                                        <label for="ni-edit-universidad">Centro de estudios</label>
+                                        <input id="ni-edit-universidad" type="text" name="universidad" maxlength="120" required minlength="2">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -266,10 +280,6 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <label class="ni-profile-info-label d-block mb--10">Intereses</label>
-                                    <div class="ni-interest-list" id="ni-interests"></div>
-                                </div>
-                                <div class="col-12">
                                     <button type="submit" class="ni-profile-btn ni-profile-btn--primary"><span>Guardar perfil</span></button>
                                 </div>
                             </div>
@@ -279,60 +289,29 @@
             </div>
         </div>
 
-        <footer class="tmp-footer footer-style-default variation-two position-relative">
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <div class="logo">
-                                    <a href="index.html">
-                                        <img class="logo-light" src="assets/images/logo/logo.png" alt="Grupo NI">
-                                        <img class="logo-dark" src="assets/images/logo/logo-dark.png" alt="Grupo NI">
-                                    </a>
-                                </div>
-                                <p class="subtitle mt--30">Grupo NI — comunidad académica y profesional.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Explorar</h4>
-                                <div class="inner">
-                                    <ul class="footer-link link-hover">
-                                        <li><a href="anuncios.html">Anuncios</a></li>
-                                        <li><a href="talleres.html">Talleres</a></li>
-                                        <li><a href="recursos.html">Recursos</a></li>
-                                        <li><a href="match.html">Match</a></li>
-                                        <li><a href="pricing-three-white.html">Membresía</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Cuenta</h4>
-                                <div class="inner">
-                                    <ul class="footer-link link-hover">
-                                        <li><a href="perfil.html">Mi perfil</a></li>
-                                        <li><a href="login.html">Ingresar</a></li>
-                                        <li><a href="register.html">Registrarse</a></li>
-                                        <li><a href="contact-white.html">Contacto</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Grupo NI</h4>
-                                <div class="inner">
-                                    <h6 class="subtitle">Completa tu perfil y LinkedIn para aparecer mejor en Match Académico.</h6>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Modal gestionar intereses (catálogo completo + búsqueda) -->
+        <div class="modal fade ni-interests-modal" id="ni-interests-modal" tabindex="-1" aria-labelledby="ni-interests-modal-title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ni-interests-modal-title">Tus intereses</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="ni-interests-modal__hint">Busca y selecciona entre todos los intereses creados por el admin.</p>
+                        <input type="search" id="ni-interests-search" class="ni-interests-modal__search" placeholder="Buscar intereses…" autocomplete="off" aria-label="Buscar intereses">
+                        <p id="ni-interests-modal-msg" class="ni-profile-msg" hidden></p>
+                        <div class="ni-interest-list ni-interest-list--modal" id="ni-interests-modal-list"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="ni-profile-btn ni-profile-btn--ghost" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="ni-profile-btn ni-profile-btn--primary" id="ni-interests-save">Guardar intereses</button>
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
+
+                <footer id="ni-site-footer" class="ni-footer" aria-label="Pie de página"></footer>
     </main>
 
     <script src="assets/js/vendor/jquery.min.js" defer></script>
@@ -340,7 +319,7 @@
     <script src="assets/js/vendor/feather.min.js" defer></script>
     <script src="assets/js/main.js" defer></script>
     <script type="module">
-      import { initProfilePage } from './assets/js/ni/auth-pages.js';
+      import { initProfilePage } from './assets/js/ni/auth-pages.js?v=1.0.8';
       import { mountHeaderAuth } from './assets/js/ni/header.js';
       mountHeaderAuth();
       initProfilePage();

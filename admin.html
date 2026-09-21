@@ -10,240 +10,637 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=4.5.3">
-    <style>
-      .ni-admin-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.95rem;
-      }
-      .ni-admin-table th,
-      .ni-admin-table td {
-        padding: 0.65rem 0.5rem;
-        border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-        vertical-align: middle;
-        text-align: left;
-      }
-      .ni-admin-table th {
-        font-weight: 600;
-        white-space: nowrap;
-      }
-      .ni-admin-table .tmp-btn {
-        margin: 0.15rem 0.15rem 0.15rem 0;
-      }
-      #ni-admin-elite-detail,
-      #ni-admin-ws-enroll-detail {
-        border: 1px solid rgba(15, 23, 42, 0.1);
-        padding: 1.25rem;
-        margin-top: 1.5rem;
-        background: #fff;
-        border-radius: 8px;
-      }
-      [data-ni-status="error"] { color: #b91c1c; }
-      [data-ni-status="ok"] { color: #15803d; }
-      [data-ni-status="warn"] { color: #a16207; }
-      [data-ni-status="info"] { color: #1e40af; }
-      .ni-admin-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css?v=4.5.4">
+    <link rel="stylesheet" href="assets/css/ni-admin.css?v=1.5.6">
 </head>
-<body class="active-light-mode" data-ni-page="admin">
-    <main class="page-wrapper">
-        <header class="tmp-header header-default header-not-transparent header-sticky">
-            <div class="container position-relative">
-                <div class="row align-items-center row--0">
-                    <div class="col-xl-2 col-lg-2 col-md-6 col-4">
-                        <div class="logo">
-                            <a href="index.html">
-                                <img class="logo-light" src="assets/images/logo/event-logo.svg" alt="Grupo NI">
-                                <img class="logo-dark" src="assets/images/logo/event-logo-dark.svg" alt="Grupo NI">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-md-6 col-8 position-static">
-                        <div class="header-right with-search">
-                            <nav class="mainmenu-nav d-none d-lg-block">
-                                <ul class="mainmenu">
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="anuncios.html">Anuncios</a></li>
-                                    <li><a href="talleres.html">Talleres</a></li>
-                                    <li><a href="recursos.html">Recursos</a></li>
-                                                <li><a href="match.html">Match</a></li>
-                                    <li><a href="about-white.html">Nosotros</a></li>
-                                    <li><a href="contact-white.html">Contact</a></li>
-                                </ul>
-                            </nav>
-                            <div class="header-btn">
-                                <a class="tmp-btn" href="pricing-three-white.html">Membresia</a>
-                            </div>
-                            <div class="mobile-menu-bar ml--5 d-block d-lg-none">
-                                <div class="hamberger">
-                                    <button class="hamberger-button" type="button">
-                                        <i class="feather-menu"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+<body class="active-light-mode ni-admin-page" data-ni-page="admin">
+    <div class="ni-admin-shell" id="ni-admin-shell">
+        <div class="ni-admin-overlay" data-ni-admin-overlay hidden></div>
 
-        <div class="popup-mobile-menu">
-            <div class="inner">
-                <div class="header-top">
-                    <div class="logo">
-                        <a href="index.html">
-                            <img class="logo-light" src="assets/images/logo/logo.png" alt="Grupo NI">
-                            <img class="logo-dark" src="assets/images/logo/logo-dark.png" alt="Grupo NI">
-                        </a>
-                    </div>
-                    <div class="close-menu">
-                        <button class="close-button" type="button">
-                            <i class="feather-x"></i>
-                        </button>
+        <aside class="ni-admin-sidebar" id="ni-admin-sidebar" aria-label="Navegación admin">
+            <div class="ni-admin-sidebar__brand">
+                <a class="ni-admin-brand" href="index.html">
+                    <span class="ni-admin-brand__mark" aria-hidden="true">
+                        <img src="assets/images/logo/ni-logo.png" alt="">
+                    </span>
+                    <span class="ni-admin-brand__text">
+                        <strong>Zenit</strong>
+                        <span>Admin</span>
+                    </span>
+                </a>
+                <button type="button" class="ni-admin-sidebar__close" data-ni-admin-close aria-label="Cerrar menú">
+                    <i class="feather-x" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <nav class="ni-admin-sidebar__nav">
+                <p class="ni-admin-sidebar__label">Panel</p>
+                <a class="ni-admin-nav-link is-active" href="#ni-admin-section-elite">
+                    <i class="feather-star" aria-hidden="true"></i>
+                    <span>Postulaciones Elite</span>
+                </a>
+                <a class="ni-admin-nav-link" href="#ni-admin-section-workshops">
+                    <i class="feather-users" aria-hidden="true"></i>
+                    <span>Inscripciones</span>
+                </a>
+
+                <p class="ni-admin-sidebar__label">Gestión</p>
+                <a class="ni-admin-nav-link" href="#ni-admin-section-anuncios">
+                    <i class="feather-bell" aria-hidden="true"></i>
+                    <span>Anuncios</span>
+                </a>
+                <a class="ni-admin-nav-link" href="#ni-admin-section-talleres">
+                    <i class="feather-video" aria-hidden="true"></i>
+                    <span>Talleres</span>
+                </a>
+                <a class="ni-admin-nav-link" href="#ni-admin-section-recursos">
+                    <i class="feather-book-open" aria-hidden="true"></i>
+                    <span>Recursos</span>
+                </a>
+                <a class="ni-admin-nav-link" href="#ni-admin-section-intereses">
+                    <i class="feather-tag" aria-hidden="true"></i>
+                    <span>Intereses</span>
+                </a>
+            </nav>
+
+            <div class="ni-admin-sidebar__footer">
+                <a class="ni-admin-nav-link" href="perfil.html">
+                    <i class="feather-user" aria-hidden="true"></i>
+                    <span>Mi perfil</span>
+                </a>
+                <a class="ni-admin-nav-link" href="index.html">
+                    <i class="feather-home" aria-hidden="true"></i>
+                    <span>Volver al sitio</span>
+                </a>
+            </div>
+        </aside>
+
+        <div class="ni-admin-main">
+            <header class="ni-admin-topbar">
+                <div class="ni-admin-topbar__left">
+                    <button type="button" class="ni-admin-icon-btn" data-ni-admin-menu aria-label="Abrir menú">
+                        <i class="feather-menu" aria-hidden="true"></i>
+                    </button>
+                    <div class="ni-admin-topbar__titles">
+                        <h1 class="ni-admin-topbar__title">Panel Admin</h1>
+                        <p class="ni-admin-topbar__status" id="ni-admin-status">Cargando…</p>
                     </div>
                 </div>
-                <ul class="mainmenu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="anuncios.html">Anuncios</a></li>
-                    <li><a href="talleres.html">Talleres</a></li>
-                    <li><a href="recursos.html">Recursos</a></li>
-                                                <li><a href="match.html">Match</a></li>
-                    <li><a href="about-white.html">Nosotros</a></li>
-                    <li><a href="contact-white.html">Contact</a></li>
-                    <li><a href="pricing-three-white.html">Membresia</a></li>
-                </ul>
+                <div class="ni-admin-topbar__right">
+                    <button type="button" class="ni-admin-icon-btn" data-ni-theme-toggle aria-pressed="false" aria-label="Cambiar tema" title="Modo oscuro">
+                        <i class="feather-moon" aria-hidden="true"></i>
+                    </button>
+                    <div class="ni-admin-account" data-ni-admin-account></div>
+                </div>
+            </header>
+
+            <div class="ni-admin-content" id="ni-admin-gate" hidden>
+                <div data-ni-module="admin" hidden data-ni-stub="admin"></div>
+
+                <section class="ni-admin-card" data-ni-admin-panel id="ni-admin-section-elite">
+                    <div class="ni-admin-card__head">
+                        <div>
+                            <h2 class="ni-admin-card__title">Postulaciones NI Elite</h2>
+                            <p class="ni-admin-card__subtitle">Revisa y aprueba solicitudes Elite</p>
+                        </div>
+                    </div>
+                    <p id="ni-admin-elite-status" class="ni-admin-msg" hidden></p>
+                    <div class="ni-filter-bar ni-admin-filter-bar">
+                        <div class="ni-filter-search">
+                            <i class="feather-search search-icon" aria-hidden="true"></i>
+                            <input id="ni-admin-elite-search" type="search" placeholder="Buscar postulaciones…" autocomplete="off">
+                        </div>
+                        <div class="ni-filter-chips" id="ni-admin-elite-filter-chips" role="group" aria-label="Filtrar por estado">
+                            <button type="button" class="is-checked" data-ni-elite-status="">Todos</button>
+                            <button type="button" data-ni-elite-status="pending">Pendientes</button>
+                            <button type="button" data-ni-elite-status="approved">Aceptados</button>
+                            <button type="button" data-ni-elite-status="rejected">Rechazados</button>
+                        </div>
+                    </div>
+                    <div class="ni-admin-table-wrap">
+                        <table class="ni-admin-table" id="ni-admin-elite-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Universidad</th>
+                                    <th>Carrera</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="ni-admin-pagination" id="ni-admin-elite-pagination"></div>
+
+                    <div class="ni-admin-detail" id="ni-admin-elite-detail" hidden>
+                        <div class="ni-admin-detail__head">
+                            <h3 class="ni-admin-detail__title">Detalle de postulación</h3>
+                            <a href="#" class="ni-admin-link" id="ni-admin-elite-detail-close">Cerrar</a>
+                        </div>
+                        <div id="ni-admin-elite-detail-body"></div>
+                        <div class="ni-admin-actions">
+                            <button type="button" class="ni-admin-btn ni-admin-btn--primary" id="ni-admin-elite-approve"><span>Aprobar</span></button>
+                            <button type="button" class="ni-admin-btn ni-admin-btn--ghost" id="ni-admin-elite-reject"><span>Rechazar</span></button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="ni-admin-card" data-ni-admin-panel id="ni-admin-section-workshops">
+                    <div class="ni-admin-card__head">
+                        <div>
+                            <h2 class="ni-admin-card__title">Inscripciones a talleres</h2>
+                            <p class="ni-admin-card__subtitle">Inscritos agrupados por taller</p>
+                        </div>
+                    </div>
+                    <p id="ni-admin-ws-enroll-status" class="ni-admin-msg" hidden></p>
+                    <div id="ni-admin-ws-enroll-groups" class="ni-admin-enroll-groups"></div>
+                    <div class="ni-admin-pagination" id="ni-admin-ws-enroll-pagination"></div>
+
+                    <div class="ni-admin-detail" id="ni-admin-ws-enroll-detail" hidden>
+                        <div class="ni-admin-detail__head">
+                            <h3 class="ni-admin-detail__title">Detalle de inscripción</h3>
+                            <a href="#" class="ni-admin-link" id="ni-admin-ws-enroll-detail-close">Cerrar</a>
+                        </div>
+                        <div id="ni-admin-ws-enroll-detail-body"></div>
+                    </div>
+                </section>
+
+                <section class="ni-admin-card" data-ni-admin-panel id="ni-admin-section-anuncios">
+                    <div class="ni-admin-card__head">
+                        <div>
+                            <h2 class="ni-admin-card__title">Anuncios</h2>
+                            <p class="ni-admin-card__subtitle">Crear, editar y eliminar anuncios</p>
+                        </div>
+                        <button type="button" class="ni-admin-btn" id="ni-admin-ann-create">Nuevo anuncio</button>
+                    </div>
+                    <div class="ni-filter-bar ni-admin-filter-bar">
+                        <div class="ni-filter-search">
+                            <i class="feather-search search-icon" aria-hidden="true"></i>
+                            <input id="ni-admin-ann-search" type="search" placeholder="Buscar anuncios…" autocomplete="off">
+                        </div>
+                        <div class="ni-filter-chips" id="ni-admin-ann-filter-chips" role="group" aria-label="Filtrar por categoría">
+                            <button type="button" class="is-checked" data-ni-ann-category="">Todos</button>
+                            <button type="button" data-ni-ann-category="eventos">Eventos</button>
+                            <button type="button" data-ni-ann-category="talleres">Talleres</button>
+                            <button type="button" data-ni-ann-category="oportunidades">Oportunidades</button>
+                            <button type="button" data-ni-ann-category="comunicados">Comunicados</button>
+                            <button type="button" data-ni-ann-category="recursos">Recursos</button>
+                        </div>
+                    </div>
+                    <p id="ni-admin-ann-status" class="ni-admin-msg" hidden></p>
+                    <div class="ni-admin-table-wrap">
+                        <table class="ni-admin-table" id="ni-admin-ann-table">
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Categoría</th>
+                                    <th>Estado</th>
+                                    <th>Fecha</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="ni-admin-pagination" id="ni-admin-ann-pagination"></div>
+                </section>
+
+                <section class="ni-admin-card" data-ni-admin-panel id="ni-admin-section-talleres">
+                    <div class="ni-admin-card__head">
+                        <div>
+                            <h2 class="ni-admin-card__title">Talleres</h2>
+                            <p class="ni-admin-card__subtitle">Crear, editar y eliminar talleres</p>
+                        </div>
+                        <button type="button" class="ni-admin-btn" id="ni-admin-ws-create">Nuevo taller</button>
+                    </div>
+                    <div class="ni-filter-bar ni-admin-filter-bar">
+                        <div class="ni-filter-search">
+                            <i class="feather-search search-icon" aria-hidden="true"></i>
+                            <input id="ni-admin-ws-search" type="search" placeholder="Buscar talleres…" autocomplete="off">
+                        </div>
+                        <div class="ni-filter-chips" id="ni-admin-ws-filter-chips" role="group" aria-label="Filtrar por estado">
+                            <button type="button" class="is-checked" data-ni-ws-status="">Todos</button>
+                            <button type="button" data-ni-ws-status="published">Publicados</button>
+                            <button type="button" data-ni-ws-status="draft">Borradores</button>
+                        </div>
+                    </div>
+                    <p id="ni-admin-ws-status" class="ni-admin-msg" hidden></p>
+                    <div class="ni-admin-table-wrap">
+                        <table class="ni-admin-table" id="ni-admin-ws-table">
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Ponente</th>
+                                    <th>Modalidad</th>
+                                    <th>Estado</th>
+                                    <th>Inicio</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="ni-admin-pagination" id="ni-admin-ws-pagination"></div>
+                </section>
+
+                <section class="ni-admin-card" data-ni-admin-panel id="ni-admin-section-recursos">
+                    <div class="ni-admin-card__head">
+                        <div>
+                            <h2 class="ni-admin-card__title">Recursos</h2>
+                            <p class="ni-admin-card__subtitle">Crear, editar y eliminar recursos</p>
+                        </div>
+                        <button type="button" class="ni-admin-btn" id="ni-admin-res-create">Nuevo recurso</button>
+                    </div>
+                    <div class="ni-filter-bar ni-admin-filter-bar">
+                        <div class="ni-filter-search">
+                            <i class="feather-search search-icon" aria-hidden="true"></i>
+                            <input id="ni-admin-res-search" type="search" placeholder="Buscar recursos…" autocomplete="off">
+                        </div>
+                        <div class="ni-filter-chips" id="ni-admin-res-filter-chips" role="group" aria-label="Filtrar por categoría">
+                            <button type="button" class="is-checked" data-ni-res-category="">Todos</button>
+                            <button type="button" data-ni-res-category="comercio_internacional">Comercio Int.</button>
+                            <button type="button" data-ni-res-category="empleabilidad">Empleabilidad</button>
+                            <button type="button" data-ni-res-category="logistica">Logística</button>
+                            <button type="button" data-ni-res-category="finanzas">Finanzas</button>
+                            <button type="button" data-ni-res-category="marketing">Marketing</button>
+                            <button type="button" data-ni-res-category="tecnologia">Tecnología</button>
+                            <button type="button" data-ni-res-category="otros">Otros</button>
+                        </div>
+                    </div>
+                    <p id="ni-admin-res-status" class="ni-admin-msg" hidden></p>
+                    <div class="ni-admin-table-wrap">
+                        <table class="ni-admin-table" id="ni-admin-res-table">
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Categoría</th>
+                                    <th>Tipo</th>
+                                    <th>Estado</th>
+                                    <th>Fecha</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="ni-admin-pagination" id="ni-admin-res-pagination"></div>
+                </section>
+
+                <section class="ni-admin-card" data-ni-admin-panel id="ni-admin-section-intereses">
+                    <div class="ni-admin-card__head">
+                        <div>
+                            <h2 class="ni-admin-card__title">Intereses</h2>
+                            <p class="ni-admin-card__subtitle">Opciones que los estudiantes eligen al completar su perfil</p>
+                        </div>
+                        <button type="button" class="ni-admin-btn" id="ni-admin-int-create">Nuevo interés</button>
+                    </div>
+                    <div class="ni-filter-bar ni-admin-filter-bar">
+                        <div class="ni-filter-search">
+                            <i class="feather-search search-icon" aria-hidden="true"></i>
+                            <input id="ni-admin-int-search" type="search" placeholder="Buscar intereses…" autocomplete="off">
+                        </div>
+                        <div class="ni-filter-chips" id="ni-admin-int-filter-chips" role="group" aria-label="Filtrar intereses">
+                            <button type="button" class="is-checked" data-ni-int-filter="">Todos</button>
+                            <button type="button" data-ni-int-filter="primary">Principales</button>
+                            <button type="button" data-ni-int-filter="secondary">Secundarios</button>
+                        </div>
+                    </div>
+                    <p id="ni-admin-int-status" class="ni-admin-msg" hidden></p>
+                    <div class="ni-admin-table-wrap">
+                        <table class="ni-admin-table" id="ni-admin-int-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Slug</th>
+                                    <th>Principal</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="ni-admin-pagination" id="ni-admin-int-pagination"></div>
+                </section>
             </div>
         </div>
+    </div>
 
-        <div class="main-content">
-            <div data-ni-module="admin" hidden data-ni-stub="admin"></div>
-            <div class="inv-appoinment-area-start tmp-section-gap" id="ni-admin-gate" hidden>
-                <div class="container">
-                    <div class="tmp-section-title-border text-center mb--40">
-                        <h2 class="title w-700">Panel Admin</h2>
-                        <p class="description mb--0" id="ni-admin-status">Cargando…</p>
-                    </div>
-
-                    <!-- Elite -->
-                    <div class="row">
-                        <div class="col-12">
-                            <h3 class="title mb--20">Postulaciones NI Elite</h3>
-                            <p id="ni-admin-elite-status" class="mb--20" hidden></p>
-                            <div class="table-responsive">
-                                <table class="ni-admin-table" id="ni-admin-elite-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Nombre</th>
-                                            <th>Email</th>
-                                            <th>Universidad</th>
-                                            <th>Carrera</th>
-                                            <th>Fecha</th>
-                                            <th>Estado</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-
-                            <div id="ni-admin-elite-detail" hidden>
-                                <div class="d-flex justify-content-between align-items-start mb--15">
-                                    <h5 class="title mb--0">Detalle de postulación</h5>
-                                    <a href="#" id="ni-admin-elite-detail-close">Cerrar</a>
-                                </div>
-                                <div id="ni-admin-elite-detail-body"></div>
-                                <div class="ni-admin-actions mt--20">
-                                    <button type="button" class="tmp-btn" id="ni-admin-elite-approve"><span>Aprobar</span></button>
-                                    <button type="button" class="tmp-btn btn-border" id="ni-admin-elite-reject"><span>Rechazar</span></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Inscripciones a talleres -->
-                    <div class="row mt--60">
-                        <div class="col-12">
-                            <h3 class="title mb--20">Inscripciones a talleres</h3>
-                            <p id="ni-admin-ws-enroll-status" class="mb--20" hidden></p>
-                            <div id="ni-admin-ws-enroll-groups"></div>
-
-                            <div id="ni-admin-ws-enroll-detail" hidden>
-                                <div class="d-flex justify-content-between align-items-start mb--15">
-                                    <h5 class="title mb--0">Detalle de inscripción</h5>
-                                    <a href="#" id="ni-admin-ws-enroll-detail-close">Cerrar</a>
-                                </div>
-                                <div id="ni-admin-ws-enroll-detail-body"></div>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Anuncios modal -->
+    <div class="modal fade ni-admin-modal" id="ni-admin-ann-modal" tabindex="-1" aria-labelledby="ni-admin-ann-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <form class="modal-content ni-admin-form" id="ni-admin-ann-form" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ni-admin-ann-modal-title">Nuevo anuncio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
-            </div>
+                <div class="modal-body">
+                    <input type="hidden" id="ni-admin-ann-id" name="id" value="">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ann-title">Título</label>
+                                <input id="ni-admin-ann-title" name="title" type="text" required maxlength="200">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ann-category">Categoría</label>
+                                <select id="ni-admin-ann-category" name="category" required>
+                                    <option value="eventos">Eventos</option>
+                                    <option value="talleres">Talleres</option>
+                                    <option value="oportunidades">Oportunidades</option>
+                                    <option value="comunicados">Comunicados</option>
+                                    <option value="recursos">Recursos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ann-published-at">Fecha de publicación</label>
+                                <input id="ni-admin-ann-published-at" name="published_at" type="datetime-local">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ann-description">Descripción</label>
+                                <textarea id="ni-admin-ann-description" name="description" required maxlength="4000" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ann-image">Imagen (JPEG, PNG o WebP · máx. 2 MB)</label>
+                                <input id="ni-admin-ann-image" name="image" type="file" accept="image/jpeg,image/png,image/webp">
+                                <img id="ni-admin-ann-image-preview" alt="Vista previa" hidden>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ann-link">Enlace “Ver más”</label>
+                                <input id="ni-admin-ann-link" name="link_url" type="text" required maxlength="500" placeholder="https://… o página local">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ann-status">Estado</label>
+                                <select id="ni-admin-ann-status" name="status" required>
+                                    <option value="draft">Borrador</option>
+                                    <option value="published">Publicado</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <p id="ni-admin-ann-form-status" class="ni-admin-msg" hidden></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="ni-admin-btn ni-admin-btn--ghost" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="ni-admin-btn">Guardar</button>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <footer class="tmp-footer footer-style-default variation-two position-relative">
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <div class="logo">
-                                    <a href="index.html">
-                                        <img class="logo-light" src="assets/images/logo/logo.png" alt="Grupo NI">
-                                        <img class="logo-dark" src="assets/images/logo/logo-dark.png" alt="Grupo NI">
-                                    </a>
-                                </div>
-                                <p class="subtitle mt--30">Grupo NI — comunidad académica y profesional.</p>
+    <!-- Talleres modal -->
+    <div class="modal fade ni-admin-modal" id="ni-admin-ws-modal" tabindex="-1" aria-labelledby="ni-admin-ws-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <form class="modal-content ni-admin-form" id="ni-admin-ws-form" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ni-admin-ws-modal-title">Nuevo taller</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="ni-admin-ws-id" name="id" value="">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-title">Título</label>
+                                <input id="ni-admin-ws-title" name="title" type="text" required maxlength="200">
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Explorar</h4>
-                                <div class="inner">
-                                    <ul class="footer-link link-hover">
-                                        <li><a href="anuncios.html">Anuncios</a></li>
-                                        <li><a href="talleres.html">Talleres</a></li>
-                                        <li><a href="recursos.html">Recursos</a></li>
-                                                <li><a href="match.html">Match</a></li>
-                                        <li><a href="pricing-three-white.html">Membresía</a></li>
-                                    </ul>
-                                </div>
+                        <div class="col-md-12">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-desc">Descripción corta</label>
+                                <textarea id="ni-admin-ws-desc" name="short_description" required maxlength="1000" rows="3"></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Cuenta</h4>
-                                <div class="inner">
-                                    <ul class="footer-link link-hover">
-                                        <li><a href="perfil.html">Mi perfil</a></li>
-                                        <li><a href="admin.html">Admin</a></li>
-                                        <li><a href="login.html">Ingresar</a></li>
-                                        <li><a href="contact-white.html">Contacto</a></li>
-                                    </ul>
-                                </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-speaker">Ponente</label>
+                                <input id="ni-admin-ws-speaker" name="speaker" type="text" required maxlength="120">
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Admin</h4>
-                                <div class="inner">
-                                    <h6 class="subtitle">Gestión de anuncios, postulaciones Elite e inscripciones a talleres. Solo administradores.</h6>
-                                </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-modality">Modalidad</label>
+                                <select id="ni-admin-ws-modality" name="modality" required>
+                                    <option value="virtual">Virtual</option>
+                                    <option value="presencial">Presencial</option>
+                                    <option value="hibrido">Híbrido</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-starts">Inicio</label>
+                                <input id="ni-admin-ws-starts" name="starts_at" type="datetime-local" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-ends">Fin</label>
+                                <input id="ni-admin-ws-ends" name="ends_at" type="datetime-local" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-location">Lugar</label>
+                                <input id="ni-admin-ws-location" name="location" type="text" maxlength="200" placeholder="Vacío = Próximamente">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-virtual">Enlace virtual</label>
+                                <input id="ni-admin-ws-virtual" name="virtual_url" type="url" maxlength="500" placeholder="https://…">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-level">Membresía requerida</label>
+                                <select id="ni-admin-ws-level" name="required_membership_level" required>
+                                    <option value="0">NI Free (0)</option>
+                                    <option value="1">NI Pro (1)</option>
+                                    <option value="2">NI Elite (2)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-capacity">Cupos</label>
+                                <input id="ni-admin-ws-capacity" name="capacity" type="number" min="1" required value="30">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-deadline">Límite de inscripción</label>
+                                <input id="ni-admin-ws-deadline" name="registration_deadline" type="datetime-local" required>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-recording">URL de grabación (opcional)</label>
+                                <input id="ni-admin-ws-recording" name="recording_url" type="url" maxlength="500" placeholder="https://…">
+                                <small class="d-block mt-1">Se guarda de forma privada; solo se entrega tras validar inscripción y membresía.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-status">Estado de publicación</label>
+                                <select id="ni-admin-ws-status" name="status" required>
+                                    <option value="draft">Borrador</option>
+                                    <option value="published">Publicado</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-ws-image">Imagen de la card (JPEG, PNG o WebP · máx. 2 MB)</label>
+                                <input id="ni-admin-ws-image" name="image" type="file" accept="image/jpeg,image/png,image/webp">
+                                <img id="ni-admin-ws-image-preview" alt="Vista previa" hidden>
                             </div>
                         </div>
                     </div>
+                    <p id="ni-admin-ws-form-status" class="ni-admin-msg" hidden></p>
                 </div>
-            </div>
-        </footer>
-    </main>
+                <div class="modal-footer">
+                    <button type="button" class="ni-admin-btn ni-admin-btn--ghost" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="ni-admin-btn">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Recursos modal -->
+    <div class="modal fade ni-admin-modal" id="ni-admin-res-modal" tabindex="-1" aria-labelledby="ni-admin-res-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <form class="modal-content ni-admin-form" id="ni-admin-res-form" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ni-admin-res-modal-title">Nuevo recurso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="ni-admin-res-id" name="id" value="">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-res-title">Título</label>
+                                <input id="ni-admin-res-title" name="title" type="text" required maxlength="200">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-res-desc">Descripción (opcional)</label>
+                                <textarea id="ni-admin-res-desc" name="description" maxlength="2000" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-res-category">Categoría</label>
+                                <select id="ni-admin-res-category" name="category" required>
+                                    <option value="comercio_internacional">Comercio Internacional</option>
+                                    <option value="empleabilidad">Empleabilidad</option>
+                                    <option value="logistica">Logística</option>
+                                    <option value="finanzas">Finanzas</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="tecnologia">Tecnología</option>
+                                    <option value="otros">Otros</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-res-level">Membresía requerida</label>
+                                <select id="ni-admin-res-level" name="required_membership_level" required>
+                                    <option value="0">NI Free (0)</option>
+                                    <option value="1">NI Pro (1)</option>
+                                    <option value="2">NI Elite (2)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-res-status">Estado</label>
+                                <select id="ni-admin-res-status" name="status" required>
+                                    <option value="draft">Borrador</option>
+                                    <option value="published">Publicado</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-res-file">Archivo (PDF, DOCX, PPTX, XLSX, MP4 · máx. 50 MB)</label>
+                                <input id="ni-admin-res-file" name="file" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.mp4,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,video/mp4">
+                                <small class="d-block mt-1">Al crear es obligatorio. Al editar, déjalo vacío para conservar el archivo actual.</small>
+                            </div>
+                        </div>
+                    </div>
+                    <p id="ni-admin-res-form-status" class="ni-admin-msg" hidden></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="ni-admin-btn ni-admin-btn--ghost" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="ni-admin-btn">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Intereses modal -->
+    <div class="modal fade ni-admin-modal" id="ni-admin-int-modal" tabindex="-1" aria-labelledby="ni-admin-int-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <form class="modal-content ni-admin-form" id="ni-admin-int-form" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ni-admin-int-modal-title">Nuevo interés</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="ni-admin-int-id" name="id" value="">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-int-label">Nombre</label>
+                                <input id="ni-admin-int-label" name="label" type="text" required maxlength="80" placeholder="Ej. Emprendimiento">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group mb-0">
+                                <label for="ni-admin-int-slug">Slug</label>
+                                <input id="ni-admin-int-slug" name="slug" type="text" required maxlength="40" pattern="[a-z0-9-]{2,40}" title="Solo minúsculas, números y guiones" placeholder="emprendimiento">
+                                <small class="d-block mt-1">Se genera solo al escribir el nombre; puedes editarlo.</small>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label class="ni-admin-check" for="ni-admin-int-primary">
+                                <input id="ni-admin-int-primary" name="is_primary" type="checkbox">
+                                <span class="ni-admin-check__box" aria-hidden="true"></span>
+                                <span class="ni-admin-check__text">Principal — visible en el registro / completar perfil</span>
+                            </label>
+                        </div>
+                    </div>
+                    <p id="ni-admin-int-form-status" class="ni-admin-msg" hidden></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="ni-admin-btn ni-admin-btn--ghost" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="ni-admin-btn">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="assets/js/vendor/jquery.min.js" defer></script>
     <script src="assets/js/vendor/bootstrap.min.js" defer></script>
-    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/vendor/feather.min.js" defer></script>
+    <script type="module" src="assets/js/ni/admin-shell.js"></script>
     <script type="module" src="assets/js/ni/boot.js"></script>
 </body>
 </html>

@@ -26,7 +26,8 @@
     <link href="assets/css/plugins/slick-theme.css" rel="stylesheet">
     <link href="assets/css/plugins/lightbox.css" rel="stylesheet">
     <link href="assets/css/plugins/odometer.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=4.5.3">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.5.6">
+    <link rel="stylesheet" href="assets/css/ni-admin.css?v=1.4.3">
 </head>
 
 <body class="active-light-mode" data-ni-page="recursos">
@@ -66,6 +67,7 @@
                                         <li><a href="about-white.html">Nosotros</a></li>
 
                                         <li><a href="contact-white.html">Contact</a></li>
+                                        <li><a href="pricing-three-white.html">Membresia</a></li>
 
                                     </ul>
                                 </nav>
@@ -132,6 +134,7 @@
                     </li>
                     <li><a href="about-white.html">Nosotros</a></li>
                     <li><a href="contact-white.html">Contacto</a></li>
+                    <li><a href="pricing-three-white.html">Membresia</a></li>
                 </ul>
             </div>
         </div>
@@ -152,14 +155,14 @@
                             <div class="tmp-section-title-border text-start mb--35">
                                 <div class="pres-line-separator-wrapper text-start mb--10">
                                     <span class="subtitle">
-                                        <span class="subtitle-text">RECURSOS ACADÃ‰MICOS</span>
+                                        <span class="subtitle-text">RECURSOS ACADÉMICOS</span>
                                     </span>
                                     <div class="line-separator line-right"></div>
                                 </div>
                                 <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
                                     <div>
-                                        <h2 class="title w-700 tmp-title-split">Biblioteca de Recursos</h2>
-                                        <p class="description mt--10">Materiales de talleres, plantillas, guÃ­as y mÃ¡s para tu desarrollo acadÃ©mico.</p>
+                                        <h2 class="title w-700">Biblioteca de Recursos</h2>
+                                        <p class="description mt--10">Materiales de talleres, plantillas, guías y más para tu desarrollo académico.</p>
                                     </div>
                                     <button type="button" id="ni-recursos-admin-create" class="tmp-btn" hidden>
                                         <span>Crear recurso</span>
@@ -172,11 +175,11 @@
                             <div class="resource-filter-bar mb--30">
                                 <div class="resource-search-box">
                                     <i class="feather-search search-icon" aria-hidden="true"></i>
-                                    <input id="ni-recursos-search" type="search" name="q" placeholder="Buscar recursosâ€¦" autocomplete="off" aria-label="Buscar recursos">
+                                    <input id="ni-recursos-search" type="search" name="q" placeholder="Buscar recursos…" autocomplete="off" aria-label="Buscar recursos">
                                 </div>
                                 <div class="resource-select-box">
-                                    <select id="ni-recursos-category" aria-label="Filtrar por categorÃ­a">
-                                        <option value="">Todas las categorÃ­as</option>
+                                    <select id="ni-recursos-category" aria-label="Filtrar por categoría">
+                                        <option value="">Todas las categorías</option>
                                         <option value="comercio_internacional">Comercio Internacional</option>
                                         <option value="empleabilidad">Empleabilidad</option>
                                         <option value="logistica">LogÃ­stica</option>
@@ -190,7 +193,7 @@
                             </div>
 
                             <div id="ni-recursos-pub-wrap" class="mb--20" hidden>
-                                <label class="d-block mb--10">PublicaciÃ³n (admin)</label>
+                                <label class="d-block mb--10">Publicación (admin)</label>
                                 <div class="filter-button-default" id="ni-recursos-pub" role="group" aria-label="Filtrar por publicaciÃ³n">
                                     <button type="button" data-ni-pub="" class="is-checked">Todos</button>
                                     <button type="button" data-ni-pub="published">Publicados</button>
@@ -211,9 +214,9 @@
         <!-- End Service Area  -->
 
         <!-- Modal crear / editar recurso -->
-        <div class="modal fade ni-modal" id="ni-recursos-modal" tabindex="-1" aria-labelledby="ni-recursos-modal-title" aria-hidden="true">
+        <div class="modal fade ni-admin-modal" id="ni-recursos-modal" tabindex="-1" aria-labelledby="ni-recursos-modal-title" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
-                <form class="modal-content" id="ni-recursos-form" autocomplete="off">
+                <form class="modal-content ni-admin-form" id="ni-recursos-form" autocomplete="off">
                     <div class="modal-header">
                         <h5 class="modal-title" id="ni-recursos-modal-title">Crear recurso</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -223,33 +226,33 @@
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-res-title">TÃ­tulo</label>
+                                    <label for="ni-res-title">Título</label>
                                     <input id="ni-res-title" name="title" type="text" required maxlength="200">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-res-desc">DescripciÃ³n (opcional)</label>
+                                    <label for="ni-res-desc">Descripción (opcional)</label>
                                     <textarea id="ni-res-desc" name="description" maxlength="2000" rows="3"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-0">
-                                    <label for="ni-res-category">CategorÃ­a</label>
+                                    <label for="ni-res-category">Categoría</label>
                                     <select id="ni-res-category" name="category" required>
                                         <option value="comercio_internacional">Comercio Internacional</option>
                                         <option value="empleabilidad">Empleabilidad</option>
-                                        <option value="logistica">LogÃ­stica</option>
+                                        <option value="logistica">Logística</option>
                                         <option value="finanzas">Finanzas</option>
                                         <option value="marketing">Marketing</option>
-                                        <option value="tecnologia">TecnologÃ­a</option>
+                                        <option value="tecnologia">Tecnología</option>
                                         <option value="otros">Otros</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
-                                    <label for="ni-res-level">MembresÃ­a requerida</label>
+                                    <label for="ni-res-level">Membresía requerida</label>
                                     <select id="ni-res-level" name="required_membership_level" required>
                                         <option value="0">NI Free (0)</option>
                                         <option value="1">NI Pro (1)</option>
@@ -268,138 +271,23 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
-                                    <label for="ni-res-file">Archivo (PDF, DOCX, PPTX, XLSX, MP4 Â· mÃ¡x. 50 MB)</label>
+                                    <label for="ni-res-file">Archivo (PDF, DOCX, PPTX, XLSX, MP4 · máx. 50 MB)</label>
                                     <input id="ni-res-file" name="file" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.mp4,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,video/mp4">
-                                    <small id="ni-res-file-hint" class="d-block mt--5">Al crear es obligatorio. Al editar, dÃ©jalo vacÃ­o para conservar el archivo actual.</small>
+                                    <small id="ni-res-file-hint" class="d-block mt-1">Al crear es obligatorio. Al editar, déjalo vacío para conservar el archivo actual.</small>
                                 </div>
                             </div>
                         </div>
-                        <p id="ni-recursos-form-status" class="mt--20 mb-0" hidden></p>
+                        <p id="ni-recursos-form-status" class="ni-admin-msg" hidden></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="tmp-btn btn-border" data-bs-dismiss="modal"><span>Cancelar</span></button>
-                        <button type="submit" class="tmp-btn" id="ni-recursos-form-submit"><span>Guardar</span></button>
+                        <button type="button" class="ni-admin-btn ni-admin-btn--ghost" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="ni-admin-btn" id="ni-recursos-form-submit">Guardar</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <!-- Start Footer Area  -->
-        <footer class="tmp-footer footer-style-default variation-two position-relative">
-
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <div class="logo">
-                                    <a href="index.html">
-                                        <img class="logo-light" src="assets/images/logo/logo.png" alt="Corporate Logo">
-                                        <img class="logo-dark" src="assets/images/logo/logo-dark.png" alt="Corporate Logo">
-                                    </a>
-                                </div>
-                                <p class="subtitle mt--30">If you want to create a corporate template you can purshace now
-                                    our Corpex
-                                    template.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Company</h4>
-                                <div class="inner">
-                                    <ul class="footer-link link-hover">
-                                        <li><a href="pricing.html">Pricing</a></li>
-                                        <li><a href="tab.html">Tab Styles</a></li>
-                                        <li><a href="service.html">Service</a></li>
-                                        <li><a href="social-share.html">Social</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Resources</h4>
-                                <div class="inner">
-                                    <ul class="footer-link link-hover">
-                                        <li><a href="team.html">Team</a></li>
-                                        <li><a href="testimonial.html">Testimonial</a></li>
-                                        <li><a href="service.html">Service</a></li>
-                                        <li><a href="timeline.html">Timeline</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Stay With Us.</h4>
-                                <div class="inner">
-                                    <h6 class="subtitle">1200+ trusted clients are subscribe Us around the world</h6>
-                                    <ul class="social-icon social-default justify-content-start">
-                                        <li><a href="https://www.facebook.com/">
-                                                <i class="feather-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li><a href="https://www.twitter.com">
-                                                <i class="feather-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li><a href="https://www.instagram.com/">
-                                                <i class="feather-instagram"></i>
-                                            </a>
-                                        </li>
-                                        <li><a href="https://www.linkdin.com/">
-                                                <i class="feather-linkedin"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div class="jumping-text">
-        <h2 class="title end">
-            Contact Us
-        </h2>
-    </div> -->
-
-            <!-- Start Copy Right Area  -->
-            <div class="copyright-area copyright-style-one">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 col-md-8 col-sm-12 col-12">
-                            <div class="copyright-left">
-                                <ul class="ft-menu link-hover">
-                                    <li>
-                                        <a href="privacy-policy.html">Privacy Policy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Terms And Condition</a>
-                                    </li>
-                                    <li>
-                                        <a href="contact.html">Contact Us</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-4 col-sm-12 col-12">
-                            <div class="copyright-right text-center text-lg-end">
-                                <p class="copyright-text">All Right Reserved Â© Corpox
-                                    <span id="year"></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Copy Right Area  -->
-            <div class="shape-area wow move-right" data-wow-offset="250">
-                <img src="assets/images/shape/02.png" alt="consulting_business">
-            </div>
-        </footer>
-        <!-- End Footer Area  -->
+                <footer id="ni-site-footer" class="ni-footer" aria-label="Pie de página"></footer>
     </main>
 
 

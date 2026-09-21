@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <meta name="theme-style-mode" content="1">
     <meta name="description" content="Transform your business with expert consulting. Our team delivers strategic insights, innovative solutions, and professional guidance to help you achieve lasting success.">
 
-    <title>Contact || Corpox Business and Consulting Bootstrap5 Template</title>
+    <title>Contacto || Grupo NI</title>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
     <!-- CSS ============================================ -->
@@ -26,7 +26,8 @@
     <link href="assets/css/plugins/slick-theme.css" rel="stylesheet">
     <link href="assets/css/plugins/lightbox.css" rel="stylesheet">
     <link href="assets/css/plugins/odometer.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=4.5.3">
+    <link rel="stylesheet" href="assets/css/style.css?v=4.5.4">
+    <link rel="stylesheet" href="assets/css/ni-contact.css?v=1.0.2">
 </head>
 
 
@@ -64,6 +65,7 @@
                                         <li><a href="about-white.html">Nosotros</a></li>
 
                                         <li><a href="contact-white.html">Contact</a></li>
+                                        <li><a href="pricing-three-white.html">Membresia</a></li>
 
                                     </ul>
                                 </nav>
@@ -129,250 +131,137 @@
                     </li>
                     <li><a href="about-white.html">Nosotros</a></li>
                     <li><a href="contact-white.html">Contacto</a></li>
+                    <li><a href="pricing-three-white.html">Membresia</a></li>
                 </ul>
             </div>
         </div>
         <!-- Start Contact Area  -->
         <div class="main-content">
-
-            <div class="tmp-contact-area tmp-section-gap">
+            <section class="ni-contact" aria-labelledby="ni-contact-title">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="tmp-section-title-border text-center">
-                                <div class="pres-line-separator-wrapper text-center mb--10">
-                                    <div class="line-separator line-left"></div>
-                                    <span class="subtitle">
-                                        <span class="number"><a href="index.html">01</a></span>
-                                    <span class="subtitle-text">Contact With Us</span>
-                                    </span>
-                                    <div class="line-separator line-right"></div>
-                                </div>
-                                <h2 class="title w-700 mt--20 tmp-title-split">Let's Contact With Us</h2>
+                    <header class="ni-contact__intro">
+                        <h1 id="ni-contact-title">Contacto</h1>
+                        <p>¿Tienes dudas o quieres saber más sobre Grupo NI? Escríbenos.</p>
+                    </header>
+
+                    <div class="ni-contact__grid">
+                        <form class="ni-contact-card ni-contact-form" id="contact-form" method="POST" action="mail.php" novalidate>
+                            <p id="ni-contact-form-msg" class="ni-contact-form__msg" hidden></p>
+
+                            <div class="ni-contact-field">
+                                <label for="contact-name">Nombre completo <span class="req" aria-hidden="true">*</span></label>
+                                <input type="text" name="contact-name" id="contact-name" placeholder="Ana García Torres" required autocomplete="name">
                             </div>
-                        </div>
-                    </div>
-                    <div class="row g-5 mt--30">
-                        <div class="col-lg-12">
-                            <div class="tmp-contact-address mt_dec--30">
-                                <div class="row g-5">
-                                    <div class="col-lg-4 col-md-6 col-12">
-                                        <div class="tmp-address tmponhover">
-                                            <div class="icon">
-                                                <i class="feather-headphones"></i>
-                                            </div>
-                                            <div class="inner">
-                                                <h4 class="title">Call us todays</h4>
-                                                <p><a href="#">+444 555 666 777</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-12">
-                                        <div class="tmp-address tmponhover">
-                                            <div class="icon">
-                                                <i class="feather-mail"></i>
-                                            </div>
-                                            <div class="inner">
-                                                <h4 class="title">Send an Email</h4>
-                                                <p><a href="mailto:admin@gmail.com">admin@gmail.com</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-12">
-                                        <div class="tmp-address tmponhover">
-                                            <div class="icon">
-                                                <i class="feather-map-pin"></i>
-                                            </div>
-                                            <div class="inner">
-                                                <h4 class="title">Visit our HQ</h4>
-                                                <p>Dhaka, Bangladesh</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                            <div class="ni-contact-field">
+                                <label for="contact-email">Correo electrónico <span class="req" aria-hidden="true">*</span></label>
+                                <input type="email" name="contact-email" id="contact-email" placeholder="tu@correo.edu.pe" required autocomplete="email">
                             </div>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
-
-
-            <!-- appoinment area start -->
-            <div class="inv-appoinment-area-start tmp-section-gapBottom">
-                <div class="container">
-                    <div class="row g-5">
-
-                        <div class="col-lg-5">
-                            <div class="aapoiment-left-area-thumbnail">
-                                <img src="assets/images/appoinment/01.webp" alt="appoinment">
+                            <div class="ni-contact-field">
+                                <label for="contact-career">Carrera</label>
+                                <input type="text" name="contact-career" id="contact-career" placeholder="Negocios Internacionales" autocomplete="organization-title">
                             </div>
-                        </div>
-                        <div class="col-lg-7">
-                            <form class="contact-form-1 appoinment-form-wrapper tmponhover tmp-dynamic-form" id="contact-form" method="POST" action="mail.php">
-                                <div class="form-group-wrapper">
-                                    <div class="form-group tmponhover">
-                                        <input type="text" name="contact-name" id="contact-name" placeholder="Your Name" required>
-                                    </div>
-                                    <div class="form-group tmponhover">
-                                        <input type="tel" name="contact-phone" id="contact-phone" placeholder="Phone Number">
-                                    </div>
-                                </div>
-                                <div class="form-group tmponhover">
-                                    <input type="email" id="contact-email" name="contact-email" placeholder="Your Email" required>
-                                </div>
 
-                                <div class="form-group tmponhover">
-                                    <input type="text" id="subject" name="subject" placeholder="Your Subject">
-                                </div>
+                            <div class="ni-contact-field">
+                                <label for="contact-university">Universidad</label>
+                                <input type="text" name="contact-university" id="contact-university" placeholder="Universidad Nacional Mayor de San Marcos" autocomplete="organization">
+                            </div>
 
-                                <div class="form-group tmponhover">
-                                    <textarea name="contact-message" id="contact-message" placeholder="Your Message"></textarea>
-                                </div>
+                            <div class="ni-contact-field">
+                                <label for="contact-message">Mensaje <span class="req" aria-hidden="true">*</span></label>
+                                <textarea name="contact-message" id="contact-message" placeholder="Escribe tu consulta aquí..." required></textarea>
+                            </div>
 
-                                <div class="form-group tmponhover">
-                                    <button name="submit" type="submit" id="submit" class="btn-default btn-large tmp-btn" style="width: 100%;">
-                                        <span>Submit Now</span>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                            <button type="submit" class="ni-contact-form__submit" id="submit">
+                                <span>Enviar mensaje</span>
+                                <i class="feather-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </form>
+
+                        <aside class="ni-contact__aside">
+                            <div class="ni-contact-card">
+                                <h2 class="ni-contact-card__title">Información de contacto</h2>
+                                <ul class="ni-contact-info">
+                                    <li>
+                                        <span class="ni-contact-info__icon" aria-hidden="true"><i class="feather-mail"></i></span>
+                                        <div class="ni-contact-info__meta">
+                                            <span>Correo</span>
+                                            <a href="mailto:contacto@gruponi.pe">contacto@gruponi.pe</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="ni-contact-info__icon" aria-hidden="true"><i class="feather-phone"></i></span>
+                                        <div class="ni-contact-info__meta">
+                                            <span>WhatsApp</span>
+                                            <a href="https://wa.me/51987654000" target="_blank" rel="noopener noreferrer">+51 987 654 000</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="ni-contact-info__icon" aria-hidden="true"><i class="feather-globe"></i></span>
+                                        <div class="ni-contact-info__meta">
+                                            <span>Web</span>
+                                            <a href="https://www.gruponi.pe" target="_blank" rel="noopener noreferrer">www.gruponi.pe</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="ni-contact-card">
+                                <h2 class="ni-contact-card__title">Síguenos en redes sociales</h2>
+                                <ul class="ni-contact-social">
+                                    <li>
+                                        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+                                            <span class="ni-contact-social__icon ni-contact-social__icon--linkedin" aria-hidden="true"><i class="feather-linkedin"></i></span>
+                                            <span class="ni-contact-social__text">
+                                                <strong>LinkedIn</strong>
+                                                <span>@GrupoNI</span>
+                                            </span>
+                                            <i class="feather-chevron-right ni-contact-social__chevron" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                                            <span class="ni-contact-social__icon ni-contact-social__icon--instagram" aria-hidden="true"><i class="feather-instagram"></i></span>
+                                            <span class="ni-contact-social__text">
+                                                <strong>Instagram</strong>
+                                                <span>@gruponi.pe</span>
+                                            </span>
+                                            <i class="feather-chevron-right ni-contact-social__chevron" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+                                            <span class="ni-contact-social__icon ni-contact-social__icon--facebook" aria-hidden="true"><i class="feather-facebook"></i></span>
+                                            <span class="ni-contact-social__text">
+                                                <strong>Facebook</strong>
+                                                <span>Grupo NI Oficial</span>
+                                            </span>
+                                            <i class="feather-chevron-right ni-contact-social__chevron" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">
+                                            <span class="ni-contact-social__icon ni-contact-social__icon--tiktok" aria-hidden="true"><i class="feather-music"></i></span>
+                                            <span class="ni-contact-social__text">
+                                                <strong>TikTok</strong>
+                                                <span>@gruponi</span>
+                                            </span>
+                                            <i class="feather-chevron-right ni-contact-social__chevron" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
                     </div>
                 </div>
-            </div>
-            <!-- appoinment area end -->
-
-            <div class="tmp-map-area tmp-section-gapBottom">
-                <div class="container">
-                    <div class="row g-5">
-                        <div class="col-12 sal-animate">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235495.62780269101!2d-73.932551722484!3d41.33466214858558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e1!3m2!1sen!2sbd!4v1637254792714!5m2!1sen!2sbd" height="550" style="border:0;" allowfullscreen="" loading="lazy" spellcheck="false" aria-label="To enrich screen reader interactions, please activate Accessibility in Grammarly extension settings"></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            </section>
         </div>
         <!-- End Contact Area  -->
 
 
 
-        <!-- Start Footer Area  -->
-        <footer class="tmp-footer footer-style-default variation-two position-relative">
-
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <div class="logo">
-                                    <a href="index.html">
-                                        <img class="logo-light" src="assets/images/logo/logo.png" alt="Corporate Logo">
-                                        <img class="logo-dark" src="assets/images/logo/logo-dark.png" alt="Corporate Logo">
-                                    </a>
-                                </div>
-                                <p class="subtitle mt--30">If you want to create a corporate template you can purshace now
-                                    our Corpex
-                                    template.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Company</h4>
-                                <div class="inner">
-                                    <ul class="footer-link link-hover">
-                                        <li><a href="pricing.html">Pricing</a></li>
-                                        <li><a href="tab.html">Tab Styles</a></li>
-                                        <li><a href="service.html">Service</a></li>
-                                        <li><a href="social-share.html">Social</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Resources</h4>
-                                <div class="inner">
-                                    <ul class="footer-link link-hover">
-                                        <li><a href="team.html">Team</a></li>
-                                        <li><a href="testimonial.html">Testimonial</a></li>
-                                        <li><a href="service.html">Service</a></li>
-                                        <li><a href="timeline.html">Timeline</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="tmp-footer-widget">
-                                <h4 class="title">Stay With Us.</h4>
-                                <div class="inner">
-                                    <h6 class="subtitle">1200+ trusted clients are subscribe Us around the world</h6>
-                                    <ul class="social-icon social-default justify-content-start">
-                                        <li><a href="https://www.facebook.com/">
-                                                <i class="feather-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li><a href="https://www.twitter.com">
-                                                <i class="feather-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li><a href="https://www.instagram.com/">
-                                                <i class="feather-instagram"></i>
-                                            </a>
-                                        </li>
-                                        <li><a href="https://www.linkdin.com/">
-                                                <i class="feather-linkedin"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div class="jumping-text">
-        <h2 class="title end">
-            Contact Us
-        </h2>
-    </div> -->
-
-            <!-- Start Copy Right Area  -->
-            <div class="copyright-area copyright-style-one">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 col-md-8 col-sm-12 col-12">
-                            <div class="copyright-left">
-                                <ul class="ft-menu link-hover">
-                                    <li>
-                                        <a href="privacy-policy.html">Privacy Policy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Terms And Condition</a>
-                                    </li>
-                                    <li>
-                                        <a href="contact.html">Contact Us</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-4 col-sm-12 col-12">
-                            <div class="copyright-right text-center text-lg-end">
-                                <p class="copyright-text">All Right Reserved © Corpox
-                                    <span id="year"></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Copy Right Area  -->
-            <div class="shape-area wow move-right" data-wow-offset="250">
-                <img src="assets/images/shape/02.png" alt="consulting_business">
-            </div>
-        </footer>
-        <!-- End Footer Area  -->
+                <footer id="ni-site-footer" class="ni-footer" aria-label="Pie de página"></footer>
 
     </main>
     <!-- All Scripts  -->

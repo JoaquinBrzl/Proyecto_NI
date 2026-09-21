@@ -1,4 +1,4 @@
-/* NI header: account in popup on small screens; hamburger is responsive-only. */
+/* NI header: Zenit dark chrome + compact mobile + expandable search */
 
 body.ni-header-compact .tmp-header .header-right,
 html.ni-header-compact .tmp-header .header-right {
@@ -23,7 +23,6 @@ html.ni-header-compact .tmp-header .header-btn > a.tmp-btn {
   display: inline-flex;
 }
 
-/* Hamburger + Membresia collapse only in the theme's mobile breakpoint. */
 body.ni-header-compact .tmp-header .mobile-menu-bar,
 html.ni-header-compact .tmp-header .mobile-menu-bar {
   display: none !important;
@@ -37,8 +36,6 @@ html.ni-header-compact .tmp-header .mobile-menu-bar {
     margin-left: 8px;
   }
 
-  /* Same hide as style.css (static) — kept for when ni-header-compact loads later.
-     Mobile CTA must not flash: primary rule is in style.css without JS. */
   body.ni-header-compact .tmp-header .header-btn > a.tmp-btn,
   body.ni-header-compact .tmp-header .header-btn .dot-btn,
   html.ni-header-compact .tmp-header .header-btn > a.tmp-btn,
@@ -46,7 +43,6 @@ html.ni-header-compact .tmp-header .mobile-menu-bar {
     display: none !important;
   }
 
-  /* Overlay fade only (opacity is cheap). Panel slides with transform (GPU). */
   body.ni-header-compact .popup-mobile-menu,
   html.ni-header-compact .popup-mobile-menu {
     transition: opacity 0.2s ease;
@@ -77,11 +73,840 @@ html.ni-header-compact .tmp-header .mobile-menu-bar {
 
 .popup-mobile-menu .ni-auth-menu {
   margin-top: auto;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
 }
 
 .popup-mobile-menu .ni-auth-menu .ni-auth-loading {
   display: block;
   padding: 8px 0;
   opacity: 0.6;
+}
+
+/* ---------------------------------------------------------------------------
+   Zenit dark header — glass / translucent
+--------------------------------------------------------------------------- */
+body.ni-zenit .tmp-header.ni-zenit-header,
+html.ni-zenit .tmp-header.ni-zenit-header {
+  --ni-zenit-bg: #0f172a;
+  --ni-zenit-bg-2: #1a233b;
+  --ni-zenit-text: #f8fafc;
+  --ni-zenit-muted: #93c5fd;
+  --ni-zenit-accent: #f59e0b;
+  --ni-zenit-glass: rgba(15, 23, 42, 0.52);
+  --ni-zenit-glass-sticky: rgba(15, 23, 42, 0.68);
+  --ni-zenit-glass-blue: rgba(22, 78, 180, 0.68);
+  --ni-zenit-glass-blue-sticky: rgba(18, 70, 170, 0.82);
+  background: var(--ni-zenit-glass) !important;
+  background-image: none !important;
+  backdrop-filter: blur(18px) saturate(1.35);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+  min-height: 72px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  transition: background 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+body.ni-zenit .tmp-header.ni-zenit-header.sticky {
+  background: var(--ni-zenit-glass-sticky) !important;
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  border-bottom-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.18);
+}
+
+/* Bluish glass over white / light sections (not the main hero) */
+body.ni-zenit .tmp-header.ni-zenit-header.ni-zenit-over-light,
+body.ni-zenit .tmp-header.ni-zenit-header.ni-zenit-over-light.sticky {
+  background: var(--ni-zenit-glass-blue) !important;
+  backdrop-filter: blur(20px) saturate(1.55);
+  -webkit-backdrop-filter: blur(20px) saturate(1.55);
+  border-bottom-color: rgba(125, 190, 255, 0.45);
+  box-shadow: 0 12px 36px rgba(20, 70, 170, 0.28);
+}
+
+body.ni-zenit .tmp-header.ni-zenit-header.ni-zenit-over-light.sticky {
+  background: var(--ni-zenit-glass-blue-sticky) !important;
+}
+
+/* Let page content show through the glass bar */
+body.ni-zenit .header-transparent-with-topbar {
+  background: transparent;
+}
+
+body.ni-zenit.ni-search-open .tmp-header.ni-zenit-header {
+  background: rgba(15, 23, 42, 0.78) !important;
+}
+
+body.ni-zenit.ni-search-open .tmp-header.ni-zenit-header.ni-zenit-over-light {
+  background: rgba(18, 70, 170, 0.88) !important;
+}
+
+/* Keep Zenit header above theme light sticky overrides */
+body.ni-zenit.active-light-mode .tmp-header.ni-zenit-header.sticky,
+body.ni-zenit.active-dark-mode .tmp-header.ni-zenit-header.sticky {
+  background-image: none !important;
+}
+
+body.ni-zenit .ni-zenit-header .container {
+  max-width: 1400px;
+}
+
+body.ni-zenit .ni-zenit-header .row {
+  align-items: center;
+}
+
+body.ni-zenit .ni-zenit-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none !important;
+  color: var(--ni-zenit-text);
+}
+
+body.ni-zenit .ni-zenit-brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--ni-zenit-accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+body.ni-zenit .ni-zenit-brand-mark img {
+  width: 86%;
+  height: 86%;
+  object-fit: contain;
+  display: block;
+}
+
+body.ni-zenit .ni-zenit-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+body.ni-zenit .ni-zenit-brand-text strong {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+body.ni-zenit .ni-zenit-brand-text span {
+  color: var(--ni-zenit-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+body.ni-zenit .ni-zenit-header .logo img.logo-light,
+body.ni-zenit .ni-zenit-header .logo img.logo-dark {
+  display: none !important;
+}
+
+body.ni-zenit .ni-zenit-header .header-right.with-search {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  width: 100%;
+}
+
+body.ni-zenit .ni-zenit-header .mainmenu-nav.d-none.d-lg-block {
+  display: block !important;
+}
+
+@media only screen and (max-width: 991px) {
+  body.ni-zenit .ni-zenit-header .mainmenu-nav.d-none.d-lg-block {
+    display: none !important;
+  }
+}
+
+body.ni-zenit .ni-zenit-nav {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.ni-zenit .ni-zenit-nav > li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.ni-zenit .ni-zenit-nav > li > a {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px !important;
+  border-radius: 10px;
+  color: #e2e8f0 !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+body.ni-zenit .ni-zenit-nav > li > a i {
+  font-size: 18px;
+  opacity: 0.95;
+}
+
+body.ni-zenit .ni-zenit-nav > li.is-active > a,
+body.ni-zenit .ni-zenit-nav > li > a:hover {
+  background: rgba(148, 163, 184, 0.22);
+  color: #fff !important;
+}
+
+body.ni-zenit .ni-zenit-header .header-btn {
+  display: none !important;
+}
+
+body.ni-zenit .ni-zenit-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+body.ni-zenit .ni-zenit-theme-toggle,
+body.ni-zenit .ni-zenit-search-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.2s ease, background 0.2s ease;
+  line-height: 1;
+}
+
+/* Theme is always icon-only */
+body.ni-zenit .ni-zenit-theme-toggle {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+}
+
+body.ni-zenit .ni-zenit-theme-toggle:hover,
+body.ni-zenit .ni-zenit-search-toggle:hover {
+  border-color: rgba(245, 158, 11, 0.55);
+}
+
+body.ni-zenit .ni-zenit-search-toggle[aria-expanded='true'] {
+  border-color: rgba(245, 158, 11, 0.65);
+  background: rgba(245, 158, 11, 0.18);
+}
+
+body.ni-zenit .ni-zenit-theme-toggle[aria-pressed='true'] {
+  border-color: rgba(147, 197, 253, 0.55);
+  background: rgba(59, 130, 246, 0.22);
+}
+
+body.ni-zenit .ni-zenit-account {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+body.ni-zenit .ni-zenit-user,
+body.ni-zenit .ni-zenit-logout,
+body.ni-zenit .ni-zenit-admin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #e2e8f0 !important;
+  text-decoration: none !important;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+body.ni-zenit .ni-zenit-logout,
+body.ni-zenit .ni-zenit-admin {
+  width: 34px;
+  height: 34px;
+  justify-content: center;
+  border-radius: 999px;
+}
+
+body.ni-zenit .ni-zenit-logout:hover,
+body.ni-zenit .ni-zenit-admin:hover {
+  background: rgba(148, 163, 184, 0.2);
+}
+
+body.ni-zenit .ni-zenit-header .hamberger-button {
+  background: rgba(148, 163, 184, 0.2);
+  color: #fff;
+}
+
+/* Keep submenu dropdowns working under Zenit styling */
+body.ni-zenit .ni-zenit-nav > li.has-droupdown,
+body.ni-zenit .ni-zenit-nav > li.has-menu-child-item {
+  position: relative;
+}
+
+body.ni-zenit .ni-zenit-nav .submenu {
+  background: rgba(15, 23, 42, 0.78) !important;
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 8px !important;
+  min-width: 200px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.28);
+}
+
+body.ni-zenit .ni-zenit-nav .submenu li a {
+  color: #e2e8f0 !important;
+  border-radius: 8px;
+  padding: 11px 14px !important;
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.05rem !important;
+}
+
+body.ni-zenit .ni-zenit-nav .submenu li a:hover {
+  background: rgba(148, 163, 184, 0.2);
+}
+
+/* Search panel */
+body.ni-zenit .ni-zenit-search-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  z-index: 120;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(22px) saturate(1.35);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+  padding: 22px 0 26px;
+}
+
+body.ni-zenit .ni-zenit-header.ni-zenit-over-light .ni-zenit-search-panel {
+  background: rgba(18, 70, 170, 0.88);
+  border-bottom-color: rgba(125, 190, 255, 0.35);
+}
+
+body.ni-zenit .ni-zenit-search-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+body.ni-zenit .ni-zenit-search-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+body.ni-zenit .ni-zenit-search-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 16px 22px;
+  margin: 0;
+  color: #94a3b8;
+}
+
+body.ni-zenit .ni-zenit-search-field i {
+  font-size: 22px;
+}
+
+body.ni-zenit .ni-zenit-search-field input {
+  flex: 1;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  color: #f8fafc !important;
+  font-size: 1.3rem;
+  line-height: 1.4;
+}
+
+body.ni-zenit .ni-zenit-search-field input::placeholder {
+  color: #94a3b8;
+  font-size: 1.2rem;
+}
+
+body.ni-zenit .ni-zenit-search-submit {
+  border: 0;
+  border-radius: 999px;
+  background: var(--ni-zenit-accent);
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 16px 28px;
+  cursor: pointer;
+}
+
+body.ni-zenit .ni-zenit-search-close {
+  border: 0;
+  background: transparent;
+  color: #93c5fd;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 8px;
+}
+
+body.ni-zenit .ni-zenit-search-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+body.ni-zenit .ni-zenit-chip {
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 11px 18px;
+  cursor: pointer;
+}
+
+body.ni-zenit .ni-zenit-search-results {
+  margin-top: 18px;
+  max-height: min(55vh, 480px);
+  overflow: auto;
+}
+
+body.ni-zenit .ni-zenit-search-group {
+  margin-bottom: 16px;
+}
+
+body.ni-zenit .ni-zenit-search-group h4 {
+  margin: 0 0 10px;
+  color: #93c5fd;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+body.ni-zenit .ni-zenit-search-item {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 4px 14px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  text-decoration: none !important;
+  color: #f1f5f9 !important;
+  background: rgba(255, 255, 255, 0.06);
+  margin-bottom: 8px;
+}
+
+body.ni-zenit .ni-zenit-search-item:hover {
+  background: rgba(245, 158, 11, 0.12);
+}
+
+body.ni-zenit .ni-zenit-search-type {
+  font-size: 1rem;
+  color: #94a3b8;
+  grid-row: span 2;
+  align-self: center;
+}
+
+body.ni-zenit .ni-zenit-search-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+body.ni-zenit .ni-zenit-search-meta {
+  font-size: 1.05rem;
+  color: #94a3b8;
+}
+
+body.ni-zenit .ni-zenit-search-empty {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 1.2rem;
+}
+
+body.ni-zenit .popup-mobile-menu .inner {
+  background: #0f172a !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: #e2e8f0;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 18px 18px 24px !important;
+  width: min(100%, 340px) !important;
+  height: 100% !important;
+  height: 100vh !important;
+  box-sizing: border-box;
+}
+
+body.ni-zenit .popup-mobile-menu .header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 20px;
+  padding: 4px 2px 16px !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+body.ni-zenit .popup-mobile-menu .header-top .logo {
+  flex: 1;
+  min-width: 0;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-brand {
+  gap: 10px;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-brand-mark {
+  width: 40px;
+  height: 40px;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-brand-text strong {
+  color: #fff;
+  font-size: 1.15rem;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-brand-text span {
+  color: #93c5fd;
+  font-size: 0.8rem;
+}
+
+body.ni-zenit .popup-mobile-menu .close-menu .close-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #1e3a8a !important;
+  color: #fff !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  flex-shrink: 0;
+}
+
+body.ni-zenit .popup-mobile-menu .close-menu .close-button i,
+body.ni-zenit .popup-mobile-menu .close-menu .close-button svg {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Vertical nav — do NOT inherit desktop horizontal .ni-zenit-nav */
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav,
+body.ni-zenit .popup-mobile-menu .mainmenu.ni-zenit-popup-nav,
+body.ni-zenit .popup-mobile-menu .mainmenu.ni-auth-menu {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  gap: 4px !important;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li,
+body.ni-zenit .popup-mobile-menu .mainmenu.ni-zenit-popup-nav > li,
+body.ni-zenit .popup-mobile-menu .mainmenu.ni-auth-menu > li {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  border: 0 !important;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li + li,
+body.ni-zenit .popup-mobile-menu .mainmenu.ni-auth-menu > li + li {
+  border-top: 0 !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li > a,
+body.ni-zenit .popup-mobile-menu .ni-zenit-popup-nav > li > a,
+body.ni-zenit .popup-mobile-menu .mainmenu.ni-auth-menu > li > a {
+  display: flex !important;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 14px !important;
+  border-radius: 12px;
+  color: #f1f5f9 !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  text-decoration: none !important;
+  white-space: normal;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li > a span,
+body.ni-zenit .popup-mobile-menu .ni-zenit-popup-nav > li > a span,
+body.ni-zenit .popup-mobile-menu .mainmenu.ni-auth-menu > li > a span {
+  display: inline !important;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li > a i,
+body.ni-zenit .popup-mobile-menu .ni-zenit-popup-nav > li > a i {
+  font-size: 20px;
+  width: 22px;
+  flex-shrink: 0;
+  opacity: 0.95;
+  color: #93c5fd;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li > a:hover,
+body.ni-zenit .popup-mobile-menu .ni-zenit-popup-nav > li > a:hover,
+body.ni-zenit .popup-mobile-menu .mainmenu.ni-auth-menu > li > a:hover {
+  background: rgba(59, 130, 246, 0.18);
+  color: #fff !important;
+}
+
+/* Blog submenu inside drawer — closed by default, opens with .open / .active */
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li.has-droupdown,
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li.has-menu-child-item {
+  position: static;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav .submenu {
+  position: static !important;
+  display: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  background: rgba(15, 23, 42, 0.55) !important;
+  border: 0;
+  border-radius: 10px;
+  box-shadow: none;
+  margin: 4px 0 8px 8px;
+  padding: 4px !important;
+  min-width: 0;
+  width: auto;
+  list-style: none;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li > a.open + .submenu,
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav .submenu.active {
+  display: block !important;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li.has-menu-child-item > a,
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li.has-droupdown > a {
+  position: relative;
+  padding-right: 42px !important;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li.has-menu-child-item > a::after,
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li.has-droupdown > a::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid #93c5fd;
+  border-bottom: 2px solid #93c5fd;
+  transform: translateY(-65%) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li.has-menu-child-item > a.open::after,
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav > li.has-droupdown > a.open::after {
+  transform: translateY(-35%) rotate(225deg);
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav .submenu li a {
+  padding: 10px 12px !important;
+  font-size: 1rem !important;
+  color: #cbd5e1 !important;
+}
+
+body.ni-zenit .popup-mobile-menu .ni-zenit-nav .submenu li a:hover {
+  background: rgba(59, 130, 246, 0.15);
+  color: #fff !important;
+}
+
+body.ni-zenit .popup-mobile-menu .mainmenu.ni-auth-menu {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+body.ni-zenit .popup-mobile-menu .mainmenu.ni-auth-menu > li > a {
+  color: #e2e8f0 !important;
+}
+
+@media only screen and (max-width: 1199px) {
+  /* Icon-only labels only in the top header bar — never in the drawer */
+  body.ni-zenit .ni-zenit-header .ni-zenit-nav > li > a span {
+    display: none;
+  }
+
+  body.ni-zenit .ni-zenit-header .ni-zenit-nav > li > a {
+    padding: 8px !important;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  body.ni-zenit .ni-zenit-header .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  body.ni-zenit .ni-zenit-header .row {
+    flex-wrap: nowrap;
+    margin: 0;
+  }
+
+  body.ni-zenit .ni-zenit-header .row > [class*='col-'] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Logo compact: don't fight the icon toolbar */
+  body.ni-zenit .ni-zenit-header .col-4,
+  body.ni-zenit .ni-zenit-header .col-md-6 {
+    flex: 0 1 auto;
+    max-width: none;
+    width: auto;
+  }
+
+  body.ni-zenit .ni-zenit-header .col-8,
+  body.ni-zenit .ni-zenit-header .col-md-6.position-static {
+    flex: 1 1 auto;
+    max-width: none;
+    width: auto;
+  }
+
+  body.ni-zenit .ni-zenit-brand {
+    gap: 8px;
+    max-width: 46vw;
+  }
+
+  body.ni-zenit .ni-zenit-brand-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  body.ni-zenit .ni-zenit-brand-text strong {
+    font-size: 1.05rem;
+  }
+
+  body.ni-zenit .ni-zenit-brand-text span {
+    font-size: 0.72rem;
+  }
+
+  body.ni-zenit .ni-zenit-header .mainmenu-nav {
+    display: none !important;
+  }
+
+  body.ni-zenit .ni-zenit-header .header-right.with-search {
+    width: auto;
+    margin-left: auto;
+    gap: 8px;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+  }
+
+  body.ni-zenit .ni-zenit-actions {
+    margin-left: 0;
+    gap: 8px;
+  }
+
+  /* Icon-only toolbar: buscar · tema · cuenta · menú */
+  body.ni-zenit .ni-zenit-search-label,
+  body.ni-zenit .ni-zenit-user span,
+  body.ni-zenit .ni-zenit-admin,
+  body.ni-zenit .ni-zenit-logout {
+    display: none !important;
+  }
+
+  body.ni-zenit .ni-zenit-theme-toggle,
+  body.ni-zenit .ni-zenit-search-toggle,
+  body.ni-zenit .ni-zenit-user {
+    width: 40px;
+    height: 40px;
+    padding: 0 !important;
+    border: 0;
+    background: transparent;
+    border-radius: 10px;
+    color: #e2e8f0;
+    font-size: 20px;
+  }
+
+  body.ni-zenit .ni-zenit-theme-toggle:hover,
+  body.ni-zenit .ni-zenit-search-toggle:hover,
+  body.ni-zenit .ni-zenit-user:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: transparent;
+  }
+
+  body.ni-zenit .ni-zenit-search-toggle[aria-expanded='true'],
+  body.ni-zenit .ni-zenit-theme-toggle[aria-pressed='true'] {
+    background: rgba(59, 130, 246, 0.22);
+  }
+
+  body.ni-zenit .ni-zenit-header .mobile-menu-bar {
+    display: flex !important;
+    align-items: center;
+    margin-left: 4px !important;
+  }
+
+  body.ni-zenit .ni-zenit-header .hamberger-button {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #e2e8f0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+
+  body.ni-zenit .ni-zenit-header .hamberger-button i,
+  body.ni-zenit .ni-zenit-header .hamberger-button svg {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+
+  body.ni-zenit .ni-zenit-header .hamberger-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  body.ni-zenit .ni-zenit-search-row {
+    flex-wrap: wrap;
+  }
+
+  body.ni-zenit .ni-zenit-search-submit {
+    flex: 1;
+  }
 }

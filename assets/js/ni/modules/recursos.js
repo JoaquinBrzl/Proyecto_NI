@@ -1,6 +1,7 @@
 import { getClient } from '../client.js';
 import { rpcIsAdmin, rpcMembershipLevel } from '../identity.js';
 import { registerModule } from './registry.js';
+import { showCatalogLoading, clearCatalogLoading, ensureCatalogLoadingStyles } from '../catalog-loading.js';
 
 /**
  * Biblioteca de Recursos: listado, descarga gated, CRUD admin (modal).
@@ -123,13 +124,20 @@ export async function listResources({
   search = '',
   pubStatus = '',
   isAdmin = false,
+  page = null,
+  pageSize = null,
 } = {}) {
   const insforge = getClient();
   const columns = isAdmin ? ADMIN_COLUMNS : PUBLIC_COLUMNS;
+  const usePaging = page != null && pageSize != null;
+  const safePage = Math.max(1, Number(page) || 1);
+  const size = Math.max(1, Number(pageSize) || 10);
+  const from = (safePage - 1) * size;
+  const to = from + size - 1;
 
   let query = insforge.database
     .from('resources')
-    .select(columns)
+    .select(columns, usePaging ? { count: 'exact' } : undefined)
     .order('created_at', { ascending: false })
     .order('id', { ascending: false });
 
@@ -151,7 +159,17 @@ export async function listResources({
     query = query.or(`title.ilike.${pattern},description.ilike.${pattern}`);
   }
 
-  return query;
+  if (usePaging) {
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
+  const rows = Array.isArray(data) ? data : [];
+  return {
+    data: rows,
+    count: typeof count === 'number' ? count : rows.length,
+    error: error || null,
+  };
 }
 
 export async function uploadResourceFile(file, { previousKey = null } = {}) {
@@ -412,6 +430,7 @@ function createController() {
 
   async function refresh() {
     if (!listEl) return;
+    showCatalogLoading(listEl, { count: 5, variant: 'rows' });
     setStatus(statusEl, 'Cargando recursos…', 'info');
     const { data, error } = await listResources({
       category: state.category,
@@ -421,6 +440,7 @@ function createController() {
     });
 
     if (error) {
+      clearCatalogLoading(listEl);
       listEl.innerHTML = '';
       setStatus(statusEl, error.message || 'No se pudieron cargar los recursos.', 'error');
       return;
@@ -428,6 +448,7 @@ function createController() {
 
     const rows = Array.isArray(data) ? data : [];
     state.itemsById = new Map(rows.map((row) => [row.id, row]));
+    clearCatalogLoading(listEl);
     listEl.innerHTML = '';
 
     if (!rows.length) {
@@ -703,6 +724,8 @@ function createController() {
 registerModule('recursos', {
   pages: ['recursos'],
   async mount({ hook }) {
+    ensureCatalogLoadingStyles();
+    showCatalogLoading(document.getElementById('resource-list'), { count: 5, variant: 'rows' });
     const controller = createController();
     await controller.init();
     if (hook) hook.setAttribute('data-ni-ready', '1');

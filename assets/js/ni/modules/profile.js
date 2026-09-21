@@ -36,15 +36,131 @@ export function displayName(profile, user) {
   return composed || profile?.username || user?.profile?.name || user?.email || 'Usuario';
 }
 
-export async function fetchInterestsCatalog() {
+/** True when the student filled the required academic/contact fields. */
+export function isProfileComplete(profile, privateContact = null) {
+  const p = profile || {};
+  const required = [
+    p.nombres,
+    p.apellidos,
+    p.username,
+    p.universidad,
+    p.carrera,
+    p.ciclo_academico,
+    privateContact?.whatsapp,
+  ];
+  return required.every((v) => String(v || '').trim().length > 0);
+}
+
+/**
+ * Force onboarding when profile is missing, incomplete, or could not be verified.
+ * (Never treat a fetch error as "complete" — that was skipping the gate.)
+ */
+export function needsProfileOnboarding(own) {
+  if (!own || own.error) return true;
+  return !isProfileComplete(own.profile, own.privateContact);
+}
+
+export async function fetchInterestsCatalog({ primaryOnly = false } = {}) {
   const insforge = getClient();
-  const { data, error } = await insforge.database
+  let query = insforge.database
     .from('interests')
-    .select('id,slug,label,sort_order')
+    .select('id,slug,label,sort_order,is_primary')
     .order('sort_order', { ascending: true })
-    .limit(100);
+    .limit(200);
+  if (primaryOnly) {
+    query = query.eq('is_primary', true);
+  }
+  const { data, error } = await query;
   if (error) return { interests: [], error };
   return { interests: Array.isArray(data) ? data : [], error: null };
+}
+
+export function slugifyInterestLabel(label) {
+  const base = String(label || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 40);
+  return base.length >= 2 ? base : `interes-${Date.now().toString(36).slice(-6)}`;
+}
+
+export async function createInterest({ label, slug, sort_order = 0, is_primary = false }) {
+  const insforge = getClient();
+  const cleanLabel = String(label || '').trim();
+  if (!cleanLabel) return { error: { message: 'El nombre del interés es obligatorio.' } };
+  let cleanSlug = String(slug || '').trim().toLowerCase() || slugifyInterestLabel(cleanLabel);
+  cleanSlug = cleanSlug.replace(/[^a-z0-9-]/g, '').slice(0, 40);
+  if (cleanSlug.length < 2) {
+    return { error: { message: 'Slug inválido (mín. 2 caracteres: a-z, 0-9, -).' } };
+  }
+  const order = Number.isFinite(Number(sort_order)) ? Number(sort_order) : 0;
+  const { data, error } = await insforge.database
+    .from('interests')
+    .insert([{
+      label: cleanLabel,
+      slug: cleanSlug,
+      sort_order: order,
+      is_primary: Boolean(is_primary),
+    }]);
+  if (error) {
+    const msg = error.message || '';
+    if (/unique|duplicate|interests_slug/i.test(msg)) {
+      return { error: { message: 'Ese slug ya existe. Elige otro.' } };
+    }
+    return { error };
+  }
+  return { data: Array.isArray(data) ? data[0] : data, error: null };
+}
+
+export async function updateInterest(id, { label, slug, sort_order, is_primary }) {
+  if (!id) return { error: { message: 'Interés inválido.' } };
+  const insforge = getClient();
+  const patch = {};
+  if (label !== undefined) {
+    const cleanLabel = String(label || '').trim();
+    if (!cleanLabel) return { error: { message: 'El nombre del interés es obligatorio.' } };
+    patch.label = cleanLabel;
+  }
+  if (slug !== undefined) {
+    let cleanSlug = String(slug || '').trim().toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 40);
+    if (cleanSlug.length < 2) {
+      return { error: { message: 'Slug inválido (mín. 2 caracteres: a-z, 0-9, -).' } };
+    }
+    patch.slug = cleanSlug;
+  }
+  if (sort_order !== undefined) {
+    patch.sort_order = Number.isFinite(Number(sort_order)) ? Number(sort_order) : 0;
+  }
+  if (is_primary !== undefined) {
+    patch.is_primary = Boolean(is_primary);
+  }
+  const { data, error } = await insforge.database
+    .from('interests')
+    .update(patch)
+    .eq('id', id);
+  if (error) {
+    const msg = error.message || '';
+    if (/unique|duplicate|interests_slug/i.test(msg)) {
+      return { error: { message: 'Ese slug ya existe. Elige otro.' } };
+    }
+    return { error };
+  }
+  return { data: Array.isArray(data) ? data[0] : data, error: null };
+}
+
+export async function deleteInterest(id) {
+  if (!id) return { error: { message: 'Interés inválido.' } };
+  const insforge = getClient();
+  const { error } = await insforge.database.from('interests').delete().eq('id', id);
+  return { error: error || null };
+}
+
+/** Persist only the user's interest selections. */
+export async function saveOwnInterests(userId, interestIds) {
+  if (!userId) return { error: { message: 'Sesión inválida' } };
+  return syncUserInterests(userId, interestIds);
 }
 
 export async function fetchUserInterestIds(userId) {
@@ -79,10 +195,16 @@ export async function fetchOwnProfile(userId) {
     fetchUserInterestIds(userId),
   ]);
 
-  const error = profileRes.error || privateRes.error || interestsRes.error || null;
+  const error = profileRes.error || null;
+  if (privateRes.error) {
+    console.warn('[ni] private contact read failed', privateRes.error);
+  }
+  if (interestsRes.error) {
+    console.warn('[ni] interests read failed', interestsRes.error);
+  }
   return {
     profile: firstRow(profileRes.data),
-    privateContact: firstRow(privateRes.data),
+    privateContact: privateRes.error ? null : firstRow(privateRes.data),
     interestIds: interestsRes.ids || [],
     error,
   };

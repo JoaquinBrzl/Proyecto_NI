@@ -1,6 +1,7 @@
 import { getClient } from '../client.js';
 import { rpcIsAdmin } from '../identity.js';
 import { registerModule } from './registry.js';
+import { showCatalogLoading, clearCatalogLoading, ensureCatalogLoadingStyles } from '../catalog-loading.js';
 
 /**
  * Anuncios públicos + CRUD admin en modal (anuncios.html).
@@ -483,6 +484,7 @@ function createController() {
 
   async function refresh() {
     if (!listEl) return;
+    showCatalogLoading(listEl, { count: 6, variant: 'cards' });
     setStatus(statusEl, 'Cargando anuncios…', 'info');
 
     const result = state.isAdmin
@@ -501,6 +503,7 @@ function createController() {
         });
 
     const { data, count, error } = result;
+    clearCatalogLoading(listEl);
     listEl.innerHTML = '';
     state.itemsById = new Map((data || []).map((row) => [row.id, row]));
 
@@ -695,6 +698,9 @@ registerModule('anuncios', {
       delete hook.dataset.niStub;
       hook.hidden = true;
     }
+
+    ensureCatalogLoadingStyles();
+    showCatalogLoading(document.getElementById('ni-anuncios-list'), { count: 6, variant: 'cards' });
 
     const controller = createController();
     try {

@@ -11,6 +11,7 @@ import {
   membershipPlanLabel,
   profileInitial,
 } from './profile.js';
+import { showCatalogLoading, clearCatalogLoading } from '../catalog-loading.js';
 
 /** Tunable scoring weights (must sum to 1). */
 export const MATCH_WEIGHTS = Object.freeze({
@@ -157,22 +158,28 @@ async function fetchMatchCandidatesFallback(userId) {
 
   if (error) return { candidates: [], error };
 
-  const rows = Array.isArray(profiles) ? profiles : [];
+  let rows = Array.isArray(profiles) ? profiles : [];
   const ids = rows.map((r) => r.user_id).filter(Boolean);
+  let adminIds = new Set();
   let interestByUser = new Map();
 
   if (ids.length) {
-    const { data: links } = await insforge.database
-      .from('user_interests')
-      .select('user_id,interest_id')
-      .in('user_id', ids)
-      .limit(5000);
+    const [{ data: roles }, { data: links }] = await Promise.all([
+      insforge.database.from('user_roles').select('user_id,role').in('user_id', ids).eq('role', 'admin').limit(500),
+      insforge.database.from('user_interests').select('user_id,interest_id').in('user_id', ids).limit(5000),
+    ]);
+    for (const role of Array.isArray(roles) ? roles : []) {
+      if (role?.user_id) adminIds.add(role.user_id);
+    }
     for (const link of Array.isArray(links) ? links : []) {
       const list = interestByUser.get(link.user_id) || [];
       list.push(link.interest_id);
       interestByUser.set(link.user_id, list);
     }
   }
+
+  // Best-effort: RLS may hide other users' roles for non-admins.
+  rows = rows.filter((r) => !adminIds.has(r.user_id));
 
   return {
     candidates: rows.map((r) => ({
@@ -407,6 +414,7 @@ registerModule('match', {
     }
 
     root.hidden = false;
+    showCatalogLoading(listEl, { count: 6, variant: 'match' });
     if (statusEl) {
       statusEl.hidden = false;
       statusEl.textContent = 'Cargando compatibilidades…';
@@ -419,6 +427,8 @@ registerModule('match', {
     ]);
 
     if (error) {
+      clearCatalogLoading(listEl);
+      if (listEl) listEl.innerHTML = '';
       if (statusEl) {
         statusEl.hidden = false;
         statusEl.dataset.niStatus = 'error';
@@ -489,6 +499,7 @@ registerModule('match', {
       const filtered = applyFilters(state.rows, state.filters);
       if (countEl) countEl.textContent = String(filtered.length);
       if (listEl) {
+        clearCatalogLoading(listEl);
         if (!filtered.length) {
           listEl.innerHTML =
             '<p class="ni-match-empty col-12">No hay estudiantes que coincidan con estos filtros.</p>';
