@@ -1,0 +1,11 @@
+# Static multi-page site. Do not rewrite all routes to index.html.
+
+[build]
+  command = "npm run ni:setup && node scripts/prepare-netlify.js"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[functions]
+  directory = "netlify/functions"

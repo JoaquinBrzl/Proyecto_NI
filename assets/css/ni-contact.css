@@ -135,8 +135,25 @@
   transition: background 0.2s ease, transform 0.15s ease;
 }
 
+.ni-contact-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .ni-contact-form__submit:hover {
   background: #1e40af;
+}
+
+.ni-contact-form__submit:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.ni-contact-form__msg[data-ni-status="info"] {
+  color: #1e40af;
 }
 
 .ni-contact-form__submit:active {

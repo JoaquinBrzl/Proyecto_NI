@@ -1,164 +1,257 @@
 <?php
+/**
+ * Optional local PHP fallback. Production (Netlify) uses
+ * functions/send-contact-message.ts via InsForge.
+ */
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-require __DIR__ . '/vendor/autoload.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
 $msg = [];
 
-// Recibir datos del formulario
-$name = trim($_POST['contact-name'] ?? '');
-$phone = trim($_POST['contact-phone'] ?? '');
-$email = trim($_POST['contact-email'] ?? '');
-$subject = trim($_POST['subject'] ?? '');
-$message = trim($_POST['contact-message'] ?? '');
+function ni_env(string $key, string $default = ''): string
+{
+    static $loaded = null;
+    if ($loaded === null) {
+        $loaded = [];
+        $path = __DIR__ . DIRECTORY_SEPARATOR . '.env.local';
+        if (is_readable($path)) {
+            foreach (file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [] as $line) {
+                $line = trim($line);
+                if ($line === '' || str_starts_with($line, '#')) {
+                    continue;
+                }
+                if (!str_contains($line, '=')) {
+                    continue;
+                }
+                [$k, $v] = explode('=', $line, 2);
+                $loaded[trim($k)] = trim($v, " \t\"'");
+            }
+        }
+    }
+    $value = $loaded[$key] ?? getenv($key);
+    if ($value === false || $value === null || $value === '') {
+        return $default;
+    }
+    return (string) $value;
+}
 
-// =========================
-// VALIDACIONES
-// =========================
+function ni_fail(string $field, string $error): array
+{
+    return [
+        'code' => false,
+        'field' => $field,
+        'err' => $error,
+    ];
+}
+
+function ni_ok(string $success): array
+{
+    return [
+        'code' => true,
+        'success' => $success,
+    ];
+}
+
+function ni_h(string $value): string
+{
+    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+function ni_contact_template(array $data): string
+{
+    $name = ni_h($data['name']);
+    $email = ni_h($data['email']);
+    $career = ni_h($data['career'] !== '' ? $data['career'] : '—');
+    $university = ni_h($data['university'] !== '' ? $data['university'] : '—');
+    $phone = ni_h($data['phone'] !== '' ? $data['phone'] : '—');
+    $subject = ni_h($data['subject'] !== '' ? $data['subject'] : 'Consulta general');
+    $message = nl2br(ni_h($data['message']));
+    $when = ni_h($data['when']);
+
+    return <<<HTML
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuevo mensaje de contacto</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f6fb;font-family:'Plus Jakarta Sans',Segoe UI,Helvetica,Arial,sans-serif;color:#1b1b1c;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6fb;padding:28px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:620px;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #eceef5;">
+          <tr>
+            <td style="background:#5237f9;padding:28px 32px;color:#ffffff;">
+              <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.85;font-weight:700;">Grupo NI</div>
+              <div style="font-size:24px;line-height:1.25;font-weight:800;margin-top:6px;">Nuevo mensaje de contacto</div>
+              <div style="font-size:13px;margin-top:8px;opacity:0.9;">Recibido el {$when}</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:28px 32px 8px;">
+              <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#363636;">
+                Alguien envió una consulta desde el formulario de <strong>Contacto</strong> en la web.
+              </p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid #eef1f6;width:38%;font-size:13px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.04em;">Nombre</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #eef1f6;font-size:15px;font-weight:600;color:#1b1b1c;">{$name}</td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid #eef1f6;font-size:13px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.04em;">Correo</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #eef1f6;font-size:15px;">
+                    <a href="mailto:{$email}" style="color:#5237f9;text-decoration:none;font-weight:600;">{$email}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid #eef1f6;font-size:13px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.04em;">Teléfono</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #eef1f6;font-size:15px;color:#1b1b1c;">{$phone}</td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid #eef1f6;font-size:13px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.04em;">Carrera</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #eef1f6;font-size:15px;color:#1b1b1c;">{$career}</td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid #eef1f6;font-size:13px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.04em;">Universidad</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #eef1f6;font-size:15px;color:#1b1b1c;">{$university}</td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid #eef1f6;font-size:13px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.04em;">Asunto</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #eef1f6;font-size:15px;color:#1b1b1c;">{$subject}</td>
+                </tr>
+              </table>
+              <div style="margin:22px 0 8px;font-size:13px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.04em;">Mensaje</div>
+              <div style="background:#f7f5ff;border:1px solid #ece7ff;border-radius:12px;padding:16px 18px;font-size:15px;line-height:1.7;color:#1b1b1c;">
+                {$message}
+              </div>
+              <p style="margin:20px 0 0;font-size:13px;color:#64748b;line-height:1.5;">
+                Puedes responder este correo y le llegará directamente a {$name}.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:18px 32px 24px;font-size:12px;color:#94a3b8;">
+              Este mensaje se envió desde el formulario de contacto de Grupo NI.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+HTML;
+}
+
+$name = trim((string) ($_POST['contact-name'] ?? ''));
+$phone = trim((string) ($_POST['contact-phone'] ?? ''));
+$email = trim((string) ($_POST['contact-email'] ?? ''));
+$career = trim((string) ($_POST['contact-career'] ?? ''));
+$university = trim((string) ($_POST['contact-university'] ?? ''));
+$subject = trim((string) ($_POST['subject'] ?? $_POST['contact-subject'] ?? ''));
+$message = trim((string) ($_POST['contact-message'] ?? ''));
+$honeypot = trim((string) ($_POST['contact-company'] ?? ''));
+
+if ($honeypot !== '') {
+    echo json_encode(ni_ok('¡Mensaje enviado correctamente!'));
+    exit;
+}
 
 if ($name === '') {
-
-    $msg['code'] = false;
-    $msg['field'] = 'contact-name';
-    $msg['err'] = 'El nombre no puede estar vacío.';
-
-} elseif ($phone === '') {
-
-    $msg['code'] = false;
-    $msg['field'] = 'contact-phone';
-    $msg['err'] = 'El teléfono no puede estar vacío.';
-
-} elseif (!preg_match('/^[0-9\s\-\+\(\)]{4,20}$/', $phone)) {
-
-    $msg['code'] = false;
-    $msg['field'] = 'contact-phone';
-    $msg['err'] = 'Ingresa un número de teléfono válido.';
-
+    $msg = ni_fail('contact-name', 'El nombre no puede estar vacío.');
+} elseif (mb_strlen($name) > 120) {
+    $msg = ni_fail('contact-name', 'El nombre es demasiado largo.');
+} elseif ($phone !== '' && !preg_match('/^[0-9\s\-\+\(\)]{4,20}$/', $phone)) {
+    $msg = ni_fail('contact-phone', 'Ingresa un número de teléfono válido.');
 } elseif ($email === '') {
-
-    $msg['code'] = false;
-    $msg['field'] = 'contact-email';
-    $msg['err'] = 'El correo no puede estar vacío.';
-
+    $msg = ni_fail('contact-email', 'El correo no puede estar vacío.');
 } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
-    $msg['code'] = false;
-    $msg['field'] = 'contact-email';
-    $msg['err'] = 'Ingresa un correo válido.';
-
+    $msg = ni_fail('contact-email', 'Ingresa un correo válido.');
 } elseif ($message === '') {
-
-    $msg['code'] = false;
-    $msg['field'] = 'contact-message';
-    $msg['err'] = 'El mensaje no puede estar vacío.';
-
+    $msg = ni_fail('contact-message', 'El mensaje no puede estar vacío.');
+} elseif (mb_strlen($message) > 5000) {
+    $msg = ni_fail('contact-message', 'El mensaje es demasiado largo.');
 } else {
+    $autoload = __DIR__ . '/vendor/autoload.php';
+    if (!is_readable($autoload)) {
+        echo json_encode(ni_fail('contact-message', 'Falta PHPMailer. Ejecuta composer install en el servidor.'));
+        exit;
+    }
 
-    // =========================
-    // CONFIGURACIÓN DEL CORREO
-    // =========================
+    require $autoload;
 
-    $mail = new PHPMailer(true);
+    $smtpUser = ni_env('MAIL_SMTP_USER', 'gruponi2026@gmail.com');
+    $smtpPass = ni_env('MAIL_SMTP_PASS');
+    $mailTo = ni_env('MAIL_TO', 'gruponi2026@gmail.com');
+    $mailFrom = ni_env('MAIL_FROM', $smtpUser !== '' ? $smtpUser : 'gruponi2026@gmail.com');
+    $mailFromName = ni_env('MAIL_FROM_NAME', 'Grupo NI');
+    $smtpHost = ni_env('MAIL_SMTP_HOST', 'smtp.gmail.com');
+    $smtpPort = (int) ni_env('MAIL_SMTP_PORT', '587');
 
-    try {
-
-        // SMTP
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-
-        // TU CORREO DE GMAIL
-        $mail->Username = 'joaquinbarzola418@gmail.com';
-
-        // IMPORTANTE:
-        // Aquí NO va tu contraseña normal de Gmail.
-        // Debes colocar una CONTRASEÑA DE APLICACIÓN.
-        $mail->Password = 'generar en la web';
-
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
-
-        // =========================
-        // REMITENTE
-        // =========================
-
-        $mail->setFrom(
-            'joaquinbarzola418@gmail.com',
-            'Formulario Web'
+    if ($smtpPass === '' || $smtpPass === 'generar en la web') {
+        error_log('[ni/mail] MAIL_SMTP_PASS missing in .env.local');
+        $msg = ni_fail(
+            'contact-message',
+            'No se pudo enviar el mensaje. Inténtalo nuevamente.'
         );
+    } else {
+        $mail = new PHPMailer(true);
+        $when = (new DateTimeImmutable('now', new DateTimeZone('America/Lima')))->format('d/m/Y H:i');
+        $mailSubject = $subject !== ''
+            ? ('[Grupo NI] ' . $subject)
+            : ('[Grupo NI] Mensaje de ' . $name);
 
-        // =========================
-        // DESTINATARIO
-        // =========================
+        $payload = [
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'career' => $career,
+            'university' => $university,
+            'subject' => $subject,
+            'message' => $message,
+            'when' => $when,
+        ];
 
-        $mail->addAddress(
-            'joaquinbarzola418@gmail.com',
-            'Joaquin Barzola'
-        );
+        try {
+            $mail->isSMTP();
+            $mail->Host = $smtpHost;
+            $mail->SMTPAuth = true;
+            $mail->Username = $smtpUser;
+            $mail->Password = $smtpPass;
+            $mail->SMTPSecure = $smtpPort === 465
+                ? PHPMailer::ENCRYPTION_SMTPS
+                : PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = $smtpPort;
+            $mail->CharSet = 'UTF-8';
 
-        // =========================
-        // RESPONDER AL CLIENTE
-        // =========================
+            $mail->setFrom($mailFrom, $mailFromName);
+            $mail->addAddress($mailTo, 'Grupo NI');
+            $mail->addReplyTo($email, $name);
 
-        $mail->addReplyTo(
-            $email,
-            $name
-        );
+            $mail->isHTML(true);
+            $mail->Subject = $mailSubject;
+            $mail->Body = ni_contact_template($payload);
+            $mail->AltBody =
+                "Nuevo mensaje de contacto — Grupo NI\n\n" .
+                "Fecha: {$when}\n" .
+                "Nombre: {$name}\n" .
+                "Correo: {$email}\n" .
+                "Teléfono: " . ($phone !== '' ? $phone : '—') . "\n" .
+                "Carrera: " . ($career !== '' ? $career : '—') . "\n" .
+                "Universidad: " . ($university !== '' ? $university : '—') . "\n" .
+                "Asunto: " . ($subject !== '' ? $subject : 'Consulta general') . "\n\n" .
+                "Mensaje:\n{$message}\n";
 
-        // =========================
-        // CONTENIDO
-        // =========================
-
-        $mail->isHTML(true);
-
-        $mail->Subject = $subject !== ''
-            ? $subject
-            : 'Nuevo mensaje desde la página web';
-
-        $mail->Body = '
-            <h2>Nuevo mensaje desde el formulario web</h2>
-
-            <p><strong>Nombre:</strong> ' . htmlspecialchars($name) . '</p>
-
-            <p><strong>Teléfono:</strong> ' . htmlspecialchars($phone) . '</p>
-
-            <p><strong>Correo:</strong> ' . htmlspecialchars($email) . '</p>
-
-            <p><strong>Asunto:</strong> ' . htmlspecialchars($subject) . '</p>
-
-            <p><strong>Mensaje:</strong></p>
-
-            <p>' . nl2br(htmlspecialchars($message)) . '</p>
-        ';
-
-        // Versión texto plano
-        $mail->AltBody =
-            "Nombre: $name\n" .
-            "Teléfono: $phone\n" .
-            "Correo: $email\n" .
-            "Asunto: $subject\n\n" .
-            "Mensaje:\n$message";
-
-        // ENVIAR
-        $mail->send();
-
-        // Respuesta que espera tu main.js
-        $msg['code'] = true;
-        $msg['success'] = '¡Mensaje enviado correctamente!';
-
-    } catch (Exception $e) {
-
-        $msg['code'] = false;
-        $msg['field'] = 'contact-message';
-        $msg['err'] = 'No se pudo enviar el mensaje. Inténtalo nuevamente.';
-
-        // Para desarrollo puedes descomentar esto:
-        // $msg['err'] = $mail->ErrorInfo;
+            $mail->send();
+            $msg = ni_ok('¡Mensaje enviado correctamente! Te responderemos pronto.');
+        } catch (Exception $e) {
+            $msg = ni_fail('contact-message', 'No se pudo enviar el mensaje. Inténtalo nuevamente.');
+        }
     }
 }
 
-echo json_encode($msg);
+echo json_encode($msg, JSON_UNESCAPED_UNICODE);

@@ -8,5 +8,6 @@ import './admin.js';
 import './talleres.js';
 import './recursos.js';
 import './match.js';
+import './contact.js';
 
 export {};

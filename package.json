@@ -24,6 +24,7 @@
     "esbuild": "^0.28.2"
   },
   "dependencies": {
-    "@insforge/sdk": "^1.5.2"
+    "@insforge/sdk": "^1.5.2",
+    "nodemailer": "^10.0.10"
   }
 }
