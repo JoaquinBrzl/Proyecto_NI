@@ -113,6 +113,23 @@ function refreshIcons(root) {
   }
 }
 
+function renderEmpty({ filtered = false } = {}) {
+  const col = document.createElement('div');
+  col.className = 'col-12';
+  col.innerHTML = `
+    <div class="resource-no-results">
+      <div class="no-results-icon"><i class="feather-inbox"></i></div>
+      <div class="no-results-title">No se encontraron anuncios</div>
+      <p class="no-results-text">${
+        filtered
+          ? 'Prueba con otra búsqueda o categoría.'
+          : 'Aún no hay anuncios publicados.'
+      }</p>
+    </div>
+  `;
+  return col;
+}
+
 function wireFilterGroup(root, attr, onChange) {
   if (!root) return;
   root.addEventListener('click', (e) => {
@@ -515,13 +532,13 @@ function createController() {
     }
 
     if (!data.length) {
-      setStatus(
-        statusEl,
-        state.search || state.category || state.pubStatus
-          ? 'No hay anuncios que coincidan con tu búsqueda o filtro.'
-          : 'Aún no hay anuncios publicados.',
-        'empty',
+      setStatus(statusEl, '', '');
+      listEl.appendChild(
+        renderEmpty({
+          filtered: Boolean(state.search || state.category || state.pubStatus),
+        }),
       );
+      refreshIcons(listEl);
       if (paginationEl) paginationEl.hidden = true;
       return;
     }

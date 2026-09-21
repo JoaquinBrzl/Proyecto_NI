@@ -114,6 +114,23 @@ function refreshIcons(root) {
   }
 }
 
+function renderEmpty({ filtered = false } = {}) {
+  const col = document.createElement('div');
+  col.className = 'col-12';
+  col.innerHTML = `
+    <div class="resource-no-results">
+      <div class="no-results-icon"><i class="feather-inbox"></i></div>
+      <div class="no-results-title">No se encontraron talleres</div>
+      <p class="no-results-text">${
+        filtered
+          ? 'Prueba con otra búsqueda o filtro.'
+          : 'Aún no hay talleres publicados.'
+      }</p>
+    </div>
+  `;
+  return col;
+}
+
 export function temporalStatus(item, now = new Date()) {
   const start = new Date(item.starts_at).getTime();
   const end = new Date(item.ends_at).getTime();
@@ -669,7 +686,12 @@ function createController() {
     clearCatalogLoading(listEl);
     listEl.innerHTML = '';
     if (!data.length) {
-      setStatus(statusEl, 'No hay talleres con estos filtros.', 'info');
+      setStatus(statusEl, '', '');
+      listEl.appendChild(
+        renderEmpty({
+          filtered: Boolean(state.search || state.temporal || state.pubStatus || state.modality || state.level),
+        }),
+      );
     } else {
       setStatus(statusEl, '', '');
       data.forEach((item) =>
@@ -682,8 +704,8 @@ function createController() {
           }),
         ),
       );
-      refreshIcons(listEl);
     }
+    refreshIcons(listEl);
 
     const totalPages = Math.max(1, Math.ceil(count / PAGE_SIZE));
     if (state.page > totalPages) {

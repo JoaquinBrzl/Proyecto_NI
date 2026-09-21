@@ -31744,6 +31744,7 @@ body.tmp-body-star::before {
   padding: 44px 20px;
   text-align: center;
   margin-top: 8px;
+  width: 100%;
 }
 
 .resource-no-results .no-results-icon {
