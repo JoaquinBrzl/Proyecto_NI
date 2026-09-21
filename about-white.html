@@ -27,6 +27,32 @@
     <link href="assets/css/plugins/lightbox.css" rel="stylesheet">
     <link href="assets/css/plugins/odometer.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css?v=4.5.4">
+    <style>
+      .ni-about-mv .tmp-address {
+        align-items: flex-start;
+        padding: 28px 26px;
+        height: 100%;
+      }
+      .ni-about-mv .tmp-address .icon {
+        line-height: 1;
+        margin-top: 2px;
+        flex-shrink: 0;
+      }
+      .ni-about-mv .tmp-address .inner h4.title {
+        font-size: calc(1.35rem + 5px);
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--color-heading, #0f172a);
+      }
+      .ni-about-mv .tmp-address .inner p {
+        margin: 0;
+        line-height: 1.65;
+        font-size: calc(1.05rem + 5px);
+      }
+      body.active-dark-mode .ni-about-mv .tmp-address .inner h4.title {
+        color: #f1f5f9;
+      }
+    </style>
 </head>
 
 <body class="active-light-mode" data-ni-page="about">
@@ -153,11 +179,37 @@
                                 <div class="line-separator line-right"></div>
                             </div>
                             <h1 class="title w-700 mt--20">Somos una comunidad que impulsa a futuros profesionales.<br> <span class="theme-gradient">Grupo</span></h1>
-                            <p class="b1">We design and develop world-class websites and applications.</p>
+                            <p class="b1">Somos una comunidad enfocada en el desarrollo profesional y personal de estudiantes y jóvenes de Negocios Internacionales, brindando herramientas, experiencias y espacios para fortalecer sus habilidades y prepararlos para nuevos desafíos.</p>
                         </div>
 
                     </div>
                 </div>
+
+                <div class="row g-4 g-lg-5 mt--40 justify-content-center ni-about-mv">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="tmp-address tmponhover text-start h-100">
+                            <div class="icon">
+                                <i class="feather-flag"></i>
+                            </div>
+                            <div class="inner">
+                                <h4 class="title">Nuestra misión</h4>
+                                <p>Formar una comunidad que combine conocimientos técnicos, habilidades digitales, liderazgo, marca personal y networking para impulsar profesionales preparados para destacar.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="tmp-address tmponhover text-start h-100">
+                            <div class="icon">
+                                <i class="feather-eye"></i>
+                            </div>
+                            <div class="inner">
+                                <h4 class="title">Nuestra visión</h4>
+                                <p>Ser una comunidad educativa referente en Latinoamérica, reconocida por transformar jóvenes talentos en profesionales con propósito, presencia y proyección internacional.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row mt--30">
                     <div class="col-lg-12">
                         <div class="video-btn">
@@ -515,12 +567,7 @@ c-0.703,1.213-0.543,2.688-0.404,3.406C20.229,6.225,20.387,5.914,20.573,5.593z"><
                         <div class="video-btn">
                             <div class="video-popup icon-center">
                                 <div class="overlay-content">
-                                    <div class="thumbnail"><img class="radius-small" src="assets/images/about/about-3.jpg" alt="Corporate Image"></div>
-                                    <div class="video-icon">
-                                        <a class="tmp-btn rounded-player popup-video" href="https://www.youtube.com/watch?v=4jnzf1yj48M">
-                                            <span><i class="feather-play"></i></span>
-                                        </a>
-                                    </div>
+                                    <div class="thumbnail"><img class="radius-small" src="assets/images/about/about-3.png" alt="Corporate Image"></div>
                                 </div>
                             </div>
                             <div class="video-lightbox-wrapper"></div>
@@ -529,122 +576,6 @@ c-0.703,1.213-0.543,2.688-0.404,3.406C20.229,6.225,20.387,5.914,20.573,5.593z"><
                 </div>
             </div>
         </div>
-
-        <!-- Fnd Gallery Large Style-1  -->
-        <div class="tmp-gallery-area tmp-section-gapBottom">
-            <div class="container-fluid">
-                <div class="row mb--40">
-                    <div class="col-lg-12">
-                        <div class="tmp-section-title-border text-center">
-                            <div class="pres-line-separator-wrapper text-center mb--10">
-                                <div class="line-separator line-left"></div>
-                                <span class="subtitle">
-                                    <span class="number">03</span>
-                                <span class="subtitle-text">Company Gallery</span>
-                                </span>
-                                <div class="line-separator line-right"></div>
-                            </div>
-                            <h2 class="title w-700 tmp-title-split">Our Company Gallery</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt_dec--30 row--15" id="animated-lightbox2">
-                    <a class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30" data-sal="slide-up" data-sal-duration="700" href="assets/images/portfolio/portfolio-01.jpg">
-                        <div class="tmp-gallery icon-center">
-                            <div class="thumbnail"><img class="radius-small" src="assets/images/portfolio/portfolio-01.jpg" alt="Corporate Image"></div>
-                            <div class="video-icon">
-                                <div class="btn-default rounded-player sm-size">
-                                    <span><i class="feather-zoom-in"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30" data-sal="slide-up" data-sal-duration="700" href="assets/images/portfolio/portfolio-02.jpg">
-                        <div class="tmp-gallery icon-center">
-                            <div class="thumbnail"><img class="radius-small" src="assets/images/portfolio/portfolio-02.jpg" alt="Corporate Image">
-                            </div>
-                            <div class="video-icon">
-                                <div class="btn-default rounded-player sm-size">
-                                    <span>
-                                        <i class="feather-zoom-in"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30" data-sal="slide-up" data-sal-duration="700" href="assets/images/portfolio/portfolio-03.jpg">
-                        <div class="tmp-gallery icon-center">
-                            <div class="thumbnail"><img class="radius-small" src="assets/images/portfolio/portfolio-03.jpg" alt="Corporate Image"></div>
-                            <div class="video-icon">
-                                <div class="btn-default rounded-player sm-size">
-                                    <span><i class="feather-zoom-in"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30" data-sal="slide-up" data-sal-duration="700" href="assets/images/portfolio/portfolio-04.jpg">
-                        <div class="tmp-gallery icon-center">
-                            <div class="thumbnail"><img class="radius-small" src="assets/images/portfolio/portfolio-04.jpg" alt="Corporate Image"></div>
-                            <div class="video-icon">
-                                <div class="btn-default rounded-player sm-size">
-                                    <span><i class="feather-zoom-in"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30" data-sal="slide-up" data-sal-duration="700" href="assets/images/portfolio/portfolio-05.jpg">
-                        <div class="tmp-gallery icon-center">
-                            <div class="thumbnail"><img class="radius-small" src="assets/images/portfolio/portfolio-05.jpg" alt="Corporate Image"></div>
-                            <div class="video-icon">
-                                <div class="btn-default rounded-player sm-size">
-                                    <span><i class="feather-zoom-in"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30" data-sal="slide-up" data-sal-duration="700" href="assets/images/portfolio/portfolio-06.jpg">
-                        <div class="tmp-gallery icon-center">
-                            <div class="thumbnail"><img class="radius-small" src="assets/images/portfolio/portfolio-06.jpg" alt="Corporate Image"></div>
-                            <div class="video-icon">
-                                <div class="btn-default rounded-player sm-size">
-                                    <span><i class="feather-zoom-in"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30" data-sal="slide-up" data-sal-duration="700" href="assets/images/portfolio/portfolio-05.jpg">
-                        <div class="tmp-gallery icon-center">
-                            <div class="thumbnail"><img class="radius-small" src="assets/images/portfolio/portfolio-05.jpg" alt="Corporate Image"></div>
-                            <div class="video-icon">
-                                <div class="btn-default rounded-player sm-size">
-                                    <span><i class="feather-zoom-in"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30" data-sal="slide-up" data-sal-duration="700" href="assets/images/portfolio/portfolio-06.jpg">
-                        <div class="tmp-gallery icon-center">
-                            <div class="thumbnail"><img class="radius-small" src="assets/images/portfolio/portfolio-06.jpg" alt="Corporate Image"></div>
-                            <div class="video-icon">
-                                <div class="btn-default rounded-player sm-size">
-                                    <span><i class="feather-zoom-in"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!-- Fnd Gallery Large Style-1  -->
-
-
-
                 <footer id="ni-site-footer" class="ni-footer" aria-label="Pie de página"></footer>
     </main>
     <!-- All Scripts  -->
