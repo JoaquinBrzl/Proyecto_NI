@@ -2,10 +2,11 @@ import { getClient } from '../client.js';
 import { fetchIdentity } from '../identity.js';
 import { fetchOwnProfile } from './profile.js';
 import { registerModule } from './registry.js';
+import { initPaymentModal, openPaymentModal } from './payment-modal.js';
 
 /**
  * Elite application form (postular-elite.html).
- * Flow: fill form → pending → admin approves → activate button (placeholder for now).
+ * Flow: fill form → pending → admin approves → payment modal → admin confirms voucher.
  */
 
 const LOGIN_HREF = 'login.html';
@@ -51,6 +52,20 @@ async function fetchLatestApplication(userId) {
   return { application: firstRow(data), error: null };
 }
 
+async function fetchPendingElitePayment(userId) {
+  if (!userId) return null;
+  const insforge = getClient();
+  const { data, error } = await insforge.database
+    .from('membership_payment_submissions')
+    .select('id,status')
+    .eq('user_id', userId)
+    .eq('plan', 'ni_elite')
+    .eq('status', 'pending')
+    .limit(1);
+  if (error) return null;
+  return firstRow(data);
+}
+
 export async function submitEliteApplicationForm(userId, answers) {
   const insforge = getClient();
   const payload = {
@@ -88,17 +103,23 @@ function fillFromProfile(form, { user, profile, privateContact }) {
   form.linkedin.value = profile?.linkedin_url || '';
 }
 
-function showActivatePlaceholder(activateBtn, { visible, ready = false }) {
+function showActivateButton(activateBtn, { visible, ready = false, pending = false }) {
   if (!activateBtn) return;
   activateBtn.classList.toggle('is-visible', visible);
   activateBtn.classList.toggle('is-ready', ready);
   activateBtn.disabled = !ready;
+  if (pending) {
+    activateBtn.removeAttribute('title');
+    activateBtn.textContent = 'Comprobante en revisión';
+    activateBtn.disabled = true;
+    return;
+  }
   if (ready) {
     activateBtn.removeAttribute('title');
     activateBtn.textContent = 'Activar acceso Elite →';
   } else if (visible) {
-    activateBtn.title = 'Se habilitará en una próxima versión';
-    activateBtn.textContent = 'Activar acceso Elite (próximamente)';
+    activateBtn.title = 'Completa el pago para activar Elite';
+    activateBtn.textContent = 'Activar acceso Elite →';
   }
 }
 
@@ -110,6 +131,8 @@ registerModule('elite-apply', {
       hook.setAttribute('data-ni-ready', '1');
       hook.hidden = true;
     }
+
+    initPaymentModal();
 
     const form = document.getElementById('ni-elite-apply-form');
     const statusEl = document.getElementById('ni-elite-apply-status');
@@ -143,12 +166,14 @@ registerModule('elite-apply', {
     if (level >= 2) {
       setStatus(statusEl, 'Ya tienes NI Elite activo.', 'ok');
       setFormDisabled(form, true);
-      showActivatePlaceholder(activateBtn, { visible: false });
+      showActivateButton(activateBtn, { visible: false });
       if (submitBtn) submitBtn.hidden = true;
       return;
     }
 
     const status = application?.status || null;
+    const pendingPay = status === 'approved' ? await fetchPendingElitePayment(user.id) : null;
+
     if (status === 'pending') {
       setStatus(
         statusEl,
@@ -160,26 +185,43 @@ registerModule('elite-apply', {
         submitBtn.textContent = 'Postulación pendiente';
         submitBtn.disabled = true;
       }
-      showActivatePlaceholder(activateBtn, { visible: false });
+      showActivateButton(activateBtn, { visible: false });
     } else if (status === 'approved') {
-      setStatus(
-        statusEl,
-        '¡Tu postulación fue aceptada! Pronto podrás activar tu acceso Elite desde aquí.',
-        'ok',
-      );
       setFormDisabled(form, true);
       if (submitBtn) submitBtn.hidden = true;
-      // Placeholder: button visible but disabled until activation is programmed.
-      showActivatePlaceholder(activateBtn, { visible: true, ready: false });
+      if (pendingPay) {
+        setStatus(statusEl, 'Tu comprobante de pago Elite está en revisión.', 'info');
+        showActivateButton(activateBtn, { visible: true, ready: false, pending: true });
+      } else {
+        setStatus(
+          statusEl,
+          '¡Tu postulación fue aceptada! Completa el pago para activar NI Elite.',
+          'ok',
+        );
+        showActivateButton(activateBtn, { visible: true, ready: true });
+        if (activateBtn) {
+          activateBtn.onclick = () => {
+            openPaymentModal({
+              plan: 'ni_elite',
+              onDone: () => {
+                setStatus(statusEl, 'Comprobante enviado. Pendiente de validación del admin.', 'ok');
+                showActivateButton(activateBtn, { visible: true, ready: false, pending: true });
+              },
+            }).catch((err) => {
+              setStatus(statusEl, err.message || 'No se pudo abrir el pago.', 'error');
+            });
+          };
+        }
+      }
     } else if (status === 'rejected') {
       setStatus(
         statusEl,
         'Tu postulación anterior fue rechazada. Puedes volver a enviar una nueva solicitud.',
         'warn',
       );
-      showActivatePlaceholder(activateBtn, { visible: false });
+      showActivateButton(activateBtn, { visible: false });
     } else {
-      showActivatePlaceholder(activateBtn, { visible: false });
+      showActivateButton(activateBtn, { visible: false });
     }
 
     form.addEventListener('submit', async (e) => {

@@ -1,11 +1,12 @@
 import { getClient } from '../client.js';
 import { fetchIdentity } from '../identity.js';
 import { registerModule } from './registry.js';
+import { initPaymentModal, openPaymentModal, STATIC_PAYMENT } from './payment-modal.js';
 
 /**
  * Pricing / memberships module (pricing-three-white.html + index).
- * Pro upgrade is a payment PLACEHOLDER via activate_pro_membership().
- * Elite: postulación → admin review (Edge Function) → activate_elite_membership() demo.
+ * Pro/Elite paid plans open the Yape/Plin/transfer voucher modal.
+ * Elite: postulación → admin approve → payment modal → admin confirms voucher.
  */
 
 const LOGIN_HREF = 'login.html';
@@ -101,7 +102,6 @@ function splitFeatures(features, slug) {
       excludes: excludes.length ? excludes : fallback.excludes,
     };
   }
-  // Legacy string[] from DB — keep visual catalog for includes/excludes.
   return {
     includes: fallback.includes,
     excludes: fallback.excludes,
@@ -139,16 +139,28 @@ async function fetchLatestEliteApplication(userId) {
   return { application: firstRow(data), error: null };
 }
 
-/** PLACEHOLDER — no real payment gateway. */
-export async function activateProMembership() {
+async function fetchPendingPayment(userId, plan) {
+  if (!userId || !plan) return { pending: null, error: null };
   const insforge = getClient();
-  return insforge.database.rpc('activate_pro_membership');
+  const { data, error } = await insforge.database
+    .from('membership_payment_submissions')
+    .select('id,plan,status,created_at')
+    .eq('user_id', userId)
+    .eq('plan', plan)
+    .eq('status', 'pending')
+    .limit(1);
+  if (error) return { pending: null, error };
+  return { pending: firstRow(data), error: null };
 }
 
-/** PLACEHOLDER — Elite after admin approval (no Stripe). */
-export async function activateEliteMembership() {
-  const insforge = getClient();
-  return insforge.database.rpc('activate_elite_membership');
+async function fetchPaymentSettingsPrices() {
+  return {
+    settings: {
+      pro_price_pen: STATIC_PAYMENT.pro_price_pen,
+      elite_price_pen: STATIC_PAYMENT.elite_price_pen,
+    },
+    error: null,
+  };
 }
 
 export async function submitEliteApplication(message = '', userId = null) {
@@ -197,7 +209,7 @@ function renderFeatureList(ul, items, { excluded = false } = {}) {
     .join('');
 }
 
-function fillPlanCard(root, plan, slug) {
+function fillPlanCard(root, plan, slug, priceOverride) {
   if (!root) return;
   const ui = PLAN_UI[slug] || {};
   const title = root.querySelector('[data-ni-plan-title]');
@@ -209,7 +221,11 @@ function fillPlanCard(root, plan, slug) {
   const highlights = root.querySelector('[data-ni-plan-highlights]');
 
   if (title) title.textContent = plan?.name || title.textContent;
-  if (price) price.textContent = formatPrice(plan?.price_monthly_pen ?? (slug === 'ni_free' ? 0 : slug === 'ni_pro' ? 30 : 50));
+  const amount =
+    priceOverride != null
+      ? priceOverride
+      : plan?.price_monthly_pen ?? (slug === 'ni_free' ? 0 : slug === 'ni_pro' ? 30 : 50);
+  if (price) price.textContent = formatPrice(amount);
   if (tagline) tagline.textContent = ui.tagline || plan?.tagline || '';
   if (period) period.textContent = ui.period || '';
 
@@ -217,7 +233,6 @@ function fillPlanCard(root, plan, slug) {
   renderFeatureList(includes, split.includes, { excluded: false });
   renderFeatureList(excludes, split.excludes, { excluded: true });
 
-  // Home teaser: show a short highlights list (no "no incluye").
   if (highlights) {
     const preview = (split.includes || ui.includes || []).slice(0, 4);
     renderFeatureList(highlights, preview, { excluded: false });
@@ -250,6 +265,26 @@ function wireCta(button, { label, disabled, href, onClick }) {
   };
 }
 
+async function openPlanPayment(ctx, plan, statusEl) {
+  setStatus(statusEl, 'Abriendo pago…', 'info');
+  try {
+    const { ok, error } = await openPaymentModal({
+      plan,
+      onDone: async () => {
+        setStatus(statusEl, 'Comprobante enviado. Pendiente de validación del admin.', 'ok');
+        await refreshUi(ctx);
+      },
+    });
+    if (!ok && error) {
+      setStatus(statusEl, error.message || 'No se pudo abrir el pago.', 'error');
+      return;
+    }
+    setStatus(statusEl, '');
+  } catch (err) {
+    setStatus(statusEl, err.message || 'No se pudo abrir el pago.', 'error');
+  }
+}
+
 async function refreshUi(ctx) {
   const snap = ctx.getSessionSnapshot ? ctx.getSessionSnapshot() : { user: null };
   const user = snap.user || ctx.user || null;
@@ -261,17 +296,34 @@ async function refreshUi(ctx) {
     setStatus(statusEl, 'No se pudo cargar el catálogo de planes.', 'error');
   }
 
+  let settingsPrices = null;
+  if (user?.id) {
+    const { settings } = await fetchPaymentSettingsPrices();
+    settingsPrices = settings;
+  }
+
   const bySlug = Object.fromEntries((plans || []).map((p) => [p.slug, p]));
   fillPlanCard(document.querySelector('[data-ni-plan="ni_free"]'), bySlug.ni_free, 'ni_free');
-  fillPlanCard(document.querySelector('[data-ni-plan="ni_pro"]'), bySlug.ni_pro, 'ni_pro');
-  fillPlanCard(document.querySelector('[data-ni-plan="ni_elite"]'), bySlug.ni_elite, 'ni_elite');
+  fillPlanCard(
+    document.querySelector('[data-ni-plan="ni_pro"]'),
+    bySlug.ni_pro,
+    'ni_pro',
+    settingsPrices?.pro_price_pen,
+  );
+  fillPlanCard(
+    document.querySelector('[data-ni-plan="ni_elite"]'),
+    bySlug.ni_elite,
+    'ni_elite',
+    settingsPrices?.elite_price_pen,
+  );
 
-  // Home teaser: only summary + link to membresías (no CTA / benefits logic).
   if (isTeaser) return;
 
   let level = 0;
   let identity = ctx.identity || null;
   let eliteApp = null;
+  let pendingPro = null;
+  let pendingElite = null;
 
   if (user?.id) {
     identity = await fetchIdentity(user.id);
@@ -281,6 +333,12 @@ async function refreshUi(ctx) {
     if (appRes.error) {
       console.warn('[ni/pricing] elite application read failed', appRes.error);
     }
+    const [proPend, elitePend] = await Promise.all([
+      fetchPendingPayment(user.id, 'ni_pro'),
+      fetchPendingPayment(user.id, 'ni_elite'),
+    ]);
+    pendingPro = proPend.pending;
+    pendingElite = elitePend.pending;
   }
 
   const freeBtn = document.querySelector('[data-ni-cta="free"]');
@@ -317,19 +375,13 @@ async function refreshUi(ctx) {
     wireCta(proBtn, { label: 'Incluido en Elite', disabled: true });
   } else if (level >= 1) {
     wireCta(proBtn, { label: '✓ Plan actual', disabled: true });
+  } else if (pendingPro) {
+    wireCta(proBtn, { label: 'Comprobante en revisión', disabled: true });
   } else {
     wireCta(proBtn, {
       label: 'Elegir NI Pro →',
-      onClick: async () => {
-        setStatus(statusEl, 'Activando NI Pro (sin pago real)…', 'info');
-        const { data, error } = await activateProMembership();
-        if (error) {
-          setStatus(statusEl, error.message || 'No se pudo activar Pro.', 'error');
-          return;
-        }
-        setStatus(statusEl, 'NI Pro activado (placeholder — no hay pasarela de pago).', 'ok');
-        await refreshUi(ctx);
-        void data;
+      onClick: () => {
+        openPlanPayment(ctx, 'ni_pro', statusEl).catch((e) => console.error(e));
       },
     });
   }
@@ -338,14 +390,19 @@ async function refreshUi(ctx) {
   if (level >= 2) {
     wireCta(eliteBtn, { label: '✓ Elite activa', disabled: true });
     setStatus(eliteNote, 'Tu membresía NI Elite está activa.', 'ok');
+  } else if (pendingElite) {
+    wireCta(eliteBtn, { label: 'Comprobante en revisión', disabled: true });
+    setStatus(eliteNote, 'Tu comprobante de pago Elite está en revisión.', 'info');
   } else if (eliteStatus === 'approved') {
     wireCta(eliteBtn, {
-      label: 'Ver activación Elite →',
-      href: ELITE_APPLY_HREF,
+      label: 'Activar NI Elite →',
+      onClick: () => {
+        openPlanPayment(ctx, 'ni_elite', statusEl).catch((e) => console.error(e));
+      },
     });
     setStatus(
       eliteNote,
-      'Tu postulación fue aceptada. El botón de activación se habilitará pronto.',
+      'Tu postulación fue aceptada. Completa el pago para activar NI Elite.',
       'ok',
     );
   } else if (eliteStatus === 'pending') {
@@ -359,7 +416,7 @@ async function refreshUi(ctx) {
     setStatus(eliteNote, 'Completa el formulario de postulación. Un admin revisará tu solicitud.', 'info');
   }
 
-  if (!statusEl?.textContent) {
+    if (!statusEl?.textContent) {
     const planLabel = level >= 2 ? 'NI Elite' : level >= 1 ? 'NI Pro' : 'NI Free';
     setStatus(statusEl, `Membresía actual: ${planLabel}`, 'ok');
   }
@@ -373,6 +430,8 @@ registerModule('pricing', {
       hook.setAttribute('data-ni-ready', '1');
       hook.hidden = true;
     }
+
+    initPaymentModal();
 
     try {
       await refreshUi(ctx);

@@ -55,6 +55,7 @@ const PANEL_TITLES = {
   'ni-admin-section-talleres': 'Talleres',
   'ni-admin-section-recursos': 'Recursos',
   'ni-admin-section-intereses': 'Intereses',
+  'ni-admin-section-pagos': 'Pagos membresías',
 };
 
 function showAdminPanel(sectionId) {

@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css?v=4.5.4">
-    <link rel="stylesheet" href="assets/css/ni-admin.css?v=1.5.6">
+    <link rel="stylesheet" href="assets/css/ni-admin.css?v=1.5.8">
     <link rel="stylesheet" href="assets/css/ni-header.css?v=5.1.4">
     <link rel="stylesheet" href="assets/css/ni-brand.css?v=1.0.1">
     <script src="assets/js/ni/header-boot.js?v=1.0.1"></script>
@@ -63,6 +63,10 @@
                 <a class="ni-admin-nav-link" href="#ni-admin-section-intereses">
                     <i class="feather-tag" aria-hidden="true"></i>
                     <span>Intereses</span>
+                </a>
+                <a class="ni-admin-nav-link" href="#ni-admin-section-pagos">
+                    <i class="feather-credit-card" aria-hidden="true"></i>
+                    <span>Pagos membresías</span>
                 </a>
             </nav>
 
@@ -326,6 +330,68 @@
                         </table>
                     </div>
                     <div class="ni-admin-pagination" id="ni-admin-int-pagination"></div>
+                </section>
+
+                <section class="ni-admin-card" data-ni-admin-panel id="ni-admin-section-pagos">
+                    <div class="ni-admin-card__head">
+                        <div>
+                            <h2 class="ni-admin-card__title">Pagos de membresías</h2>
+                            <p class="ni-admin-card__subtitle">Valida comprobantes (activar 30 días) y desactiva membresías</p>
+                        </div>
+                    </div>
+                    <p id="ni-admin-pay-status" class="ni-admin-msg" hidden></p>
+
+                    <h3 class="ni-admin-detail__section">Comprobantes</h3>
+                    <div class="ni-filter-chips mb-2" id="ni-admin-pay-filter-chips" role="group" aria-label="Filtrar comprobantes">
+                        <button type="button" class="is-checked" data-ni-pay-status="pending">Pendientes</button>
+                        <button type="button" data-ni-pay-status="">Todos</button>
+                        <button type="button" data-ni-pay-status="approved">Aprobados</button>
+                        <button type="button" data-ni-pay-status="rejected">Rechazados</button>
+                    </div>
+                    <div class="ni-admin-table-wrap">
+                        <table class="ni-admin-table" id="ni-admin-pay-table">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Plan</th>
+                                    <th>Método</th>
+                                    <th>Operación</th>
+                                    <th>Monto</th>
+                                    <th>Estado</th>
+                                    <th>Fecha</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="ni-admin-detail" id="ni-admin-pay-detail" hidden>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h4 class="mb-0">Detalle del comprobante</h4>
+                            <a href="#" class="ni-admin-link" id="ni-admin-pay-detail-close">Cerrar</a>
+                        </div>
+                        <div id="ni-admin-pay-detail-body"></div>
+                        <div class="d-flex flex-wrap gap-2 mt-3" id="ni-admin-pay-detail-actions">
+                            <button type="button" class="ni-admin-btn ni-admin-btn--primary" id="ni-admin-pay-approve"><span>Aprobar y activar (30 días)</span></button>
+                            <button type="button" class="ni-admin-btn ni-admin-btn--ghost" id="ni-admin-pay-reject"><span>Rechazar</span></button>
+                        </div>
+                    </div>
+
+                    <h3 class="ni-admin-detail__section mt-4">Membresías activas (Pro / Elite)</h3>
+                    <div class="ni-admin-table-wrap">
+                        <table class="ni-admin-table" id="ni-admin-pay-active-table">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Plan</th>
+                                    <th>Inicio</th>
+                                    <th>Vence</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </section>
             </div>
         </div>
@@ -643,7 +709,7 @@
     <script src="assets/js/vendor/jquery.min.js" defer></script>
     <script src="assets/js/vendor/bootstrap.min.js" defer></script>
     <script src="assets/js/vendor/feather.min.js" defer></script>
-    <script type="module" src="assets/js/ni/admin-shell.js"></script>
+    <script type="module" src="assets/js/ni/admin-shell.js?v=1.0.2"></script>
     <script type="module" src="assets/js/ni/boot.js"></script>
 </body>
 </html>
