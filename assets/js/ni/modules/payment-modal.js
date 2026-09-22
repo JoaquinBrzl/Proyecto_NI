@@ -8,10 +8,10 @@ import { getClient } from '../client.js';
 
 /** Static cobro — change these values in code when needed. */
 export const STATIC_PAYMENT = {
-  yape_number: '999 000 000',
-  plin_number: '999 000 000',
+  yape_number: '987 654 000',
+  plin_number: '987 654 000',
   bank_name: 'BCP',
-  account_number: '191-0000000-0-00',
+  account_number: '123-456789-0-01',
   cci: '00219100000000000000',
   account_holder: 'Grupo NI',
   yape_instructions: 'Envía el monto exacto por Yape e ingresa el número de operación.',
